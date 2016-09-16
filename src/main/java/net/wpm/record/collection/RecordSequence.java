@@ -7,16 +7,17 @@ import net.wpm.record.RecordAdapter;
 import net.wpm.record.RecordView;
 
 /**
+ * Works like a Java array. All elements are placed consecutive in memory. 
+ * 
  * @author Nico Hezel
  */
 public class RecordSequence<B> implements Iterable<B> {
 
 	protected final RecordAdapter<B> adapter;
-	protected final int recordSize;		// record size in bytes
-	
-	protected final long fromAddress;	// 
-	protected final long toAddress;		//
-	protected final int count;			// element count
+	protected final int recordSize;		// record size in bytes	
+	protected final long fromAddress;	// starting address of the sequence
+	protected final long toAddress;		// end address
+	protected final int count;			// amount of records
 	
 	public RecordSequence(final RecordAdapter<B> adapter, final long fromAddress, final int count) {
 		this.adapter = adapter;
@@ -27,10 +28,21 @@ public class RecordSequence<B> implements Iterable<B> {
 		this.count = count;
 	}
 
+	/**
+	 * Amount of records in this sequence
+	 * 
+	 * @return
+	 */
 	public int size() {
 		return count;
 	}
 	
+	/**
+	 * Get the element at index. Creates a new record view object.
+	 * 
+	 * @param index
+	 * @return
+	 */
 	public B get(final int index) {
 		return adapter.view(fromAddress + index * recordSize);
 	}
@@ -66,11 +78,16 @@ public class RecordSequence<B> implements Iterable<B> {
 		return new Itr(adapter);
 	}
 
+	/**
+	 * A iterator using reusing a single record view to access all records.
+	 * 
+	 * @author Nico Hezel
+	 */
 	protected final class Itr implements Iterator<B> {
 		
 		protected long address = 0;		// address in memory	
 		
-		// beide Objekte sind identisch, spart das casting
+		// both records are identical, safes casting
 		protected final RecordView reuseRecordView;
 		protected final B reuseRecord;
 		
@@ -80,7 +97,6 @@ public class RecordSequence<B> implements Iterable<B> {
 			this.address = fromAddress - recordSize;
 		}
 
-		// beste megamorphic variante
 		@Override
 		public final boolean hasNext() {
 			return ((address += recordSize) < toAddress);

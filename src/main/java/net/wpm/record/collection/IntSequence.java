@@ -9,8 +9,12 @@ import net.openhft.chronicle.core.OS;
 import net.wpm.record.bytes.UnsafeBytes;
 
 /**
- * TODO maxium an elemente is Integer.MAXVALUE / elementBytes
- * @author Nico
+ * Do not use this class. It is not tested throughout.
+ * 
+ * 
+ * TODO maxium size is Integer.MAXVALUE 
+ * 
+ * @author Nico Hezel
  *
  * @param <B>
  */

@@ -6,12 +6,15 @@ import java.lang.reflect.Method;
 import java.security.ProtectionDomain;
 import java.util.WeakHashMap;
 
-
 /**
- * Special Edition
+ * This is a special version of the ReflectASM library.
  * https://github.com/EsotericSoftware/reflectasm/issues/24
  * 
- * @author Nico
+ * It is extended to meet the needs of Java Records but follows their license agreement:
+ * https://github.com/EsotericSoftware/reflectasm/blob/master/license.txt
+ * 
+ * 
+ * @author Nico Hezel
  */
 class AccessClassLoader extends ClassLoader {
 	// Weak-references to class loaders, to avoid perm gen memory leaks, for example in app servers/web containters if the

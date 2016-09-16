@@ -1,20 +1,18 @@
 package net.wpm.record.samples;
 
 /**
- * TODO sequence iteration
- * TODO clear zeroes sämtlichen inhalt
- * TODO Teste ob zugriffe auf protected variablen auch den polymorphic einflüssen unterlegen?
- * TODO Annotation an blueprint methoden die ihren ActionType ändern obwohl der Name nicht passt.
- * 		-> BlueprintInspector muss alle methoden mit invaliden Namen auf diese Annotation testen
- * TODO copy methode für inhalt (auch in ein byte array rein)
+ * TODO clear-method: zeroes the entire content
+ * TODO check if access to protected variables is slower under polymorphic effect
+ * TODO an annotation at the blueprint method should define a ActionType, ignoring the naming conventions 
+ * 		-> BlueprintInspector has to analyze all methods for this annotation
+ * TODO copy-method: copy the content into a byte array
  * 
- * @author Nico
- *
+ * @author Nico Hezel
  */
 public class RecordsSample_xx {
 
 	/**
-	 * Polymorphic vermeiden in dem kein interface mit allgemeinen methoden verwendet wird 
+	 * Avoid interfaces with common methods only for convenient reasons. Those methods are subject to polymorphic effects and therefor slow.
 	 */	
 	public static interface StructCommon {
 		public int structId();

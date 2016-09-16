@@ -2,6 +2,11 @@ package net.wpm.record;
 
 import java.io.IOException;
 
+/**
+ * This class exists only for test purposes. 
+ * 
+ * @author Nico Hezel
+ */
 public class RecordSandbox {
 
 	public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException {

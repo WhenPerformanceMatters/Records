@@ -12,7 +12,7 @@ import net.wpm.record.Records;
 import net.wpm.record.blueprint.TestPojo;
 
 /**
- * Unit tests
+ * Unit tests for some API methods.
  * 
  * @author Nico
  *

@@ -1,64 +1,63 @@
 package net.wpm.record.samples;
 
 import java.io.IOException;
-import java.util.function.IntSupplier;
-import java.util.function.Supplier;
 
 import net.wpm.record.OpenRecords;
 import net.wpm.record.RecordAdapter;
 import net.wpm.record.Records;
-import net.wpm.record.annotation.Array;
-import net.wpm.record.annotation.Integer;
-import net.wpm.record.annotation.Text;
-import net.wpm.record.annotation.Text.Encoding;
-import net.wpm.record.blueprint.TestPojo;
-import net.wpm.record.bytecode.RecordClassGenerator;
-import net.wpm.record.bytes.MemoryAccess;
 import net.wpm.record.collection.RecordSequence;
 
 public class RecordsPerf_01_Access {
 
 	public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException {
 
-		// Zugriff auf die Structs ist möglich über die Structs Klasse oder direkt dem Adapter
+		// access to the records is possible via the Records API or the Record Adapter
 		RecordAdapter<Foo> structAdapter = new RecordAdapter<>(Foo.class);
 		int classId = OpenRecords.registerAdapter(structAdapter);
 		
-		// erstelle ein neues Objekt
+		// create a three new records
 		Foo obj = Records.create(Foo.class);
-		Foo otherObj = Records.create(classId); // faster
-		Foo anotherObj = structAdapter.create(); // the fastest
+		Foo otherObj = Records.create(classId); 	// faster
+		Foo anotherObj = structAdapter.create();	// the fastest
 		
-		// die interne Id vom Objekt
+		// a record id
 		long id = Records.id(obj);
 		
-		// zwei Referenzen zum selben Objekt
-		Foo sameObj = Records.view(Foo.class, id);
-		Foo otherSameObj = Records.view(classId, id); // faster
-		Foo anotherSameObj = structAdapter.view(id); // the fastest
+		// four record views pointing to the same record
+		Foo sameObj1 = Records.view(Foo.class, id);
+		Foo sameObj2 = Records.view(classId, id);	// fast
+		Foo sameObj3 = structAdapter.view(id);		// faster
+		Foo sameObj4 = obj.view();					// the fastest
 		
-		// reuse vom selben objekt
-		long[] objId = new long[] { id+structAdapter.getRecordSize()*2, id+0, id+structAdapter.getRecordSize()*5 };
-		long sum = 0;
+		// re-use the record view
+		long[] objId = new long[] { sameObj1.recordId(), otherObj.recordId(), anotherObj.recordId() };
 		for (int i = 0; i < objId.length; i++) {
-			obj = Records.view(Foo.class, objId[i]);
-			obj = Records.view(obj, objId[i]); // faster
 			
-			// mach etwas
-			obj.setInt1(i);
-			sum += obj.getInt1();
+			// point to another record
+			sameObj2 = Records.view(sameObj2, objId[i]); 	// faster
+			sameObj3.recordId(objId[i]);					// the fastest
+			
+			// change something
+			sameObj2.setInt1(i + 3);
 		}
-		System.out.println("sum "+sum);
 		
-		// oder gleich als liste
-		sum = 0;
+		// prints -> "Read int1 3"
+		System.out.println("Read int1 "+sameObj4.getInt1());
+		
+		// even better is using a sequence of records
 		RecordSequence<Foo> fooList = Records.array(Foo.class, 10);
-		for (Foo foo : fooList) {
+		int counter = 0;
+		for (Foo foo : fooList) 
+			foo.setInt1(counter++);
+		
+		// read the data
+		long sum = 0;
+		for (Foo foo : fooList) 
 			sum += foo.getInt1();
-		}
+		System.out.println("sum "+sum);		
 	}
 	
-	private static interface Foo {
+	public static interface Foo {
 		
 		public byte getByte();
 		public void setByte(byte number);
@@ -71,5 +70,10 @@ public class RecordsPerf_01_Access {
 		
 		public long getLong();
 		public void setLong(long number);
+		
+		public Foo view();
+		
+		public long recordId();
+		public void recordId(long recordId);
 	}
 }

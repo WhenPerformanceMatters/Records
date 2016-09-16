@@ -15,6 +15,16 @@ import static java.lang.reflect.Modifier.isPrivate;
 import static java.lang.reflect.Modifier.isStatic;
 import static org.objectweb.asm.Opcodes.*;
 
+/**
+ * This is a special version of the ReflectASM library.
+ * https://github.com/EsotericSoftware/reflectasm/issues/24
+ * 
+ * It is extended to meet the needs of Java Records but follows their license agreement:
+ * https://github.com/EsotericSoftware/reflectasm/blob/master/license.txt
+ * 
+ * 
+ * @author Nico Hezel
+ */
 public abstract class ClassAccess {
     public final static Object[] NO_ARGUMENTS = new Object[0];
     public final static Object STATIC_INSTANCE = null;

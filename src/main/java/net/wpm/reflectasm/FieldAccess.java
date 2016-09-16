@@ -1,6 +1,16 @@
 
 package net.wpm.reflectasm;
 
+/**
+ * This is a special version of the ReflectASM library.
+ * https://github.com/EsotericSoftware/reflectasm/issues/24
+ * 
+ * It is extended to meet the needs of Java Records but follows their license agreement:
+ * https://github.com/EsotericSoftware/reflectasm/blob/master/license.txt
+ * 
+ * 
+ * @author Nico Hezel
+ */
 public class FieldAccess {
     public final ClassAccess classAccess;
 
