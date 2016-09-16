@@ -1,0 +1,50 @@
+plugins {
+	id 'java'
+	id 'idea'
+	id 'eclipse'
+}
+
+// character encoding
+tasks.withType(AbstractCompile)*.options*.encoding = "UTF-8"
+
+// Java compatibility
+sourceCompatibility = targetCompatibility = 1.8
+
+// name of the project in Eclipse and IntelliJ
+def projectName = 'Records'
+eclipse.project.name = projectName
+idea.module.name = projectName
+
+version = '0.1.0'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': projectName, 'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+	compile group: 'com.koloboke', name: 'koloboke-api-jdk8', version: '1.0.0'
+	compile group: 'com.koloboke', name: 'koloboke-impl-jdk8', version: '1.0.0'
+	compile group: 'com.koloboke', name: 'koloboke-impl-common-jdk8', version: '1.0.0'
+	compile group: 'net.openhft', name: 'chronicle-bytes', version: '1.7.15'	
+	
+	// compile group: 'io.datakernel', name: 'codegen', version: '1.1.4'	// not yet released
+	compile fileTree('lib/codegen-1.1.4.jar')								// unreleased version	
+	compile group: 'org.ow2.asm', name: 'asm', version: '5.1'				// codegen dependencies
+	compile group: 'org.ow2.asm', name: 'asm-all', version: '5.1'			// codegen dependencies
+	
+	testCompile 'junit:junit:4.+';											// only for tests
+}
+
+/**
+ * Creates a gradle wrapper gradlew
+ */
+task wrapper(type: Wrapper) {
+	distributionUrl = 'https://services.gradle.org/distributions/gradle-2.14.1-rc-1-all.zip';	
+}
