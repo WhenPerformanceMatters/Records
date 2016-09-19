@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,11 +21,11 @@ import net.wpm.record.bytecode.template.TemplateDecreaseValue;
 import net.wpm.record.bytecode.template.TemplateDecreaseValueBy;
 import net.wpm.record.bytecode.template.TemplateGetArraySize;
 import net.wpm.record.bytecode.template.TemplateGetBlueprintId;
-import net.wpm.record.bytecode.template.TemplateGetValueWith;
-import net.wpm.record.bytecode.template.TemplateGetRecordSize;
 import net.wpm.record.bytecode.template.TemplateGetRecordId;
+import net.wpm.record.bytecode.template.TemplateGetRecordSize;
 import net.wpm.record.bytecode.template.TemplateGetValue;
 import net.wpm.record.bytecode.template.TemplateGetValueAt;
+import net.wpm.record.bytecode.template.TemplateGetValueWith;
 import net.wpm.record.bytecode.template.TemplateGetValueWithAt;
 import net.wpm.record.bytecode.template.TemplateIncreaseValue;
 import net.wpm.record.bytecode.template.TemplateIncreaseValueBy;
@@ -82,8 +82,11 @@ public class RecordClassGenerator {
 	
 	public Class<RecordView> construct() {
 		
-		// construct a Class that implements Test interface
-		List<Class<?>> blueprints = Arrays.asList(blueprintClass.getBlueprint());
+		// all blueprints for this record
+		List<Class<?>> blueprints = new ArrayList<Class<?>>();
+		blueprints.add(blueprintClass.getBlueprint());
+
+		// construct a class that implements the blueprints
 		AsmBuilder<RecordView> builder = new AsmBuilder<RecordView>(classLoader, RecordView.class, blueprints).setBytecodeSaveDir(byteCodePath);
 		
 		// all methods and fields necessary to work as a record

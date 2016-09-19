@@ -37,7 +37,7 @@ public class Records {
 	protected static final HashIntIntMap blueprintHashcodeToId;
 
 	static {
-		recordAdapters = new ArrayList<>();
+		recordAdapters = new ArrayList<RecordAdapter>();
 		blueprintHashcodeToId = HashIntIntMaps.newMutableMap();
 		
 		// blueprint id 0 is always null

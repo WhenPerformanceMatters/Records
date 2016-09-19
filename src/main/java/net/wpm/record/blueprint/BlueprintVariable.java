@@ -161,7 +161,7 @@ public class BlueprintVariable {
 	}
 	
 	 // creates a map of all supported data types, associated by their name
-    protected final static Map<String, BlueprintVariable> nameToDataType = new HashMap<>();
+    protected final static Map<String, BlueprintVariable> nameToDataType = new HashMap<String, BlueprintVariable>();
     
     static {    	
     	nameToDataType.put("byte", new BlueprintVariable(BlueprintVariable.class, "byte", 1, Byte.TYPE, Byte.TYPE));

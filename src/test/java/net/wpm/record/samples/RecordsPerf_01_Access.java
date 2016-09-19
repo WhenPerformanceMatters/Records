@@ -12,7 +12,7 @@ public class RecordsPerf_01_Access {
 	public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException {
 
 		// access to the records is possible via the Records API or the Record Adapter
-		RecordAdapter<Foo> structAdapter = new RecordAdapter<>(Foo.class);
+		RecordAdapter<Foo> structAdapter = new RecordAdapter<Foo>(Foo.class);
 		int classId = OpenRecords.registerAdapter(structAdapter);
 		
 		// create a three new records

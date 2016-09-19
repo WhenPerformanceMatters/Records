@@ -15,8 +15,8 @@ public class BlueprintClass {
 	
 	public BlueprintClass(Class<?> blueprint) {
 		this.blueprint = blueprint;
-		this.variables = new HashMap<>();
-		this.methods = new HashMap<>();
+		this.variables = new HashMap<String, BlueprintVariable>();
+		this.methods = new HashMap<String, BlueprintMethod>();
 	}
 
 	public Class<?> getBlueprint() {

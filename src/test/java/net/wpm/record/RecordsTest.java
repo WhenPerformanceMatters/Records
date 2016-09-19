@@ -26,7 +26,7 @@ public class RecordsTest {
 	@Before
 	public void setUpBeforeClass() throws Exception {
 		blueprint = TestPojo.class;
-		recordAdapter = new RecordAdapter<>(blueprint);
+		recordAdapter = new RecordAdapter<TestPojo>(blueprint);
 		blueprintId = Records.register(recordAdapter);
 	}
 

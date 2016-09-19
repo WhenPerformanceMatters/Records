@@ -19,7 +19,7 @@ public class OpenRecords extends Records {
 	public static <B> int register(Class<B> blueprint, Class<? extends RecordView> recordViewClass, int expectedElements) {
 		
 		// creates a new record adapter
-		RecordAdapter<B> recordAdapter = new RecordAdapter<>(blueprint, recordViewClass);
+		RecordAdapter<B> recordAdapter = new RecordAdapter<B>(blueprint, recordViewClass);
 		
 		// register the adapter and return the new blueprint id
 		return register(recordAdapter);

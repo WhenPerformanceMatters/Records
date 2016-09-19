@@ -17,10 +17,10 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	protected static final int OverProvision = 256; 		// sufficient bytes
 	
 	// all pieces of memory allocaed
-	protected final Map<Long, UnsafeBytes> addressToBytes = new HashMap<>();
+	protected final Map<Long, UnsafeBytes> addressToBytes = new HashMap<Long, UnsafeBytes>();
 	
 	// list of memory which has at least OverProvision free
-	protected final LinkedList<UnsafeBytes> freeBytes = new LinkedList<>();
+	protected final LinkedList<UnsafeBytes> freeBytes = new LinkedList<UnsafeBytes>();
 	
 	/**
 	 * Only one instance of UnsafeMemoryAdapter
