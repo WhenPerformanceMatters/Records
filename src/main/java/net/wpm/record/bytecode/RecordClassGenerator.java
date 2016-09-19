@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import io.datakernel.codegen.AsmBuilder;
-import io.datakernel.codegen.utils.DefiningClassLoader;
+import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.utils.DefiningClassLoader;
 import net.wpm.record.RecordView;
 import net.wpm.record.blueprint.BlueprintClass;
 import net.wpm.record.blueprint.BlueprintMethod;

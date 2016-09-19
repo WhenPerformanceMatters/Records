@@ -1,17 +1,17 @@
 package net.wpm.record.bytecode.template;
 
-import static io.datakernel.codegen.Expressions.add;
-import static io.datakernel.codegen.Expressions.call;
-import static io.datakernel.codegen.Expressions.callStatic;
-import static io.datakernel.codegen.Expressions.cast;
-import static io.datakernel.codegen.Expressions.getter;
-import static io.datakernel.codegen.Expressions.mul;
-import static io.datakernel.codegen.Expressions.self;
-import static io.datakernel.codegen.Expressions.setter;
-import static io.datakernel.codegen.Expressions.value;
+import static net.wpm.codegen.Expressions.add;
+import static net.wpm.codegen.Expressions.call;
+import static net.wpm.codegen.Expressions.callStatic;
+import static net.wpm.codegen.Expressions.cast;
+import static net.wpm.codegen.Expressions.getter;
+import static net.wpm.codegen.Expressions.mul;
+import static net.wpm.codegen.Expressions.self;
+import static net.wpm.codegen.Expressions.setter;
+import static net.wpm.codegen.Expressions.value;
 
-import io.datakernel.codegen.Expression;
-import io.datakernel.codegen.Expressions;
+import net.wpm.codegen.Expression;
+import net.wpm.codegen.Expressions;
 import net.wpm.record.RecordView;
 import net.wpm.record.Records;
 import net.wpm.record.blueprint.BlueprintVariable;

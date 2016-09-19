@@ -16,3 +16,13 @@ CONTRIBUTION AGREEMENT
 By contributing to the WhenPerformanceMatters/Java-Records repository through 
 pull-request, comment, or otherwise, the contributor releases their content to 
 the license and copyright terms herein.
+
+
+The package net.wpm.codegen is a modified version of datakernels codegen and 
+is therefore distributed under their license agreement.  
+https://github.com/softindex/datakernel/blob/master/LICENSE
+
+
+The package net.wpm.reflectasm is a modified version of EsotericSoftware reflectasm 
+and is therefore distributed under their license agreement.  
+https://github.com/EsotericSoftware/reflectasm/blob/master/license.txt

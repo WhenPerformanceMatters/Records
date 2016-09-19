@@ -1,13 +1,13 @@
 package net.wpm.record.bytecode.template;
 
-import static io.datakernel.codegen.Expressions.call;
-import static io.datakernel.codegen.Expressions.cast;
-import static io.datakernel.codegen.Expressions.self;
+import static net.wpm.codegen.Expressions.call;
+import static net.wpm.codegen.Expressions.cast;
+import static net.wpm.codegen.Expressions.self;
 
 import java.util.Collections;
 
-import io.datakernel.codegen.AsmBuilder;
-import io.datakernel.codegen.Expression;
+import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.Expression;
 import net.wpm.record.blueprint.BlueprintMethod;
 
 public class TemplateCopy extends TemplateBase {

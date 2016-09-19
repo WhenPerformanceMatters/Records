@@ -1,15 +1,15 @@
 package net.wpm.record.bytecode.template;
 
-import static io.datakernel.codegen.Expressions.asString;
-import static io.datakernel.codegen.Expressions.call;
-import static io.datakernel.codegen.Expressions.self;
-import static io.datakernel.codegen.Expressions.value;
+import static net.wpm.codegen.Expressions.asString;
+import static net.wpm.codegen.Expressions.call;
+import static net.wpm.codegen.Expressions.self;
+import static net.wpm.codegen.Expressions.value;
 
 import java.util.Collection;
 import java.util.Collections;
 
-import io.datakernel.codegen.AsmBuilder;
-import io.datakernel.codegen.ExpressionToString;
+import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ExpressionToString;
 import net.wpm.record.blueprint.BlueprintVariable;
 
 public class TemplateToString extends TemplateBase {

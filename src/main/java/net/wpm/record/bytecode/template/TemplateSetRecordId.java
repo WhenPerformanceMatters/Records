@@ -1,9 +1,9 @@
 package net.wpm.record.bytecode.template;
 
-import static io.datakernel.codegen.Expressions.arg;
 import static java.util.Arrays.asList;
+import static net.wpm.codegen.Expressions.arg;
 
-import io.datakernel.codegen.AsmBuilder;
+import net.wpm.codegen.AsmBuilder;
 import net.wpm.record.blueprint.BlueprintMethod;
 
 public class TemplateSetRecordId extends TemplateBase {

@@ -1,12 +1,12 @@
 package net.wpm.record.bytecode.template;
 
-import static io.datakernel.codegen.Expressions.add;
-import static io.datakernel.codegen.Expressions.value;
+import static net.wpm.codegen.Expressions.add;
+import static net.wpm.codegen.Expressions.value;
 
 import java.util.Collections;
 
-import io.datakernel.codegen.AsmBuilder;
-import io.datakernel.codegen.Expression;
+import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.Expression;
 import net.wpm.record.blueprint.BlueprintMethod;
 import net.wpm.record.blueprint.BlueprintVariable;
 

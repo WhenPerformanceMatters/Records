@@ -9,6 +9,12 @@ import net.openhft.chronicle.core.Jvm;
 import net.openhft.chronicle.core.Memory;
 import net.openhft.chronicle.core.OS;
 
+/**
+ * http://robsjava.blogspot.de/2013/06/a-faster-volatile.html
+ * 
+ * @author Nico Hezel
+ *
+ */
 public class UnsafeMemoryAdapter implements MemoryAccess {
 	
 	// net.openhft.chronicle.core.UnsafeMemory

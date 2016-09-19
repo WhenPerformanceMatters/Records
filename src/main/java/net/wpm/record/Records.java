@@ -26,11 +26,11 @@ import net.wpm.record.collection.RecordSequence;
  * @author Nico Hezel
  *
  */
+@SuppressWarnings("rawtypes")
 public class Records {
 
 
 	// lists of all available record adapters
-	@SuppressWarnings("rawtypes")
 	protected static final List<RecordAdapter> recordAdapters;
 	
 	// Maps from a blueprint hashCode to an index for the recordAdapters list

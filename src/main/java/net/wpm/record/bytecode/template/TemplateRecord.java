@@ -1,14 +1,14 @@
 package net.wpm.record.bytecode.template;
 
-import static io.datakernel.codegen.Expressions.getter;
-import static io.datakernel.codegen.Expressions.self;
-import static io.datakernel.codegen.Expressions.sequence;
-import static io.datakernel.codegen.Expressions.setter;
-import static io.datakernel.codegen.Expressions.value;
+import static net.wpm.codegen.Expressions.getter;
+import static net.wpm.codegen.Expressions.self;
+import static net.wpm.codegen.Expressions.sequence;
+import static net.wpm.codegen.Expressions.setter;
+import static net.wpm.codegen.Expressions.value;
 
 import java.util.Collections;
 
-import io.datakernel.codegen.AsmBuilder;
+import net.wpm.codegen.AsmBuilder;
 import net.wpm.record.RecordAdapter;
 import net.wpm.record.bytes.MemoryAccess;
 
