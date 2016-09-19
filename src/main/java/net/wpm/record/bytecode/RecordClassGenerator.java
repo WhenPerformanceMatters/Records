@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import io.datakernel.codegen.AsmBuilder;
 import io.datakernel.codegen.utils.DefiningClassLoader;
@@ -82,7 +83,8 @@ public class RecordClassGenerator {
 	public Class<RecordView> construct() {
 		
 		// construct a Class that implements Test interface
-		AsmBuilder<RecordView> builder = new AsmBuilder<>(classLoader, RecordView.class, Arrays.asList(blueprintClass.getBlueprint())).setBytecodeSaveDir(byteCodePath);
+		List<Class<?>> blueprints = Arrays.asList(blueprintClass.getBlueprint());
+		AsmBuilder<RecordView> builder = new AsmBuilder<RecordView>(classLoader, RecordView.class, blueprints).setBytecodeSaveDir(byteCodePath);
 		
 		// all methods and fields necessary to work as a record
 		addRecordViewTrait(builder, blueprintClass.getSizeInBytes());

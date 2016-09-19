@@ -2,9 +2,8 @@ package net.wpm.record.blueprint;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import net.wpm.record.RecordView;
 import net.wpm.record.annotation.Array;
@@ -30,9 +29,17 @@ import net.wpm.reflectasm.MethodAccess;
  */
 public class BlueprintInspector {
 	
-	// a set of all method names used in the struct class and their for forbidden in any other blueprint
-	protected static final Set<String> occupiedMethods = Arrays.stream(ClassAccess.get(RecordView.class).getMethodNames()).collect(Collectors.toSet());
+	// a set of all method names used in the record class
+	protected static final Set<String> occupiedMethods = new HashSet<String>();
 
+	static {		
+		for(String methodName : ClassAccess.get(RecordView.class).getMethodNames()) {
+			occupiedMethods.add(methodName);
+		}
+	}
+	
+	
+	
 	protected final BlueprintClass blueprintClass;
 	
 	// access to different class informations of the blueprint

@@ -186,7 +186,8 @@ public class Records {
 	 * @throws NullPointerException if blueprint is not registered 
 	 */
 	public static final <B> B create(final int blueprintId) {
-		return create(getRecordAdapter(blueprintId));
+		RecordAdapter<B> adapter = getRecordAdapter(blueprintId);
+		return create(adapter);
 	}
 
 	/**
@@ -253,7 +254,8 @@ public class Records {
 	 * @return
 	 */
 	public static final <B> B view(final int blueprintId, final long recordId) {
-		return view(getRecordAdapter(blueprintId), recordId);
+		RecordAdapter<B> adapter = getRecordAdapter(blueprintId);
+		return view(adapter, recordId);
 	}
 
 	/**
@@ -391,6 +393,7 @@ public class Records {
 	 * @throws NullPointerException if blueprint is not registered
 	 */
 	public static final <B> RecordSequence<B> array(final int blueprintId, final int count) {
-		return array(getRecordAdapter(blueprintId), count);
+		RecordAdapter<B> adapter = getRecordAdapter(blueprintId);
+		return array(adapter, count);
 	}
 }

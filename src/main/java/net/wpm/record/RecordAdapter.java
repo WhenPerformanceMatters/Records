@@ -4,6 +4,7 @@ import net.wpm.record.blueprint.BlueprintClass;
 import net.wpm.record.blueprint.BlueprintInspector;
 import net.wpm.record.bytecode.RecordClassGenerator;
 import net.wpm.record.bytes.MemoryAccess;
+import net.wpm.record.bytes.UnsafeMemoryAdapter;
 import net.wpm.record.collection.RecordSequence;
 import net.wpm.reflectasm.ClassAccess;
 import net.wpm.reflectasm.ConstructorAccess;
@@ -69,13 +70,17 @@ public final class RecordAdapter<B> {
 		recordSize = (Integer) recordViewClassFieldAccess.get(null, "recordSize");
 			
 		// create the underlying byte buffer
-		memoryAccess = MemoryAccess.build();
+		memoryAccess = build();
 		
 		// inform the recordView about the adapter and its buffer 
 		recordViewClassFieldAccess.set(null, "recordAdapter", this);
 		recordViewClassFieldAccess.set(null, "memoryAccess", memoryAccess);
 	}
 
+	public static MemoryAccess build() {
+		return UnsafeMemoryAdapter.getInstance();
+	}		
+	
 	/**
 	 * Constructs a new record view class implementing the blueprint methods 
 	 * and providing access to the data of a record.
@@ -234,5 +239,9 @@ public final class RecordAdapter<B> {
 
 	public final int getRecordSize() {
 		return recordSize;
+	}
+
+	public Class<? extends RecordView> getRecordClass() {
+		return recordViewClass;
 	}
 }

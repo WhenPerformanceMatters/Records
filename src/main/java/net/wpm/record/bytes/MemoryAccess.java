@@ -10,11 +10,6 @@ package net.wpm.record.bytes;
  */
 public interface MemoryAccess {
 	
-
-	public static MemoryAccess build() {
-		return UnsafeMemoryAdapter.getInstance();
-	}
-		
 	/**
 	 * Reserved a piece of memory
 	 * 
