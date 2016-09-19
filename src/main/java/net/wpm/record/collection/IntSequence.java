@@ -40,7 +40,7 @@ public class IntSequence {
 		
 		this.capacity = getRecordSize(count);
 		this.memoryBytes = new UnsafeBytes(memory, capacity);	    
-		this.address = memoryBytes.address();
+		this.address = memoryBytes.freeAddress();
 		this.cursor = new SequenceCursor(count);
 	}
 	

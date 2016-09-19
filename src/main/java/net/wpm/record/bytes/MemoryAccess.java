@@ -11,16 +11,26 @@ package net.wpm.record.bytes;
 public interface MemoryAccess {
 	
 	/**
-	 * Reserved a piece of memory
+	 * Reserve a specific amount of memory. 
+	 * Returns the starting address of reserved region.
 	 * 
 	 * @param size
 	 * @return
 	 */
 	public long reserve(int size);
 		
+	/**
+	 * Releases all memory allocated for Records.
+	 */
 	public void releaseAll();
 	
+	/**
+	 * Maximum amount of allocatable memory
+	 * @return
+	 */
 	public long capacity();
+	
+	
 	
 	public boolean getBoolean(final long address);
 	

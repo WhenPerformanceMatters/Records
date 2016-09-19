@@ -24,6 +24,7 @@ public class UnsafeBytes {
 		this.address = memory.allocate(capacity);
 		memory.setMemory(address, capacity, (byte) 0);
 		this.cleaner = Cleaner.create(this, new Deallocator(address, capacity));
+		System.out.println("alloc "+capacity);
 	}	
 	
 
@@ -32,8 +33,8 @@ public class UnsafeBytes {
 	 * 
 	 * @return
 	 */
-	public long address() {
-		return address;
+	public long freeAddress() {
+		return address + used;
 	}
 	
 	/**
@@ -61,7 +62,7 @@ public class UnsafeBytes {
 	 * @return
 	 */
 	public boolean hasCapacity(long size) {	
-		return (used + size) < capacity;
+		return 0 <= size && ((used + size) <= capacity);
 	}
 	
 	/**
@@ -69,8 +70,14 @@ public class UnsafeBytes {
 	 */
 	public void release() {
 		cleaner.clean();
+		used = capacity;
 	}
 	
+	/**
+	 * Frees the memory.
+	 * 
+	 * @author Nico Hezel
+	 */
 	public static class Deallocator implements Runnable {
         private volatile long address, size;
 

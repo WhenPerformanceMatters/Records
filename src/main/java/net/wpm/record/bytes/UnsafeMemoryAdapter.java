@@ -10,22 +10,26 @@ import net.openhft.chronicle.core.Memory;
 import net.openhft.chronicle.core.OS;
 
 /**
- * http://robsjava.blogspot.de/2013/06/a-faster-volatile.html
+ * Can not be 
+	 * 
+	 * Reserviert eine bestimmte Menge an Speicher. 
+	 * Alloziert welchen falls keiner vorhanden ist.
+ * 
+ * TODO: not thread safe
  * 
  * @author Nico Hezel
  *
  */
 public class UnsafeMemoryAdapter implements MemoryAccess {
 	
-	// net.openhft.chronicle.core.UnsafeMemory
-	protected static final Memory memory = OS.memory();
+	protected static final Memory memory = OS.memory();		// net.openhft.chronicle.core.UnsafeMemory
 	protected static final int BlockSize = 4096;			// size of the piece of memory
 	protected static final int OverProvision = 256; 		// sufficient bytes
 	
-	// all pieces of memory allocaed
+	// all pieces of memory allocated
 	protected final Map<Long, UnsafeBytes> addressToBytes = new HashMap<Long, UnsafeBytes>();
 	
-	// list of memory which has at least OverProvision free
+	// list of memory pieces which has some free space
 	protected final LinkedList<UnsafeBytes> freeBytes = new LinkedList<UnsafeBytes>();
 	
 	/**
@@ -49,7 +53,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	 * @param size
 	 */
 	protected final UnsafeBytes allocate(int size) {	
-//		System.out.println("Allocate "+size+" bytes of memory.");
+		System.out.println("Allocate "+size+" bytes of memory.");
 		UnsafeBytes bytes = new UnsafeBytes(memory, size);
 		addressToBytes.put(bytes.address, bytes);
 		return bytes;
@@ -57,9 +61,10 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	
 	/**
 	 * Returns a piece of memory containing the desired amount of free space.
-	 * The memory is either retrieved from the list of FreeBytes or has been allocated.
+	 * The memory is either retrieved from the list of FreeBytes or has been 
+	 * newly allocated.
 	 * 
-	 * @param size
+	 * @param size in bytes
 	 * @return
 	 */
 	protected final UnsafeBytes ensureCapacity(final int size) {
@@ -74,28 +79,36 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 			}
 		}
 				
+		// or allocate a new one
 		return allocate(Math.max(BlockSize, size));
 	}
 		
 	/**
-	 * Reserviert eine bestimmte Menge an Speicher. 
-	 * Alloziert welchen falls keiner vorhanden ist.
+	 * Reserve a specific amount of memory. 
+	 * Returns the starting address of reserved region.
 	 */
 	@Override
 	public final long reserve(final int size) {
+		
+		// get a piece of memory able to store the desired size 
 		final UnsafeBytes bytes = ensureCapacity(size);
 		
-		// use some parts of it
-		final long address = bytes.address;
+		// current free address of this piece 
+		final long address = bytes.freeAddress();
+		
+		// reserve some parts of it
 		bytes.use(size);
 				
-		// still enough space, add to the list of free bytes
-		if(bytes.remaining() < OverProvision) 
+		// does the piece still have enough space? Add to the list of free bytes.
+		if(OverProvision < bytes.remaining()) 
 			freeBytes.add(bytes);
 		
 		return address;
 	}
 	
+	/**
+	 * Releases all allocated memory.
+	 */
 	@Override
 	public void releaseAll() {
 		for (UnsafeBytes memory : addressToBytes.values()) {
@@ -104,10 +117,13 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 		addressToBytes.clear();
 	}
 
+	/**
+	 * Maximum amount of allocatable memory. Including memory allocated by DirectByteBuffers.
+	 */
 	@Override
 	public long capacity() {
 		long max = Jvm.maxDirectMemory();
-		long used = Jvm.usedDirectMemory();
+		long used = Jvm.usedNativeMemory() + Jvm.usedDirectMemory();
 		return max - used;
 	}
 
