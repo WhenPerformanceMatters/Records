@@ -18,6 +18,6 @@ public class TemplateGetValueWithAt extends TemplateBase {
 	@Override
 	public void addBytecode(AsmBuilder<?> builder) {		
 		BlueprintVariable variable = blueprintMethod.getVariable();
-		builder.method(blueprintMethod.getName(), variable.getExternalType(), asList(int.class, variable.getExternalType()), readRecordWithExpression(variable, arg(0), arg(0)));			
+		builder.method(blueprintMethod.getName(), variable.getExternalType(), asList(int.class, variable.getExternalType()), readRecordWithExpression(variable, arg(0), arg(1)));			
 	}	
 }

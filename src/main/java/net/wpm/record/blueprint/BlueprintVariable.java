@@ -176,6 +176,10 @@ public class BlueprintVariable {
 		
 		return new BlueprintVariable(blueprint, name, defaultType.elementSizeInBytes, defaultType.internalType, type);
 	}
+	
+	public static BlueprintVariable of(Class<?> blueprint, String name, Class<?> type, int sizeInBytes) {
+		return new BlueprintVariable(blueprint, name, sizeInBytes, type, type);
+	}
 		
 	/**
 	 * Returns the default supported data type or null if not supported

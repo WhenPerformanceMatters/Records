@@ -16,13 +16,13 @@ import net.wpm.record.annotation.Array;
 import net.wpm.record.blueprint.BlueprintMethod.ActionType;
 
 /**
- * Testing internal behaviors
+ * Component Test.
+ * Testing internal behaviors.
  * 
  * @author Nico Hezel
  */
 public class BlueprintInspectorTest {
 
-	
 	/**
 	 * Test blueprints
 	 */
