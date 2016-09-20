@@ -17,20 +17,24 @@ public class BlueprintMethod {
 			Copy, CopyFrom, View
 		};
 
+	/**
+	 * Blueprint where this variable is used
+	 */
+	protected final Class<?> blueprint;
+		
 	protected final String name;
 	protected final ActionType actionType;	
-	protected final BlueprintVariable variable;
+	protected final BlueprintVariable variable;	
 	
-	public BlueprintMethod(String name, ActionType action) {
-		this.name = name;
-		this.actionType = action;
-		this.variable = null;
+	public BlueprintMethod(Class<?> blueprint, String name, ActionType actionType) {
+		this(blueprint, name, actionType, null);
 	}
 	
-	public BlueprintMethod(String name, ActionType type, BlueprintVariable underlyingVariable) {
+	public BlueprintMethod(Class<?> blueprint, String name, ActionType actionType, BlueprintVariable var) {
+		this.blueprint = blueprint;
 		this.name = name;
-		this.actionType = type;
-		this.variable = underlyingVariable;
+		this.actionType = actionType;
+		this.variable = var;
 	}
 
 
@@ -64,19 +68,19 @@ public class BlueprintMethod {
 	public String getSignature() {
 		switch (actionType) {
 			case SetValue:
+			case GetValueWith:
 				return getName() + "(" + variable.getExternalType().getName() + ")";
 			case SetValueAt:
+			case GetValueWithAt:
 				return getName() + "(int, " + variable.getExternalType().getName() + ")";
 			case IncreaseValueBy:
 			case DecreaseValueBy:
-			case SetRecordId:
 			case GetValueAt:
 				return getName() + "(int)";
+			case SetRecordId:
+				return getName() + "(long)";
 			case CopyFrom:
-			case GetValueWith:
-				return getName() + "(Object)";
-			case GetValueWithAt:
-				return getName() + "(int, Object)";
+				return getName() + "(" + blueprint.getName() + ")";
 			default:
 				return getName() + "()";
 		}		
@@ -91,9 +95,6 @@ public class BlueprintMethod {
 			case GetValueWith:
 			case GetValueAt:
 			case GetValueWithAt:
-			case GetRecordId:
-			case GetBlueprintId:
-			case GetRecordSize:
 			case IncreaseValue:
 			case IncreaseValueBy:
 			case DecreaseValue:
@@ -109,8 +110,14 @@ public class BlueprintMethod {
 				sb.append("void " + getSignature());
 				sb.append(" {" + actionType.toString() + "}");
 				break;
+			case GetRecordSize:
+			case GetBlueprintId:
 			case GetArraySize:
 				sb.append("int " + getSignature());
+				sb.append(" {" + actionType.toString() + "}");
+				break;
+			case GetRecordId:
+				sb.append("long " + getSignature());
 				sb.append(" {" + actionType.toString() + "}");
 				break;
 			case Copy:

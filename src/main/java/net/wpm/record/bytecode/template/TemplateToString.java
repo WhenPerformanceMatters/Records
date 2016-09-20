@@ -38,7 +38,7 @@ public class TemplateToString extends TemplateBase {
 			
 			if(variable.isArray()) {
 				ExpressionToString arrayEts = asString().quotes("[", "]", ", ");
-				for (int i = 0; i < variable.getLength(); i++)	{
+				for (int i = 0; i < variable.getElementCount(); i++)	{
 					arrayEts.add(readValueExpression(variable, value(i)));
 				}
 				ets.add(variable.getName()+": ", arrayEts);

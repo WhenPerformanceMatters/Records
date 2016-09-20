@@ -186,11 +186,11 @@ public abstract class TemplateBase implements ASMTemplate {
 	 * An Expression representing the offset value at the specified array index of the variable in the memory buffer
 	 * 
 	 * @param variable
-	 * @param index
+	 * @param elementIndex
 	 * @return
 	 */
-	protected Expression addressOf(BlueprintVariable variable, Expression index) {
-		return add(addressOf(variable), mul(index, value(variable.getSizeInBytes())));	// offset + index * sizeInBytes
+	protected Expression addressOf(BlueprintVariable variable, Expression elementIndex) {
+		return add(addressOf(variable), mul(elementIndex, value(variable.getElementSizeInBytes())));	// offset + index * sizeInBytes
 	}
 	
 	/**

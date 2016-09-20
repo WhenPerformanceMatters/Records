@@ -16,18 +16,18 @@ public class RecordsSample_08_RecordSize {
 	public static void main(String[] args) {
 		
 		// get a record
-		Sample09 obj1 = Records.of(Sample09.class);
+		Sample08 obj1 = Records.of(Sample08.class);
 		
 		// size of the record in bytes 
 		int sizeInBytes = obj1.recordSize(); // same as Records.size(obj1)
 				
 		// float (4 bytes) + int (4 bytes) = 8 bytes
-		if(8 == sizeInBytes && Records.size(Sample09.class) == 8)
+		if(8 == sizeInBytes && Records.size(Sample08.class) == 8)
 			System.out.println("The content is 8 byte long");	
 	}
 	
 
-	protected static interface Sample09 {
+	protected static interface Sample08 {
 		
 		public int getNumber();
 		public void setNumber(int number);

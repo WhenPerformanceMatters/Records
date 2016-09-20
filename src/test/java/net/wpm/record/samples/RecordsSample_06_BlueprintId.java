@@ -25,10 +25,10 @@ public class RecordsSample_06_BlueprintId {
 	public static void main(String[] args) {
 		
 		// register the blueprint
-		int blueprintId = Records.register(Sample07.class);
+		int blueprintId = Records.register(Sample06.class);
 		
 		// create a new record
-		Sample07 obj = Records.create(blueprintId);
+		Sample06 obj = Records.create(blueprintId);
 		obj.setNumber(77);
 		obj.setFraction(-0.7f);
 		
@@ -40,7 +40,7 @@ public class RecordsSample_06_BlueprintId {
 			System.out.println("Blueprint id is "+blueprintId);		
 	}
 
-	protected static interface Sample07 {
+	protected static interface Sample06 {
 		
 		public int getNumber();
 		public void setNumber(int number);

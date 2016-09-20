@@ -20,6 +20,6 @@ public class TemplateGetArraySize extends TemplateBase {
 	@Override
 	public void addBytecode(AsmBuilder<?> builder) {		
 		BlueprintVariable variable = blueprintMethod.getVariable();
-		builder.method(blueprintMethod.getName(), int.class, Collections.EMPTY_LIST, value(variable.getLength()));			
+		builder.method(blueprintMethod.getName(), int.class, Collections.EMPTY_LIST, value(variable.getElementCount()));			
 	}	
 }

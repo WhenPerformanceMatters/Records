@@ -25,10 +25,10 @@ public class RecordsSample_07_RecordId {
 	public static void main(String[] args) {
 		
 		// register the blueprint
-		int blueprintId = Records.register(Sample08.class);
+		int blueprintId = Records.register(Sample07.class);
 		
 		// get a record and a record view of it
-		Sample08 obj = Records.create(blueprintId);
+		Sample07 obj = Records.create(blueprintId);
 		obj.setFraction(0.1f);
 		
 		// prints -> {Number: 0, Fraction: 0.1}
@@ -42,7 +42,7 @@ public class RecordsSample_07_RecordId {
 		System.out.println(obj);
 				
 		// another record view, pointing to the same record
-		Sample08 otherObj = Records.view(blueprintId, recordId);
+		Sample07 otherObj = Records.view(blueprintId, recordId);
 		
 		// the record id can be obtained with optional recordId() method
 		if(otherObj.recordId() == recordId)
@@ -68,11 +68,11 @@ public class RecordsSample_07_RecordId {
 	 */
 	protected static void changeNumberOf(long recordId) {
 		// new record view, pointing to the data of an existing record
-		Sample08 otherObj = Records.view(Sample08.class, recordId);
+		Sample07 otherObj = Records.view(Sample07.class, recordId);
 		otherObj.setNumber(3);
 	}
 
-	protected static interface Sample08 {
+	protected static interface Sample07 {
 		
 		public int getNumber();
 		public void setNumber(int number);

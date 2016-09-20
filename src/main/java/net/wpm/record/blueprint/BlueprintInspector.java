@@ -74,7 +74,7 @@ public class BlueprintInspector {
 	 */
 	protected BlueprintClass analyseBlueprint(final Class<?> blueprint) {
 		BlueprintClass blueprintClass = new BlueprintClass(blueprint);
-				
+		
 		analyseBlueprintClass(blueprintClass);
 		analyseBlueprintVariables(blueprintClass);
 		analyseBlueprintMethods(blueprintClass);
@@ -175,7 +175,7 @@ public class BlueprintInspector {
 		}
 		
 		// defines a valid recordId method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.View));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.View));
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class BlueprintInspector {
 		}
 
 		// defines a valid blueprintId method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.GetRecordSize));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.GetRecordSize));
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class BlueprintInspector {
 		}
 		
 		// defines a valid recordId method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.CopyFrom));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.CopyFrom));
 	}
 	
 	/**
@@ -242,7 +242,7 @@ public class BlueprintInspector {
 		}
 		
 		// defines a valid copy method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.Copy));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.Copy));
 	}
 	
 	/**
@@ -269,7 +269,7 @@ public class BlueprintInspector {
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, getMethodParameterTypes(methodIndex)[0]);
 
 		// defines a valid get-at-index method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.DecreaseValueBy, variable));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.DecreaseValueBy, variable));
 	}
 	
 	/**
@@ -296,7 +296,7 @@ public class BlueprintInspector {
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, Object.class);
 
 		// defines a valid get-at-index method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.DecreaseValue, variable));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.DecreaseValue, variable));
 	}
 	
 	/**
@@ -323,7 +323,7 @@ public class BlueprintInspector {
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, getMethodParameterTypes(methodIndex)[0]);
 
 		// defines a valid get-at-index method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.IncreaseValueBy, variable));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.IncreaseValueBy, variable));
 	}
 	
 	/**
@@ -350,7 +350,7 @@ public class BlueprintInspector {
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, Object.class);
 
 		// defines a valid get-at-index method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.IncreaseValue, variable));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.IncreaseValue, variable));
 	}
 	
 	/**
@@ -395,7 +395,7 @@ public class BlueprintInspector {
 		}
 		
 		// defines a valid blueprintId method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.GetBlueprintId));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.GetBlueprintId));
 	}	
 	
 	/**
@@ -419,7 +419,7 @@ public class BlueprintInspector {
 		
 		// defines a valid recordId method contained in the blueprint
 		BlueprintMethod.ActionType type = noParams ? BlueprintMethod.ActionType.GetRecordId : BlueprintMethod.ActionType.SetRecordId;
-		blueprintClass.addMethod(new BlueprintMethod(methodName, type));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, type));
 	}	
 	
 	/**
@@ -446,7 +446,7 @@ public class BlueprintInspector {
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, getMethodParameterTypes(methodIndex)[0]);
 
 		// defines a valid set-method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.SetValue, variable));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.SetValue, variable));
 	}
 
 	/**
@@ -473,7 +473,7 @@ public class BlueprintInspector {
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, getMethodParameterTypes(methodIndex)[1]);
 
 		// defines a valid get-at-index method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.SetValueAt, variable));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.SetValueAt, variable));
 	}
 	
 
@@ -501,7 +501,7 @@ public class BlueprintInspector {
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, Object.class);
 
 		// defines a valid get-at-index method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, BlueprintMethod.ActionType.GetArraySize, variable));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.GetArraySize, variable));
 	}
 	
 	
@@ -533,7 +533,7 @@ public class BlueprintInspector {
 		BlueprintMethod.ActionType action = zeroParam ? BlueprintMethod.ActionType.GetValue : BlueprintMethod.ActionType.GetValueWith;
 							
 		// defines a valid get-method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, action, variable));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, action, variable));
 	}	
 	
 	/**
@@ -566,7 +566,7 @@ public class BlueprintInspector {
 		BlueprintMethod.ActionType action = oneParam ? BlueprintMethod.ActionType.GetValueAt : BlueprintMethod.ActionType.GetValueWithAt;
 		
 		// defines a valid get-at-index method contained in the blueprint
-		blueprintClass.addMethod(new BlueprintMethod(methodName, action, variable));
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, action, variable));
 	}	
 	
 	/**
@@ -603,9 +603,9 @@ public class BlueprintInspector {
 		// add array annotation information
 		Array arrayAnnotation = getMethodAnnotation(methodIndex, Array.class);
 		if(arrayAnnotation != null) {
-			if(variable.isArray() && variable.getLength() != arrayAnnotation.size())
+			if(variable.isArray() && variable.getElementCount() != arrayAnnotation.size())
 				throw new InvalidBlueprintException("Size of array annotation is "+arrayAnnotation.size()+" for method "+getMethodName(methodIndex)+" but is defined different elsewhere.");
-			variable.setLength(arrayAnnotation.size());
+			variable.setElementCount(arrayAnnotation.size());
 		}
 		
 		// TODO andere Annotationen auslesen

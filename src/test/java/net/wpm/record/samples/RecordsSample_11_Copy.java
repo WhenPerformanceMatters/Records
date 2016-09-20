@@ -12,19 +12,19 @@ public class RecordsSample_11_Copy {
 	public static void main(String[] args) {
 		
 		// get a record
-		Sample10 obj = Records.of(Sample10.class);
+		Sample11 obj = Records.of(Sample11.class);
 		obj.setFraction(0.3f);
 		
 		// prints -> {Number: 0, Fraction: 0.3}
 		System.out.println(obj);
 	
 		// create a new record and copy the content of existing record
-		Sample10 otherObj = Records.copy(obj);
+		Sample11 otherObj = Records.copy(obj);
 		otherObj.setFraction(0.5f);
 		
 		// a third record view pointing to the content of the record
 		long structId = Records.id(otherObj);
-		Sample10 thirdObj = Records.view(Sample10.class, structId);
+		Sample11 thirdObj = Records.view(Sample11.class, structId);
 		
 		// prints -> {Number: 0, Fraction: 0.5}
 		System.out.println(thirdObj);
@@ -36,7 +36,7 @@ public class RecordsSample_11_Copy {
 		System.out.println(otherObj);			
 	}	
 
-	protected static interface Sample10 {
+	protected static interface Sample11 {
 		
 		public int getNumber();
 		public void setNumber(int number);
@@ -44,7 +44,7 @@ public class RecordsSample_11_Copy {
 		public float getFraction();
 		public void setFraction(float fraction);
 		
-		public Sample10 copy();
-		public void copyFrom(Sample10 to);
+		public Sample11 copy();
+		public void copyFrom(Sample11 to);
 	}
 }

@@ -67,7 +67,7 @@ public class BlueprintClass {
 	public int getSizeInBytes() {
 		int sum = 0;
 		for (BlueprintVariable var : variables.values()) 		
-			sum += var.getSizeInBytes() * var.getLength();
+			sum += var.getSizeInBytes();
 		return sum;
 	}
 	
@@ -80,7 +80,7 @@ public class BlueprintClass {
 		int offset = 0;
 		for (BlueprintVariable var : variables.values()) {			
 			var.setOffset(offset);
-			offset += var.getSizeInBytes() * var.getLength();
+			offset += var.getSizeInBytes();
 		}
 	}
 }

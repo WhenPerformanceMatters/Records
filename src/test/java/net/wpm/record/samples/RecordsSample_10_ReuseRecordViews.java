@@ -9,6 +9,7 @@ import net.wpm.record.Records;
  * record view instance is enough to access different records, reducing the 
  * produced garbage.
  * 
+ * 
  * @author Nico Hezel
  */
 public class RecordsSample_10_ReuseRecordViews {
@@ -16,12 +17,12 @@ public class RecordsSample_10_ReuseRecordViews {
 	public static void main(String[] args) {
 		
 		// get a record view, our view of memory
-		Sample06 obj = Records.of(Sample06.class);
+		Sample10 obj = Records.of(Sample10.class);
 		obj.setNumber(5);
 		obj.setFraction(4.3f);
 		
 		// reuse the record view, point to a new record 
-		Sample06 otherObj = Records.create(obj);
+		Sample10 otherObj = Records.create(obj);
 		otherObj.setNumber(-7);
 		otherObj.setFraction(1.23f);
 		
@@ -34,7 +35,7 @@ public class RecordsSample_10_ReuseRecordViews {
 		
 	}
 
-	protected static interface Sample06 {
+	protected static interface Sample10 {
 		
 		public int getNumber();
 		public void setNumber(int number);

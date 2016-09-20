@@ -8,6 +8,8 @@ import net.wpm.record.Records;
 /**
  * Underlying variable of a blueprint method. 
  * 
+ * If the element count is higher 1, then the variable represents an array.
+ * 
  * @author Nico
  */
 public class BlueprintVariable {
@@ -25,7 +27,7 @@ public class BlueprintVariable {
 	/**
 	 * Size of the data type in bytes e.g. 4
 	 */
-	protected int sizeInBytes;
+	protected int elementSizeInBytes;
 	
 	/**
 	 * External type e.g. Integer specifies how
@@ -52,15 +54,15 @@ public class BlueprintVariable {
 	/**
 	 * How many elements does this array have 
 	 */
-	protected int length;
+	protected int elementCount;
 	
-	private BlueprintVariable(Class<?> blueprint, String name, int sizeInBytes, Class<?> internalType, Class<?> externalType) {
+	private BlueprintVariable(Class<?> blueprint, String name, int elementSizeInBytes, Class<?> internalType, Class<?> externalType) {
 		this.blueprint = blueprint;
 		this.name = name;
-        this.sizeInBytes = sizeInBytes;
+        this.elementSizeInBytes = elementSizeInBytes;
 		this.externalType = externalType;
 		this.internalType = internalType;
-		this.length = 1;
+		this.elementCount = 1;
 		this.isArray = false;
     }	
 	
@@ -72,16 +74,37 @@ public class BlueprintVariable {
 		return name;
 	}
 	
-	public int getLength() {
-		return length;
-	}
-	
 	public boolean isArray() {
 		return isArray;
 	}
 	
+	/**
+	 * Amount of elements in this array.
+	 * Returns 1 for non array variables. 
+	 * 
+	 * @return
+	 */
+	public int getElementCount() {
+		return elementCount;
+	}
+	
+	/**
+	 * Size of a single element
+	 * 
+	 * @return
+	 */
+	public int getElementSizeInBytes() {
+		return elementSizeInBytes;
+	}
+	
+	/**
+	 * Size in bytes to store the content of the variable.
+	 * Shortcut for: getElementSizeInBytes() * getElementCount()
+	 * 
+	 * @return
+	 */
 	public int getSizeInBytes() {
-		return sizeInBytes;
+		return elementSizeInBytes * elementCount;
 	}
 	
 	public Class<?> getExternalType() {
@@ -95,7 +118,7 @@ public class BlueprintVariable {
 
 	public void setType(Class<?> type) {
 		BlueprintVariable defaultType = getDefault(type);
-		this.sizeInBytes = defaultType.sizeInBytes; 
+		this.elementSizeInBytes = defaultType.elementSizeInBytes; 
 		this.internalType = defaultType.internalType; 
 		this.externalType = type;		
 	}
@@ -104,16 +127,22 @@ public class BlueprintVariable {
 		this.offset = offset;
 	}
 
-	public void setLength(int length) {
-		this.length = length;
-		if(length > 1)
+	/**
+	 * Set the amount of elements for this variable.
+	 * Element count > 1 changes the variable to an array type.
+	 * 
+	 * @param elementCount
+	 */
+	public void setElementCount(int elementCount) {
+		this.elementCount = elementCount;
+		if(elementCount > 1)
 			this.isArray = true;
 	}	
 	
 	
 	@Override
 	public String toString() {	
-		return externalType.getName() + (sizeInBytes * 8) + " " + getName();
+		return externalType.getName() + (elementSizeInBytes * 8) + " " + getName();
 	}
 	
 	/**
@@ -145,7 +174,7 @@ public class BlueprintVariable {
 			defaultType = new BlueprintVariable(blueprint, name, sizeInBytes, type, type);
 		}
 		
-		return new BlueprintVariable(blueprint, name, defaultType.sizeInBytes, defaultType.internalType, type);
+		return new BlueprintVariable(blueprint, name, defaultType.elementSizeInBytes, defaultType.internalType, type);
 	}
 		
 	/**
