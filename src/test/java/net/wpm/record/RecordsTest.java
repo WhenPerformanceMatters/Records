@@ -74,21 +74,25 @@ public class RecordsTest {
 	
 	@Test
 	public void copyTest() {
-		SimpleValue record1 = Records.create(blueprintId);
-		record1.setValue(5);
-		SimpleValue record2 = Records.copy(record1);
-		assertNotEquals(Records.id(record1), Records.id(record2));
-		assertEquals(record1.getValue(), record2.getValue());	
+		record.setValue(5);
+		SimpleValue record2 = Records.copy(record);
+		assertEquals(record.getValue(), record2.getValue());	
+		
+		long rid = ((RecordView)record).getRecordId();
+		long rid2 = ((RecordView)record2).getRecordId();
+		assertNotEquals(rid, rid2);
 	}	
 	
 	@Test
 	public void copyFromTest() {
-		SimpleValue record1 = Records.create(blueprintId);
-		record1.setValue(5);
-		SimpleValue record2 = Records.create(blueprintId);
-		Records.copy(record1, record2);
-		assertNotEquals(Records.id(record1), Records.id(record2));
-		assertEquals(record1.getValue(), record2.getValue());	
+		record.setValue(5);
+		SimpleValue record2 = recordAdapter.create();
+		Records.copy(record, record2);
+		assertEquals(record.getValue(), record2.getValue());
+		
+		long rid = ((RecordView)record).getRecordId();
+		long rid2 = ((RecordView)record2).getRecordId();
+		assertNotEquals(rid, rid2);
 	}
 
 	@Test
@@ -105,7 +109,7 @@ public class RecordsTest {
 	
 	@Test
 	public void createByReuseRecordTest() {
-		SimpleValue oldRecord = Records.create(blueprintId);
+		SimpleValue oldRecord = recordAdapter.create();
 		oldRecord.setValue(10);
 		SimpleValue record1 = Records.create(oldRecord);
 		assertEquals(0, record1.getValue());
@@ -113,13 +117,13 @@ public class RecordsTest {
 	
 	@Test
 	public void avoidOverrideWithReuseConstructorTest() {		
-		SimpleValue oldRecord = Records.create(blueprintId);
-		long oldId = Records.id(oldRecord);
+		SimpleValue oldRecord = recordAdapter.create();
+		long oldId = ((RecordView)oldRecord).getRecordId();
 		SimpleValue newRecord = Records.create(oldRecord);
-		long newId = Records.id(newRecord);
+		long newId = ((RecordView)newRecord).getRecordId();
 		assertNotEquals(oldId, newId);
 		
-		long oldIdAgain = Records.id(oldRecord);
+		long oldIdAgain = ((RecordView)oldRecord).getRecordId();
 		assertEquals(oldIdAgain, newId);
 	}
 	
@@ -134,7 +138,6 @@ public class RecordsTest {
 	@Test
 	public void createManyTest() {
 		SimpleValue[] arr = new SimpleValue[16];
-		int blueprintId = Records.register(blueprint);
 
 		// create new records and check if they are empty
 		for (int i = 0; i < arr.length; i++) {
@@ -152,7 +155,7 @@ public class RecordsTest {
 
 	@Test
 	public void recordIdTest() {
-		SimpleValue record1 = Records.create(blueprintId);
+		SimpleValue record1 = recordAdapter.create();
 		assertEquals(Records.id(record1), ((RecordView)record1).getRecordId());
 	}
 	
@@ -191,52 +194,65 @@ public class RecordsTest {
 
 	@Test
 	public void viewByRecordTest() {
-		SimpleValue record1 = Records.create(blueprintId);
-		SimpleValue record2 = Records.view(record1);
-		assertEquals(Records.id(record1), Records.id(record2));
-		assertNotEquals(record1, record2);
+		SimpleValue record2 = Records.view(record);
+		assertNotEquals(record, record2);
+		
+		long rid = ((RecordView)record).getRecordId();
+		long rid2 = ((RecordView)record2).getRecordId();
+		assertEquals(rid, rid2);
 	}
 	
 	@Test
 	public void viewByBlueprintIdTest() {
-		SimpleValue record1 = Records.create(blueprintId);
 		SimpleValue record2 = Records.view(blueprintId);
-		assertNotEquals(Records.id(record1), Records.id(record2));
-		assertNotEquals(record1, record2);
+		assertNotEquals(record, record2);
+		
+		long rid = ((RecordView)record).getRecordId();
+		long rid2 = ((RecordView)record2).getRecordId();
+		assertNotEquals(rid, rid2);
 	}
 	
 	@Test
 	public void viewByBlueprintTest() {
-		SimpleValue record1 = Records.create(blueprintId);
 		SimpleValue record2 = Records.view(blueprint);
-		assertNotEquals(Records.id(record1), Records.id(record2));
-		assertNotEquals(record1, record2);
+		assertNotEquals(record, record2);
+		
+		long rid = ((RecordView)record).getRecordId();
+		long rid2 = ((RecordView)record2).getRecordId();
+		assertNotEquals(rid, rid2);
 	}
 	
 	
 	@Test
 	public void viewByBlueprintAndRecordIdTest() {
-		SimpleValue record1 = Records.create(blueprintId);
-		SimpleValue record2 = Records.view(blueprint, Records.id(record1));
-		assertEquals(Records.id(record1), Records.id(record2));
-		assertNotEquals(record1, record2);
+		SimpleValue record2 = Records.view(blueprint, Records.id(record));
+		assertNotEquals(record, record2);
+		
+		long rid = ((RecordView)record).getRecordId();
+		long rid2 = ((RecordView)record2).getRecordId();
+		assertEquals(rid, rid2);
 	}
 	
 	@Test
 	public void viewByBlueprintIdAndRecordIdTest() {
-		SimpleValue record1 = Records.create(blueprintId);
-		SimpleValue record2 = Records.view(blueprintId, Records.id(record1));
-		assertEquals(Records.id(record1), Records.id(record2));
-		assertNotEquals(record1, record2);
+		SimpleValue record2 = Records.view(blueprintId, Records.id(record));
+		assertNotEquals(record, record2);
+		
+		long rid = ((RecordView)record).getRecordId();
+		long rid2 = ((RecordView)record2).getRecordId();
+		assertEquals(rid, rid2);
 	}
 	
 	@Test
 	public void viewByReuseRecordAndRecordIdTest() {
-		SimpleValue record1 = Records.create(blueprintId);
-		SimpleValue record2 = Records.create(blueprintId);
-		SimpleValue pojo3 = Records.view(record2, Records.id(record1));
-		assertEquals(Records.id(record1), Records.id(pojo3));
-		assertNotEquals(record1, pojo3);
+		SimpleValue record2 = recordAdapter.create();
+		SimpleValue record3 = Records.view(record2, Records.id(record));
+		assertEquals(record2, record3);
+		assertNotEquals(record, record3);
+		
+		long rid = ((RecordView)record).getRecordId();
+		long rid2 = ((RecordView)record2).getRecordId();
+		assertEquals(rid, rid2);
 	}
 	
 	
@@ -277,9 +293,11 @@ public class RecordsTest {
 	
 	@Test
 	public void viewByAdapterAndRecordIdTest() {
-		SimpleValue record1 = Records.create(blueprintId);
-		SimpleValue record2 = Records.view(recordAdapter, Records.id(record1));
-		assertEquals(Records.id(record1), Records.id(record2));
-		assertNotEquals(record1, record2);
+		SimpleValue record2 = Records.view(recordAdapter, Records.id(record));
+		assertNotEquals(record, record2);
+		
+		long rid = ((RecordView)record).getRecordId();
+		long rid2 = ((RecordView)record2).getRecordId();
+		assertEquals(rid, rid2);
 	}
 }

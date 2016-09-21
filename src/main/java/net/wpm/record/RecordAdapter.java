@@ -176,18 +176,6 @@ public final class RecordAdapter<B> {
 	}
 	
 	/**
-	 * Reuse an existing record, pointing to the data of another record. 
-	 * 
-	 * @param pojo
-	 * @param recordId
-	 * @return
-	 */
-	protected final B reuse(final B recordView, final long recordId) {
-		((RecordView)recordView).setRecordId(recordId);
-		return recordView;
-	}
-	
-	/**
 	 * Create a copy of the record and return the copy.
 	 * 
 	 * @return
