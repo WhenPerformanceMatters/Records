@@ -2,7 +2,6 @@ package net.wpm.record.samples;
 
 import java.io.IOException;
 
-import net.wpm.record.OpenRecords;
 import net.wpm.record.RecordAdapter;
 import net.wpm.record.Records;
 import net.wpm.record.collection.RecordSequence;
@@ -13,7 +12,7 @@ public class RecordsPerf_01_Access {
 
 		// access to the records is possible via the Records API or the Record Adapter
 		RecordAdapter<Foo> structAdapter = new RecordAdapter<Foo>(Foo.class);
-		int classId = OpenRecords.registerAdapter(structAdapter);
+		int classId = Records.register(structAdapter);
 		
 		// create a three new records
 		Foo obj = Records.create(Foo.class);

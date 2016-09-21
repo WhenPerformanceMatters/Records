@@ -12,8 +12,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import net.wpm.record.Records;
-import net.wpm.record.annotation.Array;
 import net.wpm.record.blueprint.BlueprintMethod.ActionType;
+import net.wpm.record.model.TestBlueprint;
+import net.wpm.record.model.TestBlueprint.SimpleValue;
 
 /**
  * Component Test.
@@ -22,57 +23,6 @@ import net.wpm.record.blueprint.BlueprintMethod.ActionType;
  * @author Nico Hezel
  */
 public class BlueprintInspectorTest {
-
-	/**
-	 * Test blueprints
-	 */
-	public interface TestClass {
-				
-		@Array(size=10)
-		public int getSimpleValueSize();
-		public SimpleValue getSimpleValue();
-		public SimpleValue getSimpleValueAt(int index);
-		public SimpleValue getSimpleValue(SimpleValue reuse);
-		public SimpleValue getSimpleValueAt(int index, SimpleValue reuse);		
-		public void setSimpleValue(SimpleValue value);
-		public void setSimpleValueAt(int index, SimpleValue value);
-		
-		public int getNumber();
-		public void increaseNumber();
-		public void increaseNumberBy(int add);
-		public void decreaseNumber();
-		public void decreaseNumberBy(int sub);
-		
-		public boolean getBoolean();
-		public byte getByte();
-		public short getShort();
-		public int getInt();
-		public long getLong();
-		public float getFloat();
-		public double getDouble();
-		
-		public Boolean getBooleanBoxed();
-		public Byte getByteBoxed();
-		public Short getShortBoxed();
-		public Integer getIntBoxed();
-		public Long getLongBoxed();
-		public Float getFloatBoxed();
-		public Double getDoubleBoxed();
-		
-		// optional Record methods 
-		public int blueprintId();
-		public TestClass view();		
-		public long recordId();
-		public void recordId(long recordId);
-		public int recordSize();
-		public TestClass copy();
-		public void copyFrom(TestClass to);		
-		public default String string() { return ""; }
-	}
-	
-	public interface SimpleValue {
-		public int getValue();
-	}
 	
 	@BeforeClass 
 	public static void setup() {
@@ -86,14 +36,14 @@ public class BlueprintInspectorTest {
 	
 	@Test
 	public void variableByNameTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		BlueprintVariable var = blueprintClass.getVariable("SimpleValue");
 		assertEquals("SimpleValue", var.getName());
 	}
 	
 	@Test
 	public void variablesTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		Collection<BlueprintVariable> vars = blueprintClass.getVariables();	
 		Set<String> varNameSet = vars.stream().map(var -> var.getName()).collect(Collectors.toSet());
 		
@@ -104,34 +54,34 @@ public class BlueprintInspectorTest {
 	
 	@Test
 	public void blueprintTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		Class<?> blueprint = blueprintClass.getBlueprint();		
-		assertEquals(TestClass.class, blueprint);
+		assertEquals(TestBlueprint.class, blueprint);
 	}
 	
 	@Test
 	public void sizeInBytesTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		int size = blueprintClass.getSizeInBytes();					
-		assertEquals(100, size);
+		assertEquals(96+40, size);
 	}
 	
 	@Test
 	public void methodBySignatureTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		BlueprintMethod method = blueprintClass.getMethod("setSimpleValue("+SimpleValue.class.getName()+")");		
 		assertEquals("setSimpleValue", method.getName());
 	}
 	
 	@Test
 	public void customToStringTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		assertTrue(blueprintClass.isCustomToString());
 	}
 	
 	@Test
 	public void methodsTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		Collection<BlueprintMethod> methods = blueprintClass.getMethods();
 		Set<String> methodNameSet = methods.stream().map(method -> method.getSignature()).collect(Collectors.toSet());
 		
@@ -142,7 +92,7 @@ public class BlueprintInspectorTest {
 			"decreaseNumber()", "decreaseNumberBy(int)", "getBoolean()", "getByte()", "getShort()", "getInt()", "getLong()", 
 			"getFloat()", "getDouble()", "getBooleanBoxed()", "getByteBoxed()", "getShortBoxed()", "getIntBoxed()", "getLongBoxed()", 
 			"getFloatBoxed()", "getDoubleBoxed()", "blueprintId()", "view()", "recordId()", "recordId(long)", "recordSize()", 
-			"copy()", "copyFrom(" + TestClass.class.getName() + ")", 
+			"copy()", "copyFrom(" + TestBlueprint.class.getName() + ")", 
 		};
 		for (String name : names)			
 			assertTrue("Could not find method " + name, methodNameSet.contains(name));
@@ -150,16 +100,16 @@ public class BlueprintInspectorTest {
 	
 	@Test
 	public void sharedVariableTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		BlueprintMethod setMethod = blueprintClass.getMethod("setSimpleValue("+SimpleValue.class.getName()+")");	
 		BlueprintMethod getMethod = blueprintClass.getMethod("getSimpleValue()");
 		assertEquals(setMethod.getVariable(), getMethod.getVariable());
 	}
 	
 	@Test
-	public void variableIsArrayTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
-		BlueprintVariable nonArray = blueprintClass.getVariable("Number");		
+	public void isArrayTest() {
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
+		BlueprintVariable nonArray = blueprintClass.getVariable("Int");		
 		assertEquals(false, nonArray.isArray());
 		
 		BlueprintVariable isArray = blueprintClass.getVariable("SimpleValue");
@@ -168,7 +118,7 @@ public class BlueprintInspectorTest {
 	
 	@Test
 	public void checkOffsetsTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		Collection<BlueprintVariable> vars = blueprintClass.getVariables();	
 
 		// sort by offset
@@ -189,7 +139,7 @@ public class BlueprintInspectorTest {
 	
 	@Test
 	public void variableInternalTypeTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		
 		// primitive variables
 		{
@@ -255,7 +205,7 @@ public class BlueprintInspectorTest {
 		
 	@Test
 	public void variableExternalTypeTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		
 		// primitive variables
 		{
@@ -321,7 +271,7 @@ public class BlueprintInspectorTest {
 	
 	@Test
 	public void actionTypeTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		
 		{
 			BlueprintMethod method = blueprintClass.getMethod("getSimpleValue()");	
@@ -392,7 +342,7 @@ public class BlueprintInspectorTest {
 			assertEquals(ActionType.Copy, method.getActionType());
 		}
 		{
-			BlueprintMethod method = blueprintClass.getMethod("copyFrom(" + TestClass.class.getName() + ")");	
+			BlueprintMethod method = blueprintClass.getMethod("copyFrom(" + TestBlueprint.class.getName() + ")");	
 			assertEquals(ActionType.CopyFrom, method.getActionType());
 		}
 	}
@@ -403,11 +353,11 @@ public class BlueprintInspectorTest {
 	
 	@Test
 	public void annotationArraySizeTest() {
-		BlueprintClass blueprintClass = inspect(TestClass.class);
+		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		BlueprintVariable simpleValueVar = blueprintClass.getVariable("SimpleValue");		
 		assertEquals(10, simpleValueVar.getElementCount());
 		
-		BlueprintVariable numberVar = blueprintClass.getVariable("Number");
+		BlueprintVariable numberVar = blueprintClass.getVariable("Int");
 		assertEquals(1, numberVar.getElementCount());
 	}
 	

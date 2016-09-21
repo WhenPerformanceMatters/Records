@@ -10,12 +10,13 @@ import org.junit.Test;
 
 import net.wpm.codegen.utils.DefiningClassLoader;
 import net.wpm.record.RecordView;
-import net.wpm.record.annotation.Array;
 import net.wpm.record.blueprint.BlueprintClass;
 import net.wpm.record.blueprint.BlueprintMethod;
 import net.wpm.record.blueprint.BlueprintMethod.ActionType;
 import net.wpm.record.blueprint.BlueprintVariable;
 import net.wpm.record.bytes.UnsafeMemoryAdapter;
+import net.wpm.record.model.TestBlueprint;
+import net.wpm.record.model.TestBlueprint.SimpleValue;
 import net.wpm.reflectasm.ClassAccess;
 import net.wpm.reflectasm.FieldAccess;
 
@@ -27,59 +28,7 @@ import net.wpm.reflectasm.FieldAccess;
  */
 public class RecordClassGeneratorTest {
 
-	/**
-	 * Test blueprints
-	 */
-	public interface TestClass {
-				
-		@Array(size=10)
-		public int getNumberSize();
-		public int getNumber();
-		public int getNumberAt(int index);
-		public void setNumber(int value);
-		public void setNumberAt(int index, int value);
-		public void increaseNumber();
-		public void increaseNumberBy(int add);
-		public void decreaseNumber();
-		public void decreaseNumberBy(int sub);
-		
-		@Array(size=10)
-		public SimpleValue getSimpleValue(SimpleValue reuse);	
-		public SimpleValue getSimpleValueAt(int index, SimpleValue reuse);	
-		
-		public boolean getBoolean();
-		public byte getByte();
-		public short getShort();
-		public int getInt();
-		public long getLong();
-		public float getFloat();
-		public double getDouble();
-		
-		public Boolean getBooleanBoxed();
-		public Byte getByteBoxed();
-		public Short getShortBoxed();
-		public Integer getIntBoxed();
-		public Long getLongBoxed();
-		public Float getFloatBoxed();
-		public Double getDoubleBoxed();
-		
-		// optional Record methods 
-		public int blueprintId();
-		public TestClass view();		
-		public long recordId();
-		public void recordId(long recordId);
-		public int recordSize();
-		public TestClass copy();
-		public void copyFrom(TestClass to);		
-		public default String string() { return ""; }
-	}
-
-	public interface SimpleValue {
-		public int getValue();
-		public void setValue(int val);
-	}
-	
-	protected static Class<? extends TestClass> blueprint = TestClass.class;
+	protected static Class<? extends TestBlueprint> blueprint = TestBlueprint.class;
 	
 	protected UnsafeMemoryAdapter memoryAccess = UnsafeMemoryAdapter.getInstance();
 	
@@ -129,8 +78,8 @@ public class RecordClassGeneratorTest {
 	
 	@Test
 	public void getRecordIdTest() throws InstantiationException, IllegalAccessException {		
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "recordId", ActionType.GetRecordId)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "recordId", ActionType.GetRecordId)
 		);
 		long recordId = record.recordId();
 		assertNotEquals(0, recordId);
@@ -138,8 +87,8 @@ public class RecordClassGeneratorTest {
 
 	@Test
 	public void setRecordIdTest() throws InstantiationException, IllegalAccessException {		
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "recordId", ActionType.SetRecordId)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "recordId", ActionType.SetRecordId)
 		);
 		record.recordId(5);
 		assertEquals(5, ((RecordView)record).getRecordId());
@@ -147,8 +96,8 @@ public class RecordClassGeneratorTest {
 		
 	@Test
 	public void recordSizeTest() throws InstantiationException, IllegalAccessException {		
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "recordSize", ActionType.GetRecordSize)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "recordSize", ActionType.GetRecordSize)
 		);
 		int size = record.recordSize();
 		assertEquals(0, size);
@@ -156,8 +105,8 @@ public class RecordClassGeneratorTest {
 	
 	@Test
 	public void blueprintIdTest() throws InstantiationException, IllegalAccessException {		
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "blueprintId", ActionType.GetBlueprintId)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "blueprintId", ActionType.GetBlueprintId)
 		);
 		int blueprintId = record.blueprintId();
 		assertEquals(-1, blueprintId);
@@ -166,30 +115,30 @@ public class RecordClassGeneratorTest {
 	@Test
 	@Ignore
 	public void viewTest() throws InstantiationException, IllegalAccessException {		
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "view", ActionType.View)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "view", ActionType.View)
 		);
-		TestClass otherView = record.view();
+		TestBlueprint otherView = record.view();
 		assertNotEquals(record, otherView);
 	}
 	
 	@Test
 	@Ignore
 	public void copyTest() throws InstantiationException, IllegalAccessException {		
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "copy", ActionType.Copy)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "copy", ActionType.Copy)
 		);
-		TestClass otherView = record.copy();
+		TestBlueprint otherView = record.copy();
 		assertNotEquals(record, otherView);
 	}
 	
 	@Test
 	@Ignore
 	public void copyFromTest() throws InstantiationException, IllegalAccessException {		
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "copyFrom", ActionType.CopyFrom)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "copyFrom", ActionType.CopyFrom)
 		);
-		TestClass otherView = record; // TODO new record
+		TestBlueprint otherView = record; // TODO new record
 		record.copyFrom(record);
 		assertNotEquals(record, otherView);
 	}
@@ -197,8 +146,8 @@ public class RecordClassGeneratorTest {
 	@Test
 	public void getValueTest() throws InstantiationException, IllegalAccessException {		
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "number", int.class);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getNumber", ActionType.GetValue, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getNumber", ActionType.GetValue, var)
 		);
 		int num = record.getNumber();
 		assertEquals(0, num);
@@ -207,8 +156,8 @@ public class RecordClassGeneratorTest {
 	@Test
 	public void getValueAtTest() throws InstantiationException, IllegalAccessException {		
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "number", int.class);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getNumberAt", ActionType.GetValueAt, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getNumberAt", ActionType.GetValueAt, var)
 		);
 		int num = record.getNumberAt(2);
 		assertEquals(0, num);
@@ -217,9 +166,9 @@ public class RecordClassGeneratorTest {
 	@Test
 	public void setValueTest() throws InstantiationException, IllegalAccessException {		
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "number", int.class);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getNumber", ActionType.GetValue, var),
-				new BlueprintMethod(TestClass.class, "setNumber", ActionType.SetValue, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getNumber", ActionType.GetValue, var),
+				new BlueprintMethod(TestBlueprint.class, "setNumber", ActionType.SetValue, var)
 		);
 		record.setNumber(5);
 		int num = record.getNumber();
@@ -229,9 +178,9 @@ public class RecordClassGeneratorTest {
 	@Test
 	public void setValueAtTest() throws InstantiationException, IllegalAccessException {		
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "number", int.class);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getNumberAt", ActionType.GetValueAt, var),
-				new BlueprintMethod(TestClass.class, "setNumberAt", ActionType.SetValueAt, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getNumberAt", ActionType.GetValueAt, var),
+				new BlueprintMethod(TestBlueprint.class, "setNumberAt", ActionType.SetValueAt, var)
 		);
 		record.setNumberAt(2, 7);
 		int num = record.getNumberAt(2);
@@ -242,8 +191,8 @@ public class RecordClassGeneratorTest {
 	public void getValueSizeTest() throws InstantiationException, IllegalAccessException {		
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "number", int.class);
 		var.setElementCount(10);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getNumberSize", ActionType.GetArraySize, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getNumberSize", ActionType.GetArraySize, var)
 		);
 		int num = record.getNumberSize();
 		assertEquals(10, num);
@@ -253,9 +202,9 @@ public class RecordClassGeneratorTest {
 	public void increaseValueTest() throws InstantiationException, IllegalAccessException {		
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "number", int.class);
 		var.setElementCount(10);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getNumber", ActionType.GetValue, var),
-				new BlueprintMethod(TestClass.class, "increaseNumber", ActionType.IncreaseValue, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getNumber", ActionType.GetValue, var),
+				new BlueprintMethod(TestBlueprint.class, "increaseNumber", ActionType.IncreaseValue, var)
 		);
 		record.increaseNumber();
 		int num = record.getNumber();
@@ -266,9 +215,9 @@ public class RecordClassGeneratorTest {
 	public void increaseValueByTest() throws InstantiationException, IllegalAccessException {		
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "number", int.class);
 		var.setElementCount(10);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getNumber", ActionType.GetValue, var),
-				new BlueprintMethod(TestClass.class, "increaseNumberBy", ActionType.IncreaseValueBy, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getNumber", ActionType.GetValue, var),
+				new BlueprintMethod(TestBlueprint.class, "increaseNumberBy", ActionType.IncreaseValueBy, var)
 		);
 		record.increaseNumberBy(3);
 		int num = record.getNumber();
@@ -279,9 +228,9 @@ public class RecordClassGeneratorTest {
 	public void decreaseValueTest() throws InstantiationException, IllegalAccessException {		
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "number", int.class);
 		var.setElementCount(10);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getNumber", ActionType.GetValue, var),
-				new BlueprintMethod(TestClass.class, "decreaseNumber", ActionType.DecreaseValue, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getNumber", ActionType.GetValue, var),
+				new BlueprintMethod(TestBlueprint.class, "decreaseNumber", ActionType.DecreaseValue, var)
 		);
 		record.decreaseNumber();
 		int num = record.getNumber();
@@ -292,9 +241,9 @@ public class RecordClassGeneratorTest {
 	public void decreaseValueByTest() throws InstantiationException, IllegalAccessException {		
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "number", int.class);
 		var.setElementCount(10);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getNumber", ActionType.GetValue, var),
-				new BlueprintMethod(TestClass.class, "decreaseNumberBy", ActionType.DecreaseValueBy, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getNumber", ActionType.GetValue, var),
+				new BlueprintMethod(TestBlueprint.class, "decreaseNumberBy", ActionType.DecreaseValueBy, var)
 		);
 		record.decreaseNumberBy(3);
 		int num = record.getNumber();
@@ -316,8 +265,8 @@ public class RecordClassGeneratorTest {
 		// class including SimpleValue
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "SimpleValue", SimpleValue.class, 4);
 		var.setElementCount(10);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getSimpleValue", ActionType.GetValueWith, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getSimpleValue", ActionType.GetValueWith, var)
 		);
 		record.getSimpleValue(simpleValueRecord);
 		assertEquals(0, simpleValueRecord.getValue());
@@ -338,8 +287,8 @@ public class RecordClassGeneratorTest {
 		// class including SimpleValue
 		BlueprintVariable var = BlueprintVariable.of(blueprint, "SimpleValue", SimpleValue.class, 4);
 		var.setElementCount(10);
-		TestClass record = createRecordView(blueprint,
-				new BlueprintMethod(TestClass.class, "getSimpleValueAt", ActionType.GetValueWithAt, var)
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getSimpleValueAt", ActionType.GetValueWithAt, var)
 		);
 		record.getSimpleValueAt(2, simpleValueRecord);
 		simpleValueRecord.setValue(7);

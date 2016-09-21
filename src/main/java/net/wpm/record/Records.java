@@ -67,26 +67,6 @@ public class Records {
 	}
 	
 	/**
-	 * Register a blueprint with the help of a record adapter. 
-	 * Do nothing if the adapter has already been registered. 
-	 * Always return the blueprint id of the adapter.
-	 * 
-	 * @param adapter
-	 * @return
-	 */
-	protected static final <B> int register(final RecordAdapter<B> adapter) {
-		
-		// try to register the blueprint
-		if(adapter.getBlueprintId() == 0) {
-			final int newBlueprintId = recordAdapters.size();
-			adapter.setBlueprintId(newBlueprintId);
-			blueprintHashcodeToId.put(adapter.getBlueprint().hashCode(), newBlueprintId);
-			recordAdapters.add(adapter);
-		}
-		return adapter.getBlueprintId();
-	}
-	
-	/**
 	 * Create a new record and a record view pointing to it, with the help of the record adapter.
 	 * The underlying blueprint does not has to be registered.
 	 * 
@@ -124,6 +104,29 @@ public class Records {
 	// --------------------------------------------------------------------------------------------
 	// ------------------------------------- Records API ------------------------------------------
 	// --------------------------------------------------------------------------------------------
+	
+	
+	/**
+	 * Register a blueprint with the help of a record adapter. 
+	 * Do nothing if the adapter has already been registered. 
+	 * Always return the blueprint id of the adapter.
+	 * 
+	 * Expert API
+	 * 
+	 * @param adapter
+	 * @return
+	 */
+	public static final <B> int register(final RecordAdapter<B> adapter) {
+		
+		// try to register the blueprint
+		if(adapter.getBlueprintId() == 0) {
+			final int newBlueprintId = recordAdapters.size();
+			adapter.setBlueprintId(newBlueprintId);
+			blueprintHashcodeToId.put(adapter.getBlueprint().hashCode(), newBlueprintId);
+			recordAdapters.add(adapter);
+		}
+		return adapter.getBlueprintId();
+	}
 	
 	/**
 	 * Register a blueprint. Returns its blueprint id.
