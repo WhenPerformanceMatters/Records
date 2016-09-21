@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 import net.wpm.record.annotation.Array;
 
@@ -16,6 +19,8 @@ import net.wpm.record.annotation.Array;
  */
 public class RecordsSample_03_Array {
 
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_03_Array.class);
+
 	public static void main(String[] args) {
 		
 		// get a record with an array inside
@@ -25,14 +30,14 @@ public class RecordsSample_03_Array {
 		obj.setNumber(5);
 		
 		// prints -> "Number: 5"
-		System.out.println("Number: "+obj.getNumberAt(0));
+		log.info("Number: "+obj.getNumberAt(0));
 		
 		// prints -> "Number: 7"
 		obj.setNumberAt(2, 7);
-		System.out.println("Number: "+obj.getNumberAt(2));
+		log.info("Number: "+obj.getNumberAt(2));
 		
 		// prints -> "Still: 5"
-		System.out.println("Still: "+obj.getNumber());
+		log.info("Still: "+obj.getNumber());
 	}
 
 	protected static interface Sample03 {

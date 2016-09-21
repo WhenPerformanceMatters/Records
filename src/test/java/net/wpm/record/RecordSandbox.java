@@ -2,12 +2,17 @@ package net.wpm.record;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This class exists only for test purposes. 
  * 
  * @author Nico Hezel
  */
 public class RecordSandbox {
+
+	private static Logger log = LoggerFactory.getLogger(RecordSandbox.class);
 
 	public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException {
 		
@@ -19,7 +24,7 @@ public class RecordSandbox {
 		Bar bar = foo.getBar();
 		bar.setFloat(0.1f);
 		
-		System.out.println("Foo: "+foo);	
+		log.info("Foo: "+foo);	
 		
 		
 		// 
@@ -27,24 +32,24 @@ public class RecordSandbox {
 		bar = otherFoo.getBar(bar); // reuse bar
 		bar.setFloat(0.4f);
 		
-		System.out.println("other Foo: "+otherFoo);
+		log.info("other Foo: "+otherFoo);
 		
 		
 		
 		// setBar copies the data
 		foo.setBar(bar); 
-		System.out.println("Foo: "+foo);	
+		log.info("Foo: "+foo);	
 		
 		// changing bar changes other foo but not foo
 		bar.setFloat(0.7f);
-		System.out.println("other Foo: "+otherFoo);
-		System.out.println("Foo: "+foo);	
+		log.info("other Foo: "+otherFoo);
+		log.info("Foo: "+foo);	
 
 		
 		// bar need to point to foo's data before changes can be made
 		foo.getBar(bar).setFloat(1.0f);
-		System.out.println("other Foo: "+otherFoo);
-		System.out.println("Foo: "+foo);
+		log.info("other Foo: "+otherFoo);
+		log.info("Foo: "+foo);
 	}
 
 	protected static interface Bar {

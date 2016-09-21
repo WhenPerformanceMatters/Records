@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 
 /**
@@ -12,6 +15,8 @@ import net.wpm.record.Records;
  * @author Nico Hezel
  */
 public class RecordsSample_08_RecordSize {
+	
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_08_RecordSize.class);
 
 	public static void main(String[] args) {
 		
@@ -23,7 +28,7 @@ public class RecordsSample_08_RecordSize {
 				
 		// float (4 bytes) + int (4 bytes) = 8 bytes
 		if(8 == sizeInBytes && Records.size(Sample08.class) == 8)
-			System.out.println("The content is 8 byte long");	
+			log.info("The content is 8 byte long");	
 	}
 	
 

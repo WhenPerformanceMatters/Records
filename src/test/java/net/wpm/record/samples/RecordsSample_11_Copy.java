@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 
 /**
@@ -9,6 +12,8 @@ import net.wpm.record.Records;
  */
 public class RecordsSample_11_Copy {
 
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_11_Copy.class);
+
 	public static void main(String[] args) {
 		
 		// get a record
@@ -16,7 +21,7 @@ public class RecordsSample_11_Copy {
 		obj.setFraction(0.3f);
 		
 		// prints -> {Number: 0, Fraction: 0.3}
-		System.out.println(obj);
+		log.info(obj.toString());
 	
 		// create a new record and copy the content of existing record
 		Sample11 otherObj = Records.copy(obj);
@@ -27,13 +32,13 @@ public class RecordsSample_11_Copy {
 		Sample11 thirdObj = Records.view(Sample11.class, structId);
 		
 		// prints -> {Number: 0, Fraction: 0.5}
-		System.out.println(thirdObj);
+		log.info(thirdObj.toString());
 		
 		// copy the content from the first object to the thirdObj/otherObj 
 		thirdObj.copyFrom(obj);
 		
 		// prints -> {Number: 0, Fraction: 0.3}
-		System.out.println(otherObj);			
+		log.info(otherObj.toString());			
 	}	
 
 	protected static interface Sample11 {

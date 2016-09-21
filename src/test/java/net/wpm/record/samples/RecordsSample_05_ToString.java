@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 
 /**
@@ -12,6 +15,8 @@ import net.wpm.record.Records;
  */
 public class RecordsSample_05_ToString {
 
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_05_ToString.class);
+
 	public static void main(String[] args) {
 		
 		// get one record
@@ -20,7 +25,7 @@ public class RecordsSample_05_ToString {
 		obj.setPi(Math.PI);
 		
 		// prints -> "{Number: 5, Pi: 3.141592653589793}"
-		System.out.println(obj);
+		log.info(obj.toString());
 		
 		
 		// record with custom toString method
@@ -29,7 +34,7 @@ public class RecordsSample_05_ToString {
 		objStr.setPi(Math.PI);
 		
 		// prints -> "Pi is 3.14 and the number is 5"
-		System.out.println(objStr);
+		log.info(objStr.toString());
 	}
 
 	protected static interface Sample05String extends Sample05 {	

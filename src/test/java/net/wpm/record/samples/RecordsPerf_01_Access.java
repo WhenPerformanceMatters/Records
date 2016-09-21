@@ -2,12 +2,17 @@ package net.wpm.record.samples;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.RecordAdapter;
 import net.wpm.record.Records;
 import net.wpm.record.collection.RecordSequence;
 
 public class RecordsPerf_01_Access {
 
+	private static Logger log = LoggerFactory.getLogger(RecordsPerf_01_Access.class);
+			
 	public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException {
 
 		// access to the records is possible via the Records API or the Record Adapter
@@ -41,7 +46,7 @@ public class RecordsPerf_01_Access {
 		}
 		
 		// prints -> "Read int1 3"
-		System.out.println("Read int1 "+sameObj4.getInt1());
+		log.info("Read int1 "+sameObj4.getInt1());
 		
 		// even better is using a sequence of records
 		RecordSequence<Foo> fooList = Records.array(Foo.class, 10);
@@ -53,7 +58,7 @@ public class RecordsPerf_01_Access {
 		long sum = 0;
 		for (Foo foo : fooList) 
 			sum += foo.getInt1();
-		System.out.println("sum "+sum);		
+		log.info("sum "+sum);		
 	}
 	
 	public static interface Foo {

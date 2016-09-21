@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 
 /**
@@ -15,6 +18,8 @@ import net.wpm.record.Records;
  */
 public class RecordsSample_09_View {
 
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_09_View.class);
+
 	public static void main(String[] args) {
 		
 		// get a record
@@ -22,21 +27,21 @@ public class RecordsSample_09_View {
 		obj.setFraction(0.3f);
 		
 		// prints -> {Fraction: 0.3}
-		System.out.println(obj);
+		log.info(obj.toString());
 	
 		// create a separate record view pointing to the same content
 		Sample09 otherView = Records.view(obj);
 		otherView.setFraction(0.5f);	
 		
 		// prints -> {Fraction: 0.5}
-		System.out.println(obj);
+		log.info(obj.toString());
 		
 		// another record view pointing to the same content
 		Sample09 thirdView = otherView.view();
 		thirdView.setFraction(0.1f);	
 		
 		// prints -> {Fraction: 0.1}
-		System.out.println(obj);
+		log.info(obj.toString());
 	}	
 
 	protected static interface Sample09 {

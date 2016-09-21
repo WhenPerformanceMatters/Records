@@ -1,5 +1,8 @@
 package net.wpm.record;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.blueprint.BlueprintClass;
 import net.wpm.record.blueprint.BlueprintInspector;
 import net.wpm.record.bytecode.RecordClassGenerator;
@@ -22,6 +25,8 @@ import net.wpm.reflectasm.MethodAccess;
  * @param <B>
  */
 public final class RecordAdapter<B> {
+	
+	private static Logger log = LoggerFactory.getLogger(RecordAdapter.class);
 
 	// id of the blueprint 
 	protected int blueprintId = 0;
@@ -93,7 +98,7 @@ public final class RecordAdapter<B> {
 		final BlueprintClass blueprintClass = inspector.getBlueprintClass();
 		final RecordClassGenerator generator = new RecordClassGenerator(blueprintClass);
 		final Class<RecordView> recordViewClass = generator.construct();
-		System.out.println("Generated " + recordViewClass);
+		log.info("Generated " + recordViewClass);
 		return recordViewClass;
 	}
 	

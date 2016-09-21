@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 import net.wpm.record.collection.RecordSequence;
 
@@ -9,6 +12,8 @@ import net.wpm.record.collection.RecordSequence;
  * @author Nico Hezel
  */
 public class RecordsSample_12_Sequence {
+
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_12_Sequence.class);
 
 	public static void main(String[] args) {
 		
@@ -25,7 +30,7 @@ public class RecordsSample_12_Sequence {
 		
 		// prints -> {Number: 12, Fraction: 0.0}
 		Sample12 obj = sampleArray.get(5);
-		System.out.println(obj);
+		log.info(obj.toString());
 	}
 
 	protected static interface Sample12 {

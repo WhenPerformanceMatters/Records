@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 
 /**
@@ -14,6 +17,8 @@ import net.wpm.record.Records;
  */
 public class RecordsSample_10_ReuseRecordViews {
 
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_10_ReuseRecordViews.class);
+
 	public static void main(String[] args) {
 		
 		// get a record view, our view of memory
@@ -27,11 +32,11 @@ public class RecordsSample_10_ReuseRecordViews {
 		otherObj.setFraction(1.23f);
 		
 		// prints -> {Number: -7, Fraction: 1.23}
-		System.out.println(otherObj);
+		log.info(otherObj.toString());
 		
 		// obj and otherObj are record view
 		if(obj == otherObj)
-			System.out.println("obj and otherObj are the same object");
+			log.info("obj and otherObj are the same object");
 		
 	}
 

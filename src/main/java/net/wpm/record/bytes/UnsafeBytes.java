@@ -1,5 +1,8 @@
 package net.wpm.record.bytes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.openhft.chronicle.core.Memory;
 import net.openhft.chronicle.core.OS;
 import sun.misc.Cleaner;
@@ -11,6 +14,7 @@ import sun.misc.Cleaner;
  *
  */
 public class UnsafeBytes {
+	private static Logger log = LoggerFactory.getLogger(UnsafeBytes.class);
 
 	protected final long address;
 	protected final long capacity;
@@ -19,12 +23,13 @@ public class UnsafeBytes {
 	protected final Cleaner cleaner;
 
 	public UnsafeBytes(Memory memory, long capacity) {
+		log.info("Allocate "+capacity+" bytes of memory.");
+
 		this.used = 0;
 		this.capacity = capacity;
 		this.address = memory.allocate(capacity);
 		memory.setMemory(address, capacity, (byte) 0);
 		this.cleaner = Cleaner.create(this, new Deallocator(address, capacity));
-		System.out.println("alloc "+capacity);
 	}	
 	
 

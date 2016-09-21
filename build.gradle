@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.20'
 	compile group: 'com.koloboke', name: 'koloboke-api-jdk8', version: '1.0.0'
 	compile group: 'com.koloboke', name: 'koloboke-impl-jdk8', version: '1.0.0'
 	compile group: 'com.koloboke', name: 'koloboke-impl-common-jdk8', version: '1.0.0'
@@ -39,6 +39,7 @@ dependencies {
 	compile group: 'org.ow2.asm', name: 'asm-all', version: '5.1'			// codegen dependencies
 	
 	testCompile 'junit:junit:4.+';											// only for tests
+	testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
 }
 
 /**

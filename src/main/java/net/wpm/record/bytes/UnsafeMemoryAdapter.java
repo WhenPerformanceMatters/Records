@@ -53,7 +53,6 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	 * @param size
 	 */
 	protected final UnsafeBytes allocate(int size) {	
-		System.out.println("Allocate "+size+" bytes of memory.");
 		UnsafeBytes bytes = new UnsafeBytes(memory, size);
 		addressToBytes.put(bytes.address, bytes);
 		return bytes;

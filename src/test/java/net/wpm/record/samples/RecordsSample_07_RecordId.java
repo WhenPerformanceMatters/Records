@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 
 /**
@@ -21,6 +24,8 @@ import net.wpm.record.Records;
  *
  */
 public class RecordsSample_07_RecordId {
+	
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_07_RecordId.class);
 
 	public static void main(String[] args) {
 		
@@ -32,33 +37,33 @@ public class RecordsSample_07_RecordId {
 		obj.setFraction(0.1f);
 		
 		// prints -> {Number: 0, Fraction: 0.1}
-		System.out.println(obj);
+		log.info(obj.toString());
 		
 		// the id is enough to change the content elsewhere
 		long recordId = Records.id(obj);
 		changeNumberOf(recordId);
 		
 		// prints -> {Number: 3, Fraction: 0.1}
-		System.out.println(obj);
+		log.info(obj.toString());
 				
 		// another record view, pointing to the same record
 		Sample07 otherObj = Records.view(blueprintId, recordId);
 		
 		// the record id can be obtained with optional recordId() method
 		if(otherObj.recordId() == recordId)
-			System.out.println("Record id is "+recordId);
+			log.info("Record id is "+recordId);
 		
 		// reuse the record view and point it to a new record
 		otherObj = Records.create(otherObj);
 		
 		// prints -> {Number: 0, Fraction: 0}
-		System.out.println(otherObj);
+		log.info(otherObj.toString());
 		
 		// point it back to the first record
 		otherObj.recordId(recordId);
 		
 		// prints -> {Number: 3, Fraction: 0.1}
-		System.out.println(obj);
+		log.info(obj.toString());
 	}
 	
 	/**

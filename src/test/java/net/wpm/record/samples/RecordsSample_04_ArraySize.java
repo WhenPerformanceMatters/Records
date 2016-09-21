@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 import net.wpm.record.annotation.Array;
 
@@ -23,6 +26,8 @@ import net.wpm.record.annotation.Array;
  *
  */
 public class RecordsSample_04_ArraySize {
+	
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_04_ArraySize.class);
 
 	public static void main(String[] args) {
 		
@@ -34,8 +39,10 @@ public class RecordsSample_04_ArraySize {
 			obj.setNumberAt(i, -i);
 		
 		// prints -> 0, -1, -2, -3, -4, 
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < obj.getNumberSize(); i++)
-			System.out.print(obj.getNumberAt(i) + ", ");
+			sb.append(obj.getNumberAt(i) + ", ");
+		log.info(sb.toString());
 	}
 
 	protected static interface Sample04 {

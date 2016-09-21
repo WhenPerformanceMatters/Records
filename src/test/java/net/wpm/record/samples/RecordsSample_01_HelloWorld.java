@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 
 /**
@@ -17,6 +20,8 @@ import net.wpm.record.Records;
  */
 public class RecordsSample_01_HelloWorld {
 
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_01_HelloWorld.class);
+
 	public static void main(String[] args) {
 		
 		// get a instance of an blueprint
@@ -28,7 +33,7 @@ public class RecordsSample_01_HelloWorld {
 
 	protected static interface Sample01 {
 		public default void greet() {
-			System.out.println("Hello world!");
+			log.info("Hello world!");
 		}
 	}
 }

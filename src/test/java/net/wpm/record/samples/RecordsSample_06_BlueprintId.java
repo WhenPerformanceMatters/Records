@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 
 /**
@@ -21,6 +24,8 @@ import net.wpm.record.Records;
  *
  */
 public class RecordsSample_06_BlueprintId {
+	
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_06_BlueprintId.class);
 
 	public static void main(String[] args) {
 		
@@ -33,11 +38,11 @@ public class RecordsSample_06_BlueprintId {
 		obj.setFraction(-0.7f);
 		
 		// prints -> {Number: 77, Fraction: -0.7}
-		System.out.println(obj);
+		log.info(obj.toString());
 				
 		// the id can also be obtained with a special blueprintId() method
 		if(blueprintId == obj.blueprintId())
-			System.out.println("Blueprint id is "+blueprintId);		
+			log.info("Blueprint id is "+blueprintId);		
 	}
 
 	protected static interface Sample06 {

@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 
 /**
@@ -8,6 +11,8 @@ import net.wpm.record.Records;
  * @author Nico Hezel
  */
 public class RecordsSample_13_NestedRecords {
+
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_13_NestedRecords.class);
 
 	public static void main(String[] args) {
 		
@@ -28,7 +33,7 @@ public class RecordsSample_13_NestedRecords {
 		bar.setFraction(0.1f);
 		
 		// prints -> {Bar: {Fraction: 0.1}, Number: 5}
-		System.out.println(obj);
+		log.info(obj.toString());
 		
 		
 		
@@ -40,7 +45,7 @@ public class RecordsSample_13_NestedRecords {
 		bar.setFraction(0.4f);		
 		
 		// prints -> {Bar: {Fraction: 0.4}, Number: 0}
-		System.out.println(otherView);
+		log.info(otherView.toString());
 		
 		
 		
@@ -48,19 +53,19 @@ public class RecordsSample_13_NestedRecords {
 		obj.setBar(bar); 
 		
 		// prints -> {Bar: {Fraction: 0.4}, Number: 5}
-		System.out.println(obj);
+		log.info(obj.toString());
 				
 		// ... and do not store reference to an object
 		bar.setFraction(0.7f);
-		System.out.println(otherView);	// {Bar: {Fraction: 0.7}, Number: 0}
-		System.out.println(obj);		// {Bar: {Fraction: 0.4}, Number: 5}
+		log.info(otherView.toString());	// {Bar: {Fraction: 0.7}, Number: 0}
+		log.info(obj.toString());		// {Bar: {Fraction: 0.4}, Number: 5}
 		
 		
 		
 		// the Bar record view needs to point to the obj's data before changes can be made
 		obj.getBar(bar).setFraction(1.0f);
-		System.out.println(otherView);	// {Bar: {Fraction: 0.7}, Number: 0}
-		System.out.println(obj);		// {Bar: {Fraction: 1.0}, Number: 5}
+		log.info(otherView.toString());	// {Bar: {Fraction: 0.7}, Number: 0}
+		log.info(obj.toString());		// {Bar: {Fraction: 1.0}, Number: 5}
 	}
 
 	protected static interface Bar {

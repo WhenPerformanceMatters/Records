@@ -1,5 +1,8 @@
 package net.wpm.record.samples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.wpm.record.Records;
 
 /**
@@ -18,29 +21,31 @@ import net.wpm.record.Records;
  */
 public class RecordsSample_02_GetterSetter {
 
+	private static Logger log = LoggerFactory.getLogger(RecordsSample_02_GetterSetter.class);
+
 	public static void main(String[] args) {
 		
 		// create a new record and a viewer pointing to it
 		Sample02 obj = Records.of(Sample02.class);
 		
 		// prints -> "Number: 0"
-		System.out.println("Number: "+obj.getNumber());
+		log.info("Number: "+obj.getNumber());
 		
 		// prints -> "Number: 5"
 		obj.setNumber(5);
-		System.out.println("Number: "+obj.getNumber());
+		log.info("Number: "+obj.getNumber());
 		
 		// prints -> "Number: 6"
 		obj.increaseNumber();
-		System.out.println("Number: "+obj.getNumber());
+		log.info("Number: "+obj.getNumber());
 		
 		// prints -> "Number: 3"
 		obj.decreaseNumberBy(3);
-		System.out.println("Number: "+obj.getNumber());
+		log.info("Number: "+obj.getNumber());
 		
 		// prints -> "Number: 4"
 		obj.decreaseNumberBy(-1);
-		System.out.println("Number: "+obj.getNumber());
+		log.info("Number: "+obj.getNumber());
 	}
 
 	protected static interface Sample02 {
