@@ -9,6 +9,11 @@ import org.junit.Test;
 import net.wpm.record.collection.RecordSequence;
 import net.wpm.record.model.TestBlueprint.SimpleValue;
 
+/**
+ * Component test
+ * 
+ * @author Nico Hezel
+ */
 public class RecordAdapterTest {
 
 	private static SimpleValue record;
