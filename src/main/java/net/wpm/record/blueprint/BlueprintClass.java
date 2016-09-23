@@ -73,8 +73,6 @@ public class BlueprintClass {
 	
 	/**
 	 * Adjust the offset of the variables.
-	 * 
-	 * @param variables
 	 */
 	public void adjustVariableOffset() {
 		int offset = 0;

@@ -18,7 +18,7 @@ import net.wpm.reflectasm.MethodAccess;
  * The RecordAdapter has access to all methods of the RecordView.
  * It can also create new views and allocate memory for additional records.
  * 
- * TODO is "Class<? extends B> recordViewClass" faster?
+ * TODO is "Class{? extends B} recordViewClass" faster?
  * 
  * @author Nico Hezel
  *
@@ -98,7 +98,7 @@ public final class RecordAdapter<B> {
 		final BlueprintClass blueprintClass = inspector.getBlueprintClass();
 		final RecordClassGenerator generator = new RecordClassGenerator(blueprintClass);
 		final Class<RecordView> recordViewClass = generator.construct();
-		log.info("Generated " + recordViewClass);
+		log.trace("Generated " + recordViewClass);
 		return recordViewClass;
 	}
 	
@@ -115,28 +115,26 @@ public final class RecordAdapter<B> {
 	 * Create a new array
 	 * 
 	 * @param count
-	 * @return
+	 * @return RecordSequence containing the new array
 	 */
 	public final RecordSequence<B> array(int count) {
 		final long fromAddress =  memoryAccess.reserve(recordSize * count);				
 		return new RecordSequence<B>(this, fromAddress, count);
 	}
 	
-	
 	/**
 	 * Create a new record view, pointing no-where
 	 * 
-	 * @return
+	 * @return RecordView
 	 */
 	public final RecordView newInstance() {
 		return recordViewClassConstructorAccess.newInstance();
 	}
 	
-	
 	/**
 	 * Create a new record view pointing to an empty record
 	 * 
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	@SuppressWarnings("unchecked")
 	public final B create() {
@@ -149,7 +147,7 @@ public final class RecordAdapter<B> {
 	 * Reuse a record view but point to an empty record.
 	 * 
 	 * @param reuse
-	 * @return
+	 * @return RecordView
 	 */
 	public final RecordView create(final RecordView reuse) {
 		reuse.setRecordId(nextId());
@@ -160,7 +158,7 @@ public final class RecordAdapter<B> {
 	 * Create a new record, pointing to the data of another record.
 	 * 
 	 * @param recordId
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	@SuppressWarnings("unchecked")
 	public final B view(final long recordId) {
@@ -173,7 +171,7 @@ public final class RecordAdapter<B> {
 	 * Create a new record view, pointing to the data of the given record.
 	 * 
 	 * @param record
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	public B view(final B record) {
 		final long recordId = ((RecordView)record).getRecordId();
@@ -183,7 +181,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a copy of the record and return the copy.
 	 * 
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	@SuppressWarnings("unchecked")
 	public B copy(final B record) {

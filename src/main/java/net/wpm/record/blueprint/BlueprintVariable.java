@@ -82,7 +82,7 @@ public class BlueprintVariable {
 	 * Amount of elements in this array.
 	 * Returns 1 for non array variables. 
 	 * 
-	 * @return
+	 * @return int element count
 	 */
 	public int getElementCount() {
 		return elementCount;
@@ -91,7 +91,7 @@ public class BlueprintVariable {
 	/**
 	 * Size of a single element
 	 * 
-	 * @return
+	 * @return int element size in bytes
 	 */
 	public int getElementSizeInBytes() {
 		return elementSizeInBytes;
@@ -101,7 +101,7 @@ public class BlueprintVariable {
 	 * Size in bytes to store the content of the variable.
 	 * Shortcut for: getElementSizeInBytes() * getElementCount()
 	 * 
-	 * @return
+	 * @return int size in bytes
 	 */
 	public int getSizeInBytes() {
 		return elementSizeInBytes * elementCount;
@@ -129,7 +129,7 @@ public class BlueprintVariable {
 
 	/**
 	 * Set the amount of elements for this variable.
-	 * Element count > 1 changes the variable to an array type.
+	 * Element count &gt; 1 changes the variable to an array type.
 	 * 
 	 * @param elementCount
 	 */
@@ -150,7 +150,8 @@ public class BlueprintVariable {
 	 * 
 	 * @param blueprint
 	 * @param name
-	 * @return
+	 * 
+	 * @return BlueprintVariable
 	 */
 	public static BlueprintVariable of(Class<?> blueprint, String name) {
 		return new BlueprintVariable(blueprint, name, 0, null, null);
@@ -162,7 +163,8 @@ public class BlueprintVariable {
 	 * @param blueprint
 	 * @param name
 	 * @param type
-	 * @return
+	 * 
+	 * @return BlueprintVariable
 	 */
 	public static BlueprintVariable of(Class<?> blueprint, String name, Class<?> type) {
 		BlueprintVariable defaultType = getDefault(type);

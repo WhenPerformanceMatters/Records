@@ -1,17 +1,37 @@
-Introduction
+Records
 =======
 
-Records is an open-source Java framework, which improves the memory object layout of the JVM. Relying heavily on sun.misc.Unsafe to store data off heap, it is designed for high performance applications. The new layout has features similar to C-structs, like unions and allocating consecutive memory for multiple Java objects. 
+An open-source Java library to improve the memory object layout of the JVM. Relying heavily on sun.misc.Unsafe to store data off heap, it is designed for high performance applications. The new layout has features similar to C-structs, like unions and allocating consecutive memory for multiple Java objects. 
 
 At the same time Records provides a convenient API and keeps the Java OOP feeling. Depending on the application a speed up and memory reduction of factor two can be archived. In case of projects with a lot of parallel process the scalability gets improved.
 
-Getting Started
+Quick start
+=======
+Add the following dependencies in your Maven `pom.xml`:
+```xml
+  <dependencies>
+    <dependency>
+      <groupId>net.whenperformancematters</groupId>
+      <artifactId>records</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+  <dependencies>
+```
+
+Or to your Gradle build script:
+```groovy
+dependencies {
+    compile 'net.whenperformancematters:records:1.0.0'
+}
+```
+
+Example
 =======
 
-The best place to learn about this library is to look at the [examples] (src/test/java/net/wpm/record/samples). In generell an interface defining getter/setter methods is all it needs. Records will build the necessary classes at runtime implementing the interface and provides an API to instantiate them. 
+The best place to learn about this library is to look at the [examples] (src/test/java/net/wpm/record/samples). In generell an interface defining getter/setter methods is all it needs. Records will build the necessary classes at runtime implementing the interface and provides an API to instantiate an object of them. 
 
   
-Instead of a POJO it is sufficient to just define an interface.
+Instead of a POJO class it is sufficient to just define an interface.
 ```java
 public interface Foo {
 	public int getNumber();

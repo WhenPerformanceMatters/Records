@@ -23,7 +23,7 @@ public class UnsafeBytes {
 	protected final Cleaner cleaner;
 
 	public UnsafeBytes(Memory memory, long capacity) {
-		log.info("Allocate "+capacity+" bytes of memory.");
+		log.trace("Allocate "+capacity+" bytes of memory.");
 
 		this.used = 0;
 		this.capacity = capacity;
@@ -36,7 +36,7 @@ public class UnsafeBytes {
 	/**
 	 * Starting address of this piece of memory
 	 * 
-	 * @return
+	 * @return address
 	 */
 	public long freeAddress() {
 		return address + used;
@@ -54,7 +54,7 @@ public class UnsafeBytes {
 	/**
 	 * How many bytes are still empty 
 	 * 
-	 * @return
+	 * @return bytes remaining
 	 */
 	public int remaining() {	
 		return (int)(capacity - used);
@@ -64,7 +64,7 @@ public class UnsafeBytes {
 	 * Does the amount of bytes fit in this piece of memory
 	 * 
 	 * @param size
-	 * @return
+	 * @return boolean
 	 */
 	public boolean hasCapacity(long size) {	
 		return 0 <= size && ((used + size) <= capacity);

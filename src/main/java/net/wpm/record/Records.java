@@ -16,7 +16,7 @@ import net.wpm.record.collection.RecordSequence;
  * 
  * TODO not thread safe
  * 
- * TODO pools with ThreadLocal? -> to expensive
+ * TODO pools with ThreadLocal? - to expensive
  * http://tutorials.jenkov.com/java-concurrency/threadlocal.html
  * http://stackoverflow.com/questions/609826/performance-of-threadlocal-variable
  * http://www.jutils.com/checks/performance.html
@@ -114,7 +114,7 @@ public class Records {
 	 * Expert API
 	 * 
 	 * @param adapter
-	 * @return
+	 * @return blueprintId
 	 */
 	public static final <B> int register(final RecordAdapter<B> adapter) {
 		
@@ -132,7 +132,7 @@ public class Records {
 	 * Register a blueprint. Returns its blueprint id.
 	 * 
 	 * @param blueprint
-	 * @return
+	 * @return blueprintId
 	 */
 	public static final <B> int register(final Class<B> blueprint) {
 		int blueprintId = blueprintId(blueprint);
@@ -172,7 +172,7 @@ public class Records {
 	 * Allocates memory for a new record and points the record view to it.
 	 *  
 	 * @param blueprint
-	 * @return
+	 * @return Record extends RecordView
 	 * @throws NullPointerException if blueprint is not registered or null
 	 */
 	public static final <B> B create(final Class<B> blueprint) {
@@ -185,7 +185,7 @@ public class Records {
 	 * Faster then using the blueprint itself.
 	 * 
 	 * @param blueprintId
-	 * @return
+	 * @return Record extends RecordView
 	 * @throws NullPointerException if blueprint is not registered 
 	 */
 	public static final <B> B create(final int blueprintId) {
@@ -199,7 +199,7 @@ public class Records {
 	 * The underlying blueprint does not have to be registered.
 	 * 
 	 * @param reuse
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	public static final <B> B create(final B reuse) {
 		final RecordView recordView = ((RecordView) reuse);
@@ -211,7 +211,7 @@ public class Records {
 	 * Get the record id of a record which identifies its content.
 	 * 
 	 * @param record
-	 * @return
+	 * @return record id
 	 */
 	public static final long id(final Object record) {
 		return ((RecordView) record).getRecordId();
@@ -222,7 +222,7 @@ public class Records {
 	 * Create a new record view pointing no-where.
 	 * 
 	 * @param blueprint
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	public static final <B> B view(final Class<B> blueprint) {
 		return view(blueprint, 0);
@@ -231,8 +231,8 @@ public class Records {
 	/**
 	 * Create a new record view pointing no-where.
 	 * 
-	 * @param blueprint
-	 * @return
+	 * @param blueprintId
+	 * @return Record extends RecordView
 	 */
 	public static final <B> B view(final int blueprintId) {
 		return view(blueprintId, 0);
@@ -243,7 +243,7 @@ public class Records {
 	 * 
 	 * @param blueprint
 	 * @param recordId
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	public static final <B> B view(final Class<B> blueprint, final long recordId) {
 		return view(blueprintId(blueprint), recordId);
@@ -254,7 +254,7 @@ public class Records {
 	 * 
 	 * @param blueprintId
 	 * @param recordId
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	public static final <B> B view(final int blueprintId, final long recordId) {
 		RecordAdapter<B> adapter = getRecordAdapter(blueprintId);
@@ -265,7 +265,7 @@ public class Records {
 	 * Create a new record view and pointing to the data of the given record
 	 * 
 	 * @param record
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	public static <B> B view(B record) {
 		return getRecordAdapter(record).view(record);
@@ -277,7 +277,7 @@ public class Records {
 	 *  
 	 * @param record
 	 * @param recordId
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	public static final <B> B view(final B record, final long recordId) {
 		final RecordView recordView = (RecordView) record;
@@ -290,7 +290,7 @@ public class Records {
 	 * Size of the corresponding record in bytes 
 	 * 
 	 * @param blueprint
-	 * @return
+	 * @return size of the record in bytes
 	 */
 	public static final <B> int size(final Class<B> blueprint) {
 		return getRecordAdapter(blueprintId(blueprint)).getRecordSize();	}
@@ -299,7 +299,7 @@ public class Records {
 	 * Size of the corresponding record in bytes 
 	 * 
 	 * @param blueprintId
-	 * @return
+	 * @return size of the record in bytes
 	 */
 	public static final <B> int size(final int blueprintId) {
 		return getRecordAdapter(blueprintId).getRecordSize();
@@ -309,7 +309,7 @@ public class Records {
 	 * Size of the record in bytes 
 	 * 
 	 * @param record
-	 * @return
+	 * @return size of the record in bytes
 	 */
 	public static final <B> int size(final B record) {
 		return ((RecordView) record).getRecordSize();
@@ -341,7 +341,7 @@ public class Records {
 	 * Get the id of the blueprint. Zero means the blueprint is not registered.
 	 * 
 	 * @param blueprint
-	 * @return
+	 * @return blueprint id
 	 */
 	public static final <B> int blueprintId(final Class<B> blueprint) {
 		return blueprintHashcodeToId.getOrDefault(blueprint.hashCode(), 0);
@@ -351,7 +351,7 @@ public class Records {
 	 * Get the underlying blueprint id 
 	 * 
 	 * @param record
-	 * @return
+	 * @return blueprint id
 	 */
 	public static final <B> int blueprintId(final B record) {
 		return ((RecordView) record).getRecordAdapter().getBlueprintId();
@@ -381,7 +381,7 @@ public class Records {
 	 * Creates multiple records and makes them accessible via a RecordSequence.
 	 *  
 	 * @param blueprint
-	 * @return
+	 * @return RecordSequence containing the array
 	 * @throws NullPointerException if blueprint is not registered or null
 	 */
 	public static final <B> RecordSequence<B> array(final Class<B> blueprint, final int count) {
@@ -392,7 +392,7 @@ public class Records {
 	 * Creates multiple records and makes them accessible via a RecordSequence.
 	 * 
 	 * @param blueprintId
-	 * @return
+	 * @return RecordSequence containing the array
 	 * @throws NullPointerException if blueprint is not registered
 	 */
 	public static final <B> RecordSequence<B> array(final int blueprintId, final int count) {

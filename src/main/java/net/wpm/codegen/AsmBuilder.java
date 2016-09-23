@@ -152,7 +152,7 @@ public class AsmBuilder<T> {
 	 *  
 	 * @param field
 	 * @param fieldClass
-	 * @return
+	 * @return changed AsmBuilder
 	 */
 	public AsmBuilder<T> staticField(String field, Class<?> fieldClass) {
 		staticFields.put(field, fieldClass);

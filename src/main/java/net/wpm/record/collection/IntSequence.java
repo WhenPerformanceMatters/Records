@@ -15,8 +15,6 @@ import net.wpm.record.bytes.UnsafeBytes;
  * TODO maxium size is Integer.MAXVALUE 
  * 
  * @author Nico Hezel
- *
- * @param <B>
  */
 public class IntSequence {
 	

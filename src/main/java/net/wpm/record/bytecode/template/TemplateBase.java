@@ -20,8 +20,7 @@ import net.wpm.record.bytecode.RecordClassGenerator;
 /**
  * Base class for accessing record view methods and variables.
  * 
- * @author Nico
- *
+ * @author Nico Hezel
  */
 public abstract class TemplateBase implements ASMTemplate {
 
@@ -32,7 +31,7 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * Creates an expression to read the content of the variable
 	 * 
-	 * @param variable
+	 * @param variable which content is stored in memory
 	 * @return Expression
 	 */
 	protected Expression readValueExpression(BlueprintVariable variable) {
@@ -42,7 +41,8 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * Creates an expression to read the content of the variable
 	 * 
-	 * @param variable
+	 * @param variable which content is stored in memory
+	 * @param index of the array 
 	 * @return Expression
 	 */
 	protected Expression readValueExpression(BlueprintVariable variable, Expression index) {		
@@ -53,7 +53,8 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * Creates an expression to write the content of the variable
 	 * 
-	 * @param variable
+	 * @param variable which content is stored in memory
+	 * @param value new content
 	 * @return Expression
 	 */
 	protected Expression writeValueExpression(BlueprintVariable variable, Expression value) {
@@ -63,7 +64,9 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * Creates an expression to write the content of the variable
 	 * 
-	 * @param variable
+	 * @param variable which content is stored in memory
+	 * @param index of the array 
+	 * @param value new content
 	 * @return Expression
 	 */
 	protected Expression writeValueExpression(BlueprintVariable variable, Expression index, Expression value) {
@@ -79,9 +82,9 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * Creates an expression to read the content of another record
 	 * 
-	 * @param variable
+	 * @param variable which content is stored in memory
 	 * @param index of the array (1 = no array)
-	 * @return
+	 * @return Expression
 	 */
 	protected Expression readRecordExpression(BlueprintVariable variable, Expression index) {		
 		int blueprintId = Records.blueprintId(variable.getInternalType());
@@ -91,10 +94,10 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * Creates an expression to read the content of another record. Reuses the given record view. 
 	 *  
-	 * @param variable
-	 * @param index
+	 * @param variable which content is stored in memory
+	 * @param index of the array 
 	 * @param withRecordView
-	 * @return
+	 * @return Expression
 	 */
 	protected Expression readRecordWithExpression(BlueprintVariable variable, Expression index, Expression withRecordView) {
 		return Expressions.sequence(
@@ -106,10 +109,10 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * Creates an expression to write the content of the variable
 	 * 
-	 * @param variable
+	 * @param variable which content is stored in memory
 	 * @param index of the array (1 = no array)
 	 * @param recordView
-	 * @return
+	 * @return Expression
 	 */
 	protected Expression writeRecordExpression(BlueprintVariable variable, Expression index, Expression recordView) {
 		Expression fromAddress = call(cast(recordView, RecordView.class), "getRecordId");
@@ -126,9 +129,9 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * Creates an expression to read the content of the variable
 	 * 
-	 * @param variable
+	 * @param variable which content is stored in memory
 	 * @param index of the array (1 = no array)
-	 * @return
+	 * @return Expression
 	 */
 	protected Expression readPrimitiveExpression(BlueprintVariable variable, Expression index) {		
 		String methodName = "get"+RecordClassGenerator.capitalize(variable.getInternalType().getName());		
@@ -139,10 +142,10 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * Creates an expression to write the content of the variable
 	 * 
-	 * @param variable
+	 * @param variable which content is stored in memory
 	 * @param index of the array (1 = no array)
-	 * @param value
-	 * @return
+	 * @param value new content
+	 * @return Expression
 	 */
 	protected Expression writePrimitiveExpression(BlueprintVariable variable, Expression index, Expression value) {
 		String methodName = "set"+RecordClassGenerator.capitalize(variable.getInternalType().getName());
@@ -156,7 +159,7 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * An Expression representing the record id or address of the record in memory
 	 * 
-	 * @return
+	 * @return Expression
 	 */
 	protected Expression address() {
 		return getter(self(), "address");
@@ -165,7 +168,8 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * An Expression representing a setter for the record id or address of the record in memory
 	 * 
-	 * @return
+	 * @param exp
+	 * @return Expression
 	 */
 	protected Expression setAddress(Expression exp) {		
 		return setter(self(), "address", exp);
@@ -176,7 +180,7 @@ public abstract class TemplateBase implements ASMTemplate {
 	 * An Expression representing the offset value of the variable in the memory buffer
 	 * 
 	 * @param variable
-	 * @return
+	 * @return Expression
 	 */
 	protected Expression addressOf(BlueprintVariable variable) {
 		return add(address(), value(variable.getOffset()));	
@@ -186,8 +190,8 @@ public abstract class TemplateBase implements ASMTemplate {
 	 * An Expression representing the offset value at the specified array index of the variable in the memory buffer
 	 * 
 	 * @param variable
-	 * @param elementIndex
-	 * @return
+	 * @param elementIndex of the array 
+	 * @return Expression
 	 */
 	protected Expression addressOf(BlueprintVariable variable, Expression elementIndex) {
 		return add(addressOf(variable), mul(elementIndex, value(variable.getElementSizeInBytes())));	// offset + index * sizeInBytes
@@ -196,7 +200,7 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * An Expression representing the memory buffer
 	 * 
-	 * @return
+	 * @return Expression
 	 */
 	protected Expression memoryAccess() {
 		return getter(self(), "memoryAccess");
@@ -205,7 +209,7 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * An Expression representing blueprint id
 	 * 
-	 * @return
+	 * @return Expression
 	 */
 	protected Expression blueprintId() {
 		return getter(self(), "blueprintId");
@@ -214,7 +218,7 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * An Expression representing record size
 	 * 
-	 * @return
+	 * @return Expression
 	 */
 	protected Expression recordSize() {
 		return getter(self(), "recordSize");
@@ -223,7 +227,7 @@ public abstract class TemplateBase implements ASMTemplate {
 	/**
 	 * An Expression representing blueprint id
 	 * 
-	 * @return
+	 * @return Expression
 	 */
 	protected Expression adapter() {
 		return getter(self(), "recordAdapter");

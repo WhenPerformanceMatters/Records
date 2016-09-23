@@ -120,10 +120,10 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	 * Maximum amount of allocatable memory. Including memory allocated by DirectByteBuffers.
 	 */
 	@Override
-	public long capacity() {
+	public int capacity() {
 		long max = Jvm.maxDirectMemory();
 		long used = Jvm.usedNativeMemory() + Jvm.usedDirectMemory();
-		return max - used;
+		return (int)(max - used);
 	}
 
 	@Override

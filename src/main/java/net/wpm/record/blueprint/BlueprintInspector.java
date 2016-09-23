@@ -24,8 +24,6 @@ import net.wpm.reflectasm.MethodAccess;
  * Inspired by Richard Warburton SLAB TypeInspector.
  * 
  * @author Nico
- *
- * @param <B>
  */
 public class BlueprintInspector {
 	
@@ -161,7 +159,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseViewMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -205,7 +202,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseCopyFromMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -228,7 +224,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseCopyMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -250,7 +245,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseDecreaseByMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -277,7 +271,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseDecreaseMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -304,7 +297,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseIncreaseByMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -331,7 +323,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseIncreaseMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -358,7 +349,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseToStringMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -380,7 +370,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseBlueprintIdMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -403,7 +392,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseRecordIdMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -427,7 +415,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseSetterMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -454,7 +441,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseSetAtMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -482,7 +468,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseGetSizeMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -510,7 +495,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseGetterMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
@@ -541,7 +525,6 @@ public class BlueprintInspector {
 	 * 
 	 * @param methodIndex
 	 * @param blueprintClass
-	 * @return
 	 */
 	protected void analyseGetAtMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);

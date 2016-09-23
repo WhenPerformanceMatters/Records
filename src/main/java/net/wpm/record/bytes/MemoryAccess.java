@@ -15,7 +15,7 @@ public interface MemoryAccess {
 	 * Returns the starting address of reserved region.
 	 * 
 	 * @param size
-	 * @return
+	 * @return address
 	 */
 	public long reserve(int size);
 		
@@ -26,9 +26,10 @@ public interface MemoryAccess {
 	
 	/**
 	 * Maximum amount of allocatable memory
-	 * @return
+	 * 
+	 * @return size in bytes
 	 */
-	public long capacity();
+	public int capacity();
 	
 	
 	

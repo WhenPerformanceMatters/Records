@@ -15,28 +15,28 @@ public abstract class RecordView {
 	/**
 	 * Id of the blueprint
 	 * 
-	 * @return
+	 * @return blueprint id
 	 */
 	public abstract int getBlueprintId();	
 	
 	/**
 	 * Access to the native memory
 	 * 
-	 * @return
+	 * @return MemoryAccess
 	 */
 	public abstract MemoryAccess getMemoryAccess();		
 	
 	/**
 	 * Record adapter to access all records of this type
 	 * 
-	 * @return
+	 * @return RecordAdapter
 	 */
 	public abstract RecordAdapter<?> getRecordAdapter();	
 	
 	/**
 	 * Size in bytes of the record
 	 * 
-	 * @return
+	 * @return record size in bytes
 	 */
 	public abstract int getRecordSize();	
 
@@ -48,7 +48,7 @@ public abstract class RecordView {
 	/**
 	 * Get the record id pointing to a record
 	 * 
-	 * @return
+	 * @return record id
 	 */
 	public final long getRecordId() {
 		return address;

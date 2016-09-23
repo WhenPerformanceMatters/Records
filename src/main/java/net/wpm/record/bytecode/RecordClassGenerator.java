@@ -118,7 +118,8 @@ public class RecordClassGenerator {
 	 * Implements the toString method of the new class
 	 * 
 	 * @param builder
-	 * @param methods
+	 * @param customToStringMethod
+	 * @param variables
 	 */
 	protected static void addToString(AsmBuilder<RecordView> builder, boolean customToStringMethod, Collection<BlueprintVariable> variables) {
 		ASMTemplate template = new TemplateToString(variables, customToStringMethod);
@@ -197,10 +198,10 @@ public class RecordClassGenerator {
 	
 
 	/**
-	 * Converts the first letter to uppercase.
+	 * Converts the first letter to upper case.
 	 * 
 	 * @param text
-	 * @return
+	 * @return String
 	 */
 	public static String capitalize(final String text) {
 	   return Character.toUpperCase(text.charAt(0)) + text.substring(1);

@@ -31,7 +31,7 @@ public class RecordSequence<B> implements Iterable<B> {
 	/**
 	 * Amount of records in this sequence
 	 * 
-	 * @return
+	 * @return int count
 	 */
 	public int size() {
 		return count;
@@ -41,7 +41,7 @@ public class RecordSequence<B> implements Iterable<B> {
 	 * Get the element at index. Creates a new record view object.
 	 * 
 	 * @param index
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	public B get(final int index) {
 		return adapter.view(fromAddress + index * recordSize);
@@ -52,7 +52,7 @@ public class RecordSequence<B> implements Iterable<B> {
 	 * 
 	 * @param index
 	 * @param record
-	 * @return
+	 * @return Record extends RecordView
 	 */
 	public B get(final int index, final B record) {
 		((RecordView)record).setRecordId(fromAddress + index * recordSize);

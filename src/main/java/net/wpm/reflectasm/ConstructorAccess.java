@@ -43,10 +43,10 @@ public class ConstructorAccess<T> {
 
     /**
      * Constructor for top-level classes and static nested classes.
-     * <p/>
+     * 
      * If the underlying class is a inner (non-static nested) class, a new instance will be created using <code>null</code> as the
-     * this$0 synthetic reference. The instantiated object will work as long as it actually don't use any member variable or method
-     * fron the enclosing instance.
+     * this synthetic reference. The instantiated object will work as long as it actually don't use any member variable or method
+     * from the enclosing instance.
      */
     @SuppressWarnings("unchecked")
     public T newInstance() {

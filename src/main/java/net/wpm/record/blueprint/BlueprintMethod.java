@@ -39,9 +39,9 @@ public class BlueprintMethod {
 
 
 	/**
-	 * Name of th eMethod
+	 * Name of the Method
 	 * 
-	 * @return
+	 * @return String 
 	 */
 	public String getName() {
 		return name;
@@ -50,7 +50,7 @@ public class BlueprintMethod {
 	/**
 	 * Kind of method
 	 * 
-	 * @return
+	 * @return ActionType
 	 */
 	public ActionType getActionType() {
 		return actionType;
@@ -59,7 +59,7 @@ public class BlueprintMethod {
 	/**
 	 * optional internal variable the method is based on
 	 * 
-	 * @return
+	 * @return BlueprintVariable
 	 */
 	public BlueprintVariable getVariable() {
 		return variable;

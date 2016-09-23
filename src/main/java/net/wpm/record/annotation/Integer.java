@@ -22,7 +22,8 @@ public @interface Integer {
 	
 	/**
 	 * Amount of bits to represent the integer
-	 * @return
+	 * 
+	 * @return int bit count
 	 */
 	public int bit() default 32;	
 
@@ -30,7 +31,7 @@ public @interface Integer {
 	/**
 	 * Is the integer is signed or unsigned
 	 * 
-	 * @return
+	 * @return Signedness
 	 */
 	public Signedness signedness() default Signedness.Signed;
 }
