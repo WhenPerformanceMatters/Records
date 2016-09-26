@@ -37,7 +37,7 @@ import static org.objectweb.asm.Type.getType;
 public class ExpressionCallStatic implements Expression {
 	private final Class<?> owner;
 	private final String name;
-	private final List<Expression> arguments = new ArrayList<>();
+	private final List<Expression> arguments = new ArrayList<Expression>();
 
 	ExpressionCallStatic(Class<?> owner, String name, Expression... arguments) {
 		this.owner = owner;
@@ -47,8 +47,8 @@ public class ExpressionCallStatic implements Expression {
 
 	@Override
 	public Type type(Context ctx) {
-		List<Class<?>> argumentClasses = new ArrayList<>();
-		List<Type> argumentTypes = new ArrayList<>();
+		List<Class<?>> argumentClasses = new ArrayList<Class<?>>();
+		List<Type> argumentTypes = new ArrayList<Type>();
 		for (Expression argument : arguments) {
 			argumentTypes.add(argument.type(ctx));
 			argumentClasses.add(getJavaType(ctx.getClassLoader(), argument.type(ctx)));
@@ -74,8 +74,8 @@ public class ExpressionCallStatic implements Expression {
 
 	@Override
 	public Type load(Context ctx) {
-		List<Class<?>> argumentClasses = new ArrayList<>();
-		List<Type> argumentTypes = new ArrayList<>();
+		List<Class<?>> argumentClasses = new ArrayList<Class<?>>();
+		List<Type> argumentTypes = new ArrayList<Type>();
 		for (Expression argument : arguments) {
 			argument.load(ctx);
 			argumentTypes.add(argument.type(ctx));

@@ -35,8 +35,8 @@ import static org.objectweb.asm.Type.INT_TYPE;
 import static org.objectweb.asm.commons.GeneratorAdapter.NE;
 
 public final class ExpressionComparatorNullable implements Expression {
-	private final List<Expression> left = new ArrayList<>();
-	private final List<Expression> right = new ArrayList<>();
+	private final List<Expression> left = new ArrayList<Expression>();
+	private final List<Expression> right = new ArrayList<Expression>();
 
 	ExpressionComparatorNullable() {
 	}

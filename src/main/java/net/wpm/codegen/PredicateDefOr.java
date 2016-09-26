@@ -33,7 +33,7 @@ import static org.objectweb.asm.Type.BOOLEAN_TYPE;
  * Defines methods for using logical 'or' for boolean type
  */
 public final class PredicateDefOr implements PredicateDef {
-	private final List<PredicateDef> predicates = new ArrayList<>();
+	private final List<PredicateDef> predicates = new ArrayList<PredicateDef>();
 
 	PredicateDefOr(List<PredicateDef> predicates) {
 		this.predicates.addAll(predicates);

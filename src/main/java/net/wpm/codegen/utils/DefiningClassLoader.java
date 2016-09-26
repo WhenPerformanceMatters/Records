@@ -29,7 +29,7 @@ import static java.util.Arrays.asList;
  * Also contains cache, that speeds up loading of classes, which have the same structure as the ones already loaded.
  */
 public class DefiningClassLoader extends ClassLoader implements DefiningClassLoaderMBean {
-	private final Map<AsmClassKey<?>, Class<?>> definedClasses = new HashMap<>();
+	private final Map<AsmClassKey<?>, Class<?>> definedClasses = new HashMap<AsmClassKey<?>, Class<?>>();
 
 	public DefiningClassLoader() {
 	}
@@ -56,7 +56,7 @@ public class DefiningClassLoader extends ClassLoader implements DefiningClassLoa
 
 	@Override
 	public Map<String, String> getDefinedClasses() {
-		Map<String, String> map = new HashMap<>(definedClasses.size());
+		Map<String, String> map = new HashMap<String, String>(definedClasses.size());
 
 		for (Map.Entry<AsmClassKey<?>, Class<?>> entry : definedClasses.entrySet()) {
 			map.put(entry.getKey().toString(), entry.getValue().toString());
@@ -67,7 +67,7 @@ public class DefiningClassLoader extends ClassLoader implements DefiningClassLoa
 
 	@Override
 	public Map<String, Integer> getDefinedClassesByType() {
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
 
 		for (Map.Entry<AsmClassKey<?>, Class<?>> entry : definedClasses.entrySet()) {
 			String type = asList(entry.getKey().getParentClasses()).toString();

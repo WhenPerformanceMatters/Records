@@ -38,7 +38,7 @@ import static org.objectweb.asm.Type.getType;
 public final class ExpressionCall implements Expression {
 	private final Expression owner;
 	private final String methodName;
-	private final List<Expression> arguments = new ArrayList<>();
+	private final List<Expression> arguments = new ArrayList<Expression>();
 
 	ExpressionCall(Expression owner, String methodName, Expression... arguments) {
 		this.owner = owner;
@@ -48,8 +48,8 @@ public final class ExpressionCall implements Expression {
 
 	@Override
 	public Type type(Context ctx) {
-		List<Class<?>> argumentClasses = new ArrayList<>();
-		List<Type> argumentTypes = new ArrayList<>();
+		List<Class<?>> argumentClasses = new ArrayList<Class<?>>();
+		List<Type> argumentTypes = new ArrayList<Type>();
 		for (Expression argument : arguments) {
 			argumentTypes.add(argument.type(ctx));
 			if (argument.type(ctx).equals(getType(Object[].class))) {
@@ -102,8 +102,8 @@ public final class ExpressionCall implements Expression {
 
 		owner.load(ctx);
 
-		List<Class<?>> argumentClasses = new ArrayList<>();
-		List<Type> argumentTypes = new ArrayList<>();
+		List<Class<?>> argumentClasses = new ArrayList<Class<?>>();
+		List<Type> argumentTypes = new ArrayList<Type>();
 		for (Expression argument : arguments) {
 			argument.load(ctx);
 			argumentTypes.add(argument.type(ctx));

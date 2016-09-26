@@ -33,7 +33,7 @@ import static org.objectweb.asm.Type.BOOLEAN_TYPE;
  * Defines methods for using logical 'and' for boolean type
  */
 public final class PredicateDefAnd implements PredicateDef {
-	private final List<PredicateDef> predicates = new ArrayList<>();
+	private final List<PredicateDef> predicates = new ArrayList<PredicateDef>();
 
 	PredicateDefAnd(List<PredicateDef> predicates) {
 		this.predicates.addAll(predicates);

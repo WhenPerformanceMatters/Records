@@ -409,7 +409,7 @@ public final class Expressions {
 	 * @return new instance of the ExpressionHash
 	 */
 	public static ExpressionHash hashCodeOfThis(List<String> fields) {
-		List<Expression> arguments = new ArrayList<>();
+		List<Expression> arguments = new ArrayList<Expression>();
 		for (String field : fields) {
 			arguments.add(getter(new VarThis(), field));
 		}

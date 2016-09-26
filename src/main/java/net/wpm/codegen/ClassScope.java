@@ -37,13 +37,13 @@ import org.objectweb.asm.commons.Method;
 public class ClassScope<T> {
 
 	private final Class<T> mainType;
-	private final Set<Class<?>> parentClasses = new LinkedHashSet<>();
+	private final Set<Class<?>> parentClasses = new LinkedHashSet<Class<?>>();
 	
-	private final Map<String, Class<?>> fields = new LinkedHashMap<>();
-	private final Map<String, Class<?>> staticFields = new LinkedHashMap<>();
-	private final List<Method> constructors = new ArrayList<>();
-	private final Set<Method> methods = new LinkedHashSet<>();
-	private final Set<Method> staticMethods = new LinkedHashSet<>();
+	private final Map<String, Class<?>> fields = new LinkedHashMap<String, Class<?>>();
+	private final Map<String, Class<?>> staticFields = new LinkedHashMap<String, Class<?>>();
+	private final List<Method> constructors = new ArrayList<Method>();
+	private final Set<Method> methods = new LinkedHashSet<Method>();
+	private final Set<Method> staticMethods = new LinkedHashSet<Method>();
 	
 
 	/**

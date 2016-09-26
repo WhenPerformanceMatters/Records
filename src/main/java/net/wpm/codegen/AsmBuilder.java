@@ -60,10 +60,10 @@ public class AsmBuilder<T> {
 
 	private final ClassScope<T> scope;
 	
-	private final Map<String, Class<?>> fields = new LinkedHashMap<>();
-	private final Map<String, Class<?>> staticFields = new LinkedHashMap<>();
-	private final Map<Method, Expression> expressionMap = new LinkedHashMap<>();
-	private final Map<Method, Expression> expressionStaticMap = new LinkedHashMap<>();
+	private final Map<String, Class<?>> fields = new LinkedHashMap<String, Class<?>>();
+	private final Map<String, Class<?>> staticFields = new LinkedHashMap<String, Class<?>>();
+	private final Map<Method, Expression> expressionMap = new LinkedHashMap<Method, Expression>();
+	private final Map<Method, Expression> expressionStaticMap = new LinkedHashMap<Method, Expression>();
 
 	public AsmBuilder<T> setBytecodeSaveDir(Path bytecodeSaveDir) {
 		this.bytecodeSaveDir = bytecodeSaveDir;
@@ -131,7 +131,7 @@ public class AsmBuilder<T> {
 
 	public AsmBuilder(DefiningClassLoader classLoader, Class<T> mainType, List<Class<?>> types) {
 		this.classLoader = classLoader;
-		this.scope = new ClassScope<>(mainType, types);
+		this.scope = new ClassScope<T>(mainType, types);
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class AsmBuilder<T> {
 		}
 
 		Method foundMethod = null;
-		List<List<java.lang.reflect.Method>> listOfMethods = new ArrayList<>();
+		List<List<java.lang.reflect.Method>> listOfMethods = new ArrayList<List<java.lang.reflect.Method>>();
 		listOfMethods.add(asList(Object.class.getMethods()));
 		for (Class<?> type : scope.getParentClasses()) {
 			listOfMethods.add(asList(type.getMethods()));
@@ -270,7 +270,7 @@ public class AsmBuilder<T> {
 
 	public Class<T> defineClass(String className) {
 		synchronized (classLoader) {
-			AsmClassKey<T> key = new AsmClassKey<>(scope.getParentClasses(), fields, staticFields, expressionMap, expressionStaticMap);
+			AsmClassKey<T> key = new AsmClassKey<T>(scope.getParentClasses(), fields, staticFields, expressionMap, expressionStaticMap);
 			Class<?> cachedClass = classLoader.getClassByKey(key);
 
 			if (cachedClass != null) {
@@ -377,9 +377,18 @@ public class AsmBuilder<T> {
 			}
 		}
 		if (bytecodeSaveDir != null) {
-			try (FileOutputStream fos = new FileOutputStream(bytecodeSaveDir.resolve(className + ".class").toFile())) {
+			FileOutputStream fos = null;
+			try {
+				fos = new FileOutputStream(bytecodeSaveDir.resolve(className + ".class").toFile());
 				fos.write(cw.toByteArray());
+				fos.close();
 			} catch (IOException e) {
+				try {
+					if(fos != null)
+						fos.close();
+				} catch (IOException ioe) {
+					throw new RuntimeException(ioe);
+				}			
 				throw new RuntimeException(e);
 			}
 		}
@@ -399,7 +408,9 @@ public class AsmBuilder<T> {
 	public T newInstance() {
 		try {
 			return defineClass().newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (InstantiationException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
 	}

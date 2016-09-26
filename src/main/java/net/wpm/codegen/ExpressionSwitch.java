@@ -37,7 +37,7 @@ import static org.objectweb.asm.Type.getType;
 public class ExpressionSwitch implements Expression {
 	private final Expression nom;
 	private final Expression defaultExp;
-	private final List<Expression> list = new ArrayList<>();
+	private final List<Expression> list = new ArrayList<Expression>();
 
 	ExpressionSwitch(Expression nom, List<Expression> list) {
 		this.nom = nom;

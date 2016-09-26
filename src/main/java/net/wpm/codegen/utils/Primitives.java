@@ -30,8 +30,8 @@ public class Primitives {
 	private Primitives() {}
 
 	static {
-		Map<Class<?>, Class<?>> primToWrap = new HashMap<>();
-		Map<Class<?>, Class<?>> wrapToPrim = new HashMap<>();
+		Map<Class<?>, Class<?>> primToWrap = new HashMap<Class<?>, Class<?>>();
+		Map<Class<?>, Class<?>> wrapToPrim = new HashMap<Class<?>, Class<?>>();
 
 		add(primToWrap, wrapToPrim, Boolean.TYPE, Boolean.class);
 		add(primToWrap, wrapToPrim, Byte.TYPE, Byte.class);

@@ -11,7 +11,7 @@ plugins {
 tasks.withType(AbstractCompile)*.options*.encoding = "UTF-8"
 
 // Java compatibility
-sourceCompatibility = targetCompatibility = 1.8
+sourceCompatibility = targetCompatibility = 1.6
 
 // name of the project in Eclipse and IntelliJ
 def projectName = 'Records'
@@ -142,9 +142,9 @@ uploadArchives {
       //}
       
       // https://oss.sonatype.org/content/repositories/snapshots/net/whenperformancematters/records/
-      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }     
+      //snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+      //  authentication(userName: ossrhUsername, password: ossrhPassword)
+      //}     
 
       pom.project {
         packaging 'jar'

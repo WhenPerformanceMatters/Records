@@ -39,7 +39,7 @@ import static org.objectweb.asm.Type.getType;
 
 public class Utils {
 
-	private static final Map<String, Type> wrapperToPrimitive = new HashMap<>();
+	private static final Map<String, Type> wrapperToPrimitive = new HashMap<String, Type>();
 
 	static {
 		for (Class<?> primitiveType : Primitives.allPrimitiveTypes()) {

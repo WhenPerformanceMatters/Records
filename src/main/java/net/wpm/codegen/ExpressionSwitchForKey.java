@@ -38,8 +38,8 @@ import static org.objectweb.asm.Type.getType;
 public class ExpressionSwitchForKey implements Expression {
 	private final Expression key;
 	private final Expression defaultExp;
-	private final List<Expression> listKey = new ArrayList<>();
-	private final List<Expression> listValue = new ArrayList<>();
+	private final List<Expression> listKey = new ArrayList<Expression>();
+	private final List<Expression> listValue = new ArrayList<Expression>();
 
 	ExpressionSwitchForKey(Expression key, List<Expression> listKey, List<Expression> listValue) {
 		this.key = key;

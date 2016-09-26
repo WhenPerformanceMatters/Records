@@ -38,7 +38,7 @@ import static net.wpm.codegen.Utils.getJavaType;
 public class ExpressionCallStaticSelf implements Expression {
 	private final Expression owner;
 	private final String methodName;
-	private final List<Expression> arguments = new ArrayList<>();
+	private final List<Expression> arguments = new ArrayList<Expression>();
 
 	public ExpressionCallStaticSelf(String methodName, Expression... expressions) {
 		this.owner = self();
@@ -69,7 +69,7 @@ public class ExpressionCallStaticSelf implements Expression {
 
 	@Override
 	public Type type(Context ctx) {
-		List<Type> argumentTypes = new ArrayList<>();
+		List<Type> argumentTypes = new ArrayList<Type>();
 		for (Expression argument : arguments) {
 			argumentTypes.add(argument.type(ctx));
 		}
@@ -100,7 +100,7 @@ public class ExpressionCallStaticSelf implements Expression {
 	}
 
 	private static List<Class<?>> argumentClasses(Context ctx, List<Expression> expressions) {
-		List<Class<?>> classList = new ArrayList<>();
+		List<Class<?>> classList = new ArrayList<Class<?>>();
 		for (Expression expression : expressions) {
 			classList.add(getJavaType(ctx.getClassLoader(), expression.type(ctx)));
 		}
@@ -112,7 +112,7 @@ public class ExpressionCallStaticSelf implements Expression {
 		GeneratorAdapter g = ctx.getGeneratorAdapter();
 		Type ownerType = owner.type(ctx);
 
-		List<Type> argumentTypes = new ArrayList<>();
+		List<Type> argumentTypes = new ArrayList<Type>();
 		for (Expression argument : arguments) {
 			argument.load(ctx);
 			argumentTypes.add(argument.type(ctx));

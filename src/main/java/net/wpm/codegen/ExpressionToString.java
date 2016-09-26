@@ -40,7 +40,7 @@ public final class ExpressionToString implements Expression {
 	private String begin = "{";
 	private String end = "}";
 	private String separator = " ";
-	private final Map<Object, Expression> arguments = new LinkedHashMap<>();
+	private final Map<Object, Expression> arguments = new LinkedHashMap<Object, Expression>();
 
 	ExpressionToString(Map<String, Expression> arguments) {
 		this.arguments.putAll(arguments);
