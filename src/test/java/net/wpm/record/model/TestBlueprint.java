@@ -48,6 +48,7 @@ public interface TestBlueprint {
 	// optional Record methods 
 	public int blueprintId();
 	public TestBlueprint view();		
+	public void viewAt(TestBlueprint at);
 	public long recordId();
 	public void recordId(long recordId);
 	public int recordSize();

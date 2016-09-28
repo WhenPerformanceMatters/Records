@@ -6,13 +6,17 @@ import org.slf4j.LoggerFactory;
 import net.wpm.record.Records;
 
 /**
- * The Records.view(record) method is a shortcut for Records.get(blueprint, Records.id(record))
- * and is overall faster. Even better is the optional view() method for a blueprint.
+ * The Records.view(record) method is a shortcut for Records.view(blueprint, Records.id(record)) 
+ * and is overall faster. It creates a copy of the record view object. Even better is the 
+ * optional view() method for a blueprint.
  * 
- * When storing records as a variable in another class, a separate view object is helpful.
- * Keep in mind each view is a real Java object with all its overhead and costs 24 bytes of memory.
+ * Since a record view can point to different records, a copy of the view object is needed when 
+ * storing a reference of it for later use. Keep in mind each view object is a Java object with 
+ * all its overhead and costs.
  * 
- * TODO: add public void view(Sample06);	
+ * Instead of creating a new copy every time. A already existing view can be reused with the
+ * Records.view(otherRecord, Records.id(record)) method or the optional viewAt(record) method 
+ * of the blueprint.	
  *  
  * @author Nico Hezel
  */
@@ -42,6 +46,16 @@ public class RecordsSample_09_View {
 		
 		// prints -> {Fraction: 0.1}
 		log.info(obj.toString());
+				
+		// another record
+		Sample09 otherObj = Records.of(Sample09.class);
+		
+		// point a existing record view to another record
+		otherView.viewAt(otherObj);
+		otherView.setFraction(0.99f);
+		
+		// prints -> {Fraction: 0.99}
+		log.info(otherObj.toString());
 	}	
 
 	protected static interface Sample09 {
@@ -49,6 +63,11 @@ public class RecordsSample_09_View {
 		public float getFraction();
 		public void setFraction(float fraction);
 		
+		// creates a new record view object pointing to this record
 		public Sample09 view();
+		
+		// point the current record view to the given record 
+		// Shortcut for record.recordId(otherRecord.recordId())
+		public void viewAt(Sample09 at);
 	}
 }

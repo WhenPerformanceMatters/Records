@@ -14,22 +14,21 @@ import net.wpm.record.blueprint.BlueprintMethod;
 public class TemplateView extends TemplateBase {
 
 	protected BlueprintMethod blueprintMethod;
-	protected Class<?> returnType;
+	protected Class<?> blueprintType;
 	
-	public TemplateView(BlueprintMethod blueprintMethod, Class<?> returnType) {
+	public TemplateView(BlueprintMethod blueprintMethod, Class<?> blueprintType) {
 		this.blueprintMethod = blueprintMethod;
-		this.returnType = returnType;
+		this.blueprintType = blueprintType;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void addBytecode(AsmBuilder<?> builder) {	
-		// cast to object, since the RecordAdapter.view uses generics
 		Expression recordView = let(call(adapter(), "newInstance"));
 		Expression setId = call(recordView, "setRecordId", address());
-		Expression cast = cast(recordView, returnType);
+		Expression cast = cast(recordView, blueprintType);
 		
 		Expression seq = sequence(recordView, setId, cast);		
-		builder.method(blueprintMethod.getName(), returnType, Collections.EMPTY_LIST, seq);			
+		builder.method(blueprintMethod.getName(), blueprintType, Collections.EMPTY_LIST, seq);			
 	}	
 }

@@ -124,6 +124,15 @@ public class RecordClassGeneratorTest {
 	
 	@Test
 	@Ignore
+	public void viewAtTest() throws InstantiationException, IllegalAccessException {		
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "viewAt", ActionType.ViewAt)
+		);
+		assertNotEquals(record, null);
+	}
+	
+	@Test
+	@Ignore
 	public void copyTest() throws InstantiationException, IllegalAccessException {		
 		TestBlueprint record = createRecordView(blueprint,
 				new BlueprintMethod(TestBlueprint.class, "copy", ActionType.Copy)

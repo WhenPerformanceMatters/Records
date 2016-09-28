@@ -137,6 +137,8 @@ public class BlueprintInspector {
 			else if(methodName.startsWith("decrease"))
 				analyseDecreaseMethod(methodIndex, blueprintClass);
 			
+			else if(methodName.startsWith("view") && methodName.endsWith("At"))
+				analyseViewAtMethod(methodIndex, blueprintClass);
 			else if(methodName.equalsIgnoreCase("view"))
 				analyseViewMethod(methodIndex, blueprintClass);
 			else if(methodName.equalsIgnoreCase("copy"))
@@ -155,6 +157,28 @@ public class BlueprintInspector {
 	}
 	
 	/**
+	 * Check if this is a valid view-at method
+	 * 
+	 * @param methodIndex
+	 * @param blueprintClass
+	 */
+	protected void analyseViewAtMethod(int methodIndex, BlueprintClass blueprintClass) {
+		String methodName = getMethodName(methodIndex);
+		
+		try {
+			notOccupied(methodName);
+			ensureAbstract(methodIndex, methodName);
+			hasParameters(methodIndex, methodName, blueprintClass.getBlueprint());		
+			returns(methodIndex, methodName, Void.TYPE);
+		} catch (Exception e) {
+			throw new InvalidBlueprintException("Unable to declare "+methodName+" as a view-at method.", e);
+		}
+		
+		// defines a valid view-at method contained in the blueprint
+		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.ViewAt));
+	}
+	
+	/**
 	 * Check if this is a valid view method
 	 * 
 	 * @param methodIndex
@@ -162,6 +186,7 @@ public class BlueprintInspector {
 	 */
 	protected void analyseViewMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
+		
 		try {
 			notOccupied(methodName);
 			ensureAbstract(methodIndex, methodName);
@@ -171,7 +196,7 @@ public class BlueprintInspector {
 			throw new InvalidBlueprintException("Unable to declare "+methodName+" as a view method.", e);
 		}
 		
-		// defines a valid recordId method contained in the blueprint
+		// defines a valid view method contained in the blueprint
 		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.View));
 	}
 	
@@ -193,7 +218,7 @@ public class BlueprintInspector {
 			throw new InvalidBlueprintException("Unable to declare "+methodName+" as a record size method.", e);
 		}
 
-		// defines a valid blueprintId method contained in the blueprint
+		// defines a valid record size method contained in the blueprint
 		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.GetRecordSize));
 	}
 	
@@ -215,7 +240,7 @@ public class BlueprintInspector {
 			throw new InvalidBlueprintException("Unable to declare "+methodName+" as a copyFrom method.", e);
 		}
 		
-		// defines a valid recordId method contained in the blueprint
+		// defines a valid copy-from method contained in the blueprint
 		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.CopyFrom));
 	}
 	
@@ -227,6 +252,7 @@ public class BlueprintInspector {
 	 */
 	protected void analyseCopyMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
+		
 		try {
 			notOccupied(methodName);
 			ensureAbstract(methodIndex, methodName);
@@ -262,7 +288,7 @@ public class BlueprintInspector {
 		String variableName = methodName.substring(8, methodName.length() - 2);
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, getMethodParameterTypes(methodIndex)[0]);
 
-		// defines a valid get-at-index method contained in the blueprint
+		// defines a valid decrease-by method contained in the blueprint
 		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.DecreaseValueBy, variable));
 	}
 	
@@ -288,7 +314,7 @@ public class BlueprintInspector {
 		String variableName = methodName.substring(8);
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, Object.class);
 
-		// defines a valid get-at-index method contained in the blueprint
+		// defines a valid decrease method contained in the blueprint
 		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.DecreaseValue, variable));
 	}
 	
@@ -314,7 +340,7 @@ public class BlueprintInspector {
 		String variableName = methodName.substring(8, methodName.length() - 2);
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, getMethodParameterTypes(methodIndex)[0]);
 
-		// defines a valid get-at-index method contained in the blueprint
+		// defines a valid increase-by method contained in the blueprint
 		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.IncreaseValueBy, variable));
 	}
 	
@@ -340,7 +366,7 @@ public class BlueprintInspector {
 		String variableName = methodName.substring(8);
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, Object.class);
 
-		// defines a valid get-at-index method contained in the blueprint
+		// defines a valid increase method contained in the blueprint
 		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.IncreaseValue, variable));
 	}
 	

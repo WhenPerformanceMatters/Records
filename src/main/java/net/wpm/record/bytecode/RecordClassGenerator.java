@@ -35,6 +35,7 @@ import net.wpm.record.bytecode.template.TemplateSetValue;
 import net.wpm.record.bytecode.template.TemplateSetValueAt;
 import net.wpm.record.bytecode.template.TemplateToString;
 import net.wpm.record.bytecode.template.TemplateView;
+import net.wpm.record.bytecode.template.TemplateViewAt;
 import net.wpm.record.exception.RecordClassException;
 
 /**
@@ -191,6 +192,8 @@ public class RecordClassGenerator {
 				return new TemplateCopyFrom(method, blueprintClass);
 			case View:
 				return new TemplateView(method, blueprintClass);
+			case ViewAt:
+				return new TemplateViewAt(method, blueprintClass);
 			default:
 				return null;
 		}

@@ -14,7 +14,7 @@ public class BlueprintMethod {
 			SetValue, SetValueAt, GetArraySize,
 			IncreaseValue, IncreaseValueBy, DecreaseValue, DecreaseValueBy,
 			GetRecordId, SetRecordId, GetRecordSize, GetBlueprintId, 
-			Copy, CopyFrom, View
+			Copy, CopyFrom, View, ViewAt
 		};
 
 	/**
@@ -79,6 +79,7 @@ public class BlueprintMethod {
 				return getName() + "(int)";
 			case SetRecordId:
 				return getName() + "(long)";
+			case ViewAt:
 			case CopyFrom:
 				return getName() + "(" + blueprint.getName() + ")";
 			default:
@@ -106,6 +107,7 @@ public class BlueprintMethod {
 			case SetValue:
 			case SetValueAt:
 			case SetRecordId:
+			case ViewAt:
 			case CopyFrom:
 				sb.append("void " + getSignature());
 				sb.append(" {" + actionType.toString() + "}");

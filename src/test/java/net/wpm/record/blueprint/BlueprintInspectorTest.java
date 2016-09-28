@@ -91,8 +91,8 @@ public class BlueprintInspectorTest {
 			"setSimpleValueAt(int, " + SimpleValue.class.getName() + ")", "getNumber()", "increaseNumber()", "increaseNumberBy(int)", 
 			"decreaseNumber()", "decreaseNumberBy(int)", "getBoolean()", "getByte()", "getShort()", "getInt()", "getLong()", 
 			"getFloat()", "getDouble()", "getBooleanBoxed()", "getByteBoxed()", "getShortBoxed()", "getIntBoxed()", "getLongBoxed()", 
-			"getFloatBoxed()", "getDoubleBoxed()", "blueprintId()", "view()", "recordId()", "recordId(long)", "recordSize()", 
-			"copy()", "copyFrom(" + TestBlueprint.class.getName() + ")", 
+			"getFloatBoxed()", "getDoubleBoxed()", "blueprintId()", "view()", "viewAt(" + TestBlueprint.class.getName() + ")", 
+			"recordId()", "recordId(long)", "recordSize()",	"copy()", "copyFrom(" + TestBlueprint.class.getName() + ")", 
 		};
 		for (String name : names)			
 			assertTrue("Could not find method " + name, methodNameSet.contains(name));

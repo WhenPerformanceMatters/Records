@@ -13,18 +13,18 @@ import net.wpm.record.blueprint.BlueprintMethod;
 public class TemplateCopy extends TemplateBase {
 
 	protected BlueprintMethod blueprintMethod;
-	protected Class<?> returnType;
+	protected Class<?> blueprintType;
 	
-	public TemplateCopy(BlueprintMethod blueprintMethod, Class<?> returnType) {
+	public TemplateCopy(BlueprintMethod blueprintMethod, Class<?> blueprintType) {
 		this.blueprintMethod = blueprintMethod;
-		this.returnType = returnType;
+		this.blueprintType = blueprintType;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void addBytecode(AsmBuilder<?> builder) {	
-		// cast to object, since the RecordAdapter.copy uses generics
+		// cast to object, since the RecordAdapter.copy uses generic
 		Expression copy = call(adapter(), "copy", cast(self(), Object.class));
-		builder.method(blueprintMethod.getName(), returnType, Collections.EMPTY_LIST, copy);			
+		builder.method(blueprintMethod.getName(), blueprintType, Collections.EMPTY_LIST, copy);			
 	}	
 }
