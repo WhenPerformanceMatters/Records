@@ -7,10 +7,9 @@ import net.wpm.record.Records;
 import net.wpm.record.annotation.Array;
 
 /**
- * When the length of an array is unknown, a get-size method can help.
- * 
- * The constant size of the arrays in a record allows Java Records to 
- * create a method which only returns a single number e.g.
+ * When the length of an array is unknown, the optional get-size method 
+ * can help. The constant size of the arrays in a record allows Java
+ * Records to create a method which only returns a single number e.g.
  * 
  * <pre>
  * public final int getNumberSize() { 
@@ -19,7 +18,7 @@ import net.wpm.record.annotation.Array;
  * <pre> 
  * 
  * Since all methods implemented by Java Records are final and the 
- * get-size method returns a constant value, the JVM optimizes the 
+ * get-size method returns a constant value, the JVM optimizes any 
  * method-call and replaces it with the actual length of the array.
  * 
  * @author Nico Hezel
@@ -31,7 +30,7 @@ public class RecordsSample_04_ArraySize {
 
 	public static void main(String[] args) {
 		
-		// get a record with an array inside
+		// get a record view pointing to a new record
 		Sample04 obj = Records.of(Sample04.class);
 		
 		// getNumberSize() returns a constant value

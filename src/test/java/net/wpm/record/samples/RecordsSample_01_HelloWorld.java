@@ -7,8 +7,8 @@ import net.wpm.record.Records;
 
 /**
  * With the help of Java Records it is possible to create POJO (Plain old Java Object) like 
- * instances of an existing interface. In the Java Records world those interfaces are called 
- * blueprints. They define the structure of the underlying data. 
+ * instances of an interface. In the Java Records world those interfaces are called blueprints. 
+ * They define the structure of the underlying data. 
  * 
  * Most of the functionality is available via the net.wpm.record.Records API. 
  * 
@@ -16,7 +16,6 @@ import net.wpm.record.Records;
  * created and a default method gets called.
  * 
  * @author Nico Hezel
- *
  */
 public class RecordsSample_01_HelloWorld {
 

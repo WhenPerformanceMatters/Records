@@ -20,7 +20,7 @@ public class RecordsSample_08_RecordSize {
 
 	public static void main(String[] args) {
 		
-		// get a record
+		// get a record view to a new record
 		Sample08 obj1 = Records.of(Sample08.class);
 		
 		// size of the record in bytes 
@@ -40,7 +40,10 @@ public class RecordsSample_08_RecordSize {
 		public float getFraction();
 		public void setFraction(float fraction);
 		
+		// size of the record in bytes
 		public int recordSize();
+		
+		// id of the record
 		public long recordId();
 	}
 }

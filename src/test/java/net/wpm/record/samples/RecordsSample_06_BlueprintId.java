@@ -10,7 +10,7 @@ import net.wpm.record.Records;
  * because Java Records analyzes and registers the blueprint, builds a 
  * record view class for it and allocates memory for a new record. 
  * 
- * The registration can be triggered manually Structs.register(blueprint),
+ * The registration can be triggered manually Structs.register(blueprint)
  * without instantiating a record view or allocating memory for a record 
  * afterwards. Included in the process is the analysis of the blueprint 
  * and the construction of the new record view class.
@@ -21,7 +21,6 @@ import net.wpm.record.Records;
  * The blueprint can define a blueprintId() method in order to receive the id.
  * 
  * @author Nico Hezel
- *
  */
 public class RecordsSample_06_BlueprintId {
 	
@@ -32,7 +31,7 @@ public class RecordsSample_06_BlueprintId {
 		// register the blueprint
 		int blueprintId = Records.register(Sample06.class);
 		
-		// create a new record
+		// create a new record and return a new record view pointing to it
 		Sample06 obj = Records.create(blueprintId);
 		obj.setNumber(77);
 		obj.setFraction(-0.7f);

@@ -19,7 +19,7 @@ public class RecordsSample_05_ToString {
 
 	public static void main(String[] args) {
 		
-		// get one record
+		// get a record 
 		Sample05 obj = Records.of(Sample05.class);
 		obj.setNumber(5);
 		obj.setPi(Math.PI);

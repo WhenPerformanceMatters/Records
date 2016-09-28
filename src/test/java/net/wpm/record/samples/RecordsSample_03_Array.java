@@ -8,11 +8,11 @@ import net.wpm.record.annotation.Array;
 
 /**
  * Dealing with arrays inside a blueprint is challenging for Java Records. 
- * It allocates a fixed amount of memory for every record of the same type. 
+ * It always allocates a fixed amount of memory for a record of the same type. 
  * Those requiring the arrays to be always at equal length.
  * 
  * An annotation at one of the blueprint method can specify the length of 
- * the array. Leaving out such information creates an array of length one.
+ * the array. Omitting it creates an array of length one.
  * 
  * @author Nico Hezel
  *
@@ -23,7 +23,7 @@ public class RecordsSample_03_Array {
 
 	public static void main(String[] args) {
 		
-		// get a record with an array inside
+		// get a record view pointing to a new record with an array inside
 		Sample03 obj = Records.of(Sample03.class);
 		
 		// writes the number 5 in the first index of the array
