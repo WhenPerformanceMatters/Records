@@ -1,9 +1,10 @@
 package net.wpm.record.bytes;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Map;
+
+import com.koloboke.collect.map.hash.HashLongObjMap;
+import com.koloboke.collect.map.hash.HashLongObjMaps;
 
 import net.openhft.chronicle.core.Jvm;
 import net.openhft.chronicle.core.Memory;
@@ -27,7 +28,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	protected static final int OverProvision = 256; 		// sufficient bytes
 	
 	// all pieces of memory allocated
-	protected final Map<Long, UnsafeBytes> addressToBytes = new HashMap<Long, UnsafeBytes>();
+	protected final HashLongObjMap<UnsafeBytes> addressToBytes = HashLongObjMaps.newMutableMap();
 	
 	// list of memory pieces which has some free space
 	protected final LinkedList<UnsafeBytes> freeBytes = new LinkedList<UnsafeBytes>();
@@ -42,6 +43,8 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	
 	/**
 	 * Start with an initial allocation of 4096 bytes
+	 * 
+	 * @costs 0C 0B 2A 1P 1M 4N
 	 */
 	private UnsafeMemoryAdapter() {
 		freeBytes.add(allocate(BlockSize));
@@ -50,6 +53,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	/**
 	 * Allocate a new piece of memory
 	 * 
+	 * @costs 0C 0B 1A 1P 1M 4N
 	 * @param size
 	 */
 	protected final UnsafeBytes allocate(int size) {	
@@ -63,6 +67,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	 * The memory is either retrieved from the list of FreeBytes or has been 
 	 * newly allocated.
 	 * 
+	 * @costs 0C ?B ?A ?P 1M 5N
 	 * @param size in bytes
 	 * @return
 	 */
@@ -85,6 +90,8 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	/**
 	 * Reserve a specific amount of memory. 
 	 * Returns the starting address of reserved region.
+	 * 
+	 * @costs 0C ?B ?A ?P 1M 5N
 	 */
 	@Override
 	public final long reserve(final int size) {
@@ -107,6 +114,8 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	
 	/**
 	 * Releases all allocated memory.
+	 * 
+	 * @costs 0C ?B ?A ?P 0M 1N
 	 */
 	@Override
 	public void releaseAll() {
@@ -118,6 +127,8 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 
 	/**
 	 * Maximum amount of allocatable memory. Including memory allocated by DirectByteBuffers.
+	 * 
+	 * @costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public int capacity() {
@@ -126,76 +137,121 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 		return (int)(max - used);
 	}
 
+	/**
+	 * @costs 0C 1B 0A 0P 0M 0N
+	 */
 	@Override
 	public boolean getBoolean(long address) {
 		return getByte(address) != 0;
 	}
 
+	/**
+	 * @costs 0C 1B 0A 0P 0M 0N
+	 */
 	@Override
 	public void setBoolean(long address, boolean value) {
 		setByte(address, value ? (byte)'Y' : 0);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public byte getByte(long address) {
 		return memory.readByte(address);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public void setByte(long address, byte value) {
 		memory.writeByte(address, value);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public short getShort(long address) {
 		return memory.readShort(address);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public void setShort(long address, short value) {
 		memory.writeShort(address, value);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public int getInt(long address) {
 		return memory.readInt(address);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public void setInt(long address, int value) {
 		memory.writeInt(address, value);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public float getFloat(long address) {
 		return memory.readFloat(address);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public void setFloat(long address, float value) {
 		memory.writeFloat(address, value);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public long getLong(long address) {
 		return memory.readLong(address);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public void setLong(long address, long value) {
 		memory.writeLong(address, value);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public double getDouble(long address) {
 		return memory.readDouble(address);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public void setDouble(long address, double value) {
 		memory.writeDouble(address, value);
 	}
 
+	/**
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 */
 	@Override
 	public void copy(long fromAddress, long toAddress, int length) {
 		memory.copyMemory(fromAddress, toAddress, length);

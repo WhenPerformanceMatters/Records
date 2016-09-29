@@ -31,6 +31,7 @@ public class RecordSequence<B> implements Iterable<B> {
 	/**
 	 * Amount of records in this sequence
 	 * 
+	 * @costs 0C 0B 0A 0P 0M 0N
 	 * @return int count
 	 */
 	public int size() {
@@ -40,6 +41,7 @@ public class RecordSequence<B> implements Iterable<B> {
 	/**
 	 * Get the element at index. Creates a new record view object.
 	 * 
+	 * @costs 2C 0B 0A 0P 0M 1N
 	 * @param index
 	 * @return Record extends RecordView
 	 */
@@ -50,16 +52,19 @@ public class RecordSequence<B> implements Iterable<B> {
 	/**
 	 * Get the element at index and reuse the record view
 	 * 
+	 * @costs 1C 0B 0A 0P 0M 0N
 	 * @param index
-	 * @param record
+	 * @param reuse
 	 * @return Record extends RecordView
 	 */
-	public B get(final int index, final B record) {
-		((RecordView)record).setRecordId(fromAddress + index * recordSize);
-		return record;
+	public B get(final int index, final B reuse) {
+		((RecordView)reuse).setRecordId(fromAddress + index * recordSize);
+		return reuse;
 	}
 	
-	
+	/**
+	 * @costs 3C ?B 0A ?P 0M 1N
+	 */
 	@Override
 	public void forEach(Consumer<? super B> action) {
 		
@@ -73,6 +78,9 @@ public class RecordSequence<B> implements Iterable<B> {
 		}
 	}
 
+	/**
+	 * @costs 3C 0B 0A 0P 0M 2N
+	 */
 	@Override
 	public final Iterator<B> iterator() {
 		return new Itr(adapter);
@@ -91,17 +99,27 @@ public class RecordSequence<B> implements Iterable<B> {
 		protected final RecordView reuseRecordView;
 		protected final B reuseRecord;
 		
+		/**
+		 * @costs 3C 0B 0A 0P 0M 1N
+		 * @param adapter
+		 */
 		public Itr(final RecordAdapter<B> adapter) {						
 			this.reuseRecord = adapter.view(0);
 			this.reuseRecordView = (RecordView) reuseRecord;
 			this.address = fromAddress - recordSize;
 		}
 
+		/**
+		 * @costs 0C 0B 0A 0P 0M 0N
+		 */
 		@Override
 		public final boolean hasNext() {
 			return ((address += recordSize) < toAddress);
 		}
 
+		/**
+		 * @costs 0C 0B 0A 0P 0M 0N
+		 */
 		@Override
 		public final B next() {
 			reuseRecordView.setRecordId(address);

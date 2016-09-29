@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import net.wpm.record.blueprint.BlueprintClass;
 import net.wpm.record.blueprint.BlueprintInspector;
 import net.wpm.record.bytecode.RecordClassGenerator;
-import net.wpm.record.bytes.MemoryAccess;
 import net.wpm.record.bytes.UnsafeMemoryAdapter;
 import net.wpm.record.collection.RecordSequence;
 import net.wpm.reflectasm.ClassAccess;
@@ -44,11 +43,12 @@ public final class RecordAdapter<B> {
 	protected final int recordSize;
 	
 	// access to memory
-	protected final MemoryAccess memoryAccess; 
+	protected final UnsafeMemoryAdapter memoryAccess; 
 	
 	/**
 	 * Analyze the blueprint and constructs a record view class.
 	 * 
+	 * @costs ?C ?B ?A ?P 0M ?N
 	 * @param blueprint
 	 */
 	public RecordAdapter(final Class<B> blueprint) {
@@ -58,6 +58,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * The record view class needs implements all methods of the blueprint.
 	 * 
+	 * @costs ?C ?B ?A ?P 0M ?N
 	 * @param blueprint
 	 * @param recordViewClass
 	 */
@@ -75,16 +76,12 @@ public final class RecordAdapter<B> {
 		recordSize = (Integer) recordViewClassFieldAccess.get(null, "recordSize");
 			
 		// create the underlying byte buffer
-		memoryAccess = build();
+		memoryAccess = UnsafeMemoryAdapter.getInstance();
 		
 		// inform the recordView about the adapter and its buffer 
 		recordViewClassFieldAccess.set(null, "recordAdapter", this);
 		recordViewClassFieldAccess.set(null, "memoryAccess", memoryAccess);
-	}
-
-	public static MemoryAccess build() {
-		return UnsafeMemoryAdapter.getInstance();
-	}		
+	}	
 	
 	/**
 	 * Constructs a new record view class implementing the blueprint methods 
@@ -105,6 +102,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Get a record id pointing to an empty record
 	 * 
+	 * @costs 0C ?B ?A ?P 1M 5N
 	 * @return
 	 */
 	protected final long nextId() {			
@@ -114,6 +112,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a new array
 	 * 
+	 * @costs 0C ?B ?A ?P 1M 6N
 	 * @param count
 	 * @return RecordSequence containing the new array
 	 */
@@ -125,6 +124,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a new record view, pointing no-where
 	 * 
+	 * @costs 1C 0B 0A 0P 0M 1N
 	 * @return RecordView
 	 */
 	public final RecordView newInstance() {
@@ -134,6 +134,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a new record view pointing to an empty record
 	 * 
+	 * @costs 2C ?B ?A ?P 1M 6N
 	 * @return Record extends RecordView
 	 */
 	@SuppressWarnings("unchecked")
@@ -157,6 +158,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a new record, pointing to the data of another record.
 	 * 
+	 * @costs 2C 0B 0A 0P 0M 1N
 	 * @param recordId
 	 * @return Record extends RecordView
 	 */
@@ -170,6 +172,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a new record view, pointing to the data of the given record.
 	 * 
+	 * @costs 3C 0B 0A 0P 0M 1N
 	 * @param record
 	 * @return Record extends RecordView
 	 */
@@ -181,6 +184,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a copy of the record and return the copy.
 	 * 
+	 * @costs 3C ?B ?A ?P 1M 6N
 	 * @return Record extends RecordView
 	 */
 	@SuppressWarnings("unchecked")
@@ -198,6 +202,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Copy the data of one record to another one
 	 * 
+	 * @costs 2C 0B 0A 0P 0M 0N
 	 * @param from
 	 * @param to
 	 */
@@ -211,10 +216,22 @@ public final class RecordAdapter<B> {
 	// -------------------------------- getter and setter --------------------------------------
 	// -----------------------------------------------------------------------------------------
 	
+	/**
+	 * get the blueprint id used by the adapter 
+	 * 
+	 * @costs 0C 0B 0A 0P 0M 0N
+	 * @return blueprint id
+	 */
 	public final int getBlueprintId() {
 		return blueprintId;
 	}
 
+	/**
+	 * set the blueprint id used by the adapter 
+	 * 
+	 * @costs 0C ?B ?A 0P 0M 0N
+	 * @param blueprintId
+	 */
 	public final void setBlueprintId(final int blueprintId) {
 		this.blueprintId = blueprintId;
 		recordViewClassFieldAccess.set(null, "blueprintId", blueprintId);
@@ -224,6 +241,9 @@ public final class RecordAdapter<B> {
 		return blueprint;
 	}
 
+	/**
+	 * @costs 0C ?B ?A ?P 0M 1N
+	 */
 	public final void releaseAll() {
 		memoryAccess.releaseAll();
 	}
