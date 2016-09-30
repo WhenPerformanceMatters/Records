@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import net.wpm.record.Records;
 
 /**
- * The first call to Structs.of(...) is slower then the consecutive ones, 
+ * The first call to Records.of(...) is slower then the consecutive ones, 
  * because Java Records analyzes and registers the blueprint, builds a 
  * record view class for it and allocates memory for a new record. 
  * 
- * The registration can be triggered manually Structs.register(blueprint)
+ * The registration can be triggered manually Records.register(blueprint)
  * without instantiating a record view or allocating memory for a record 
  * afterwards. Included in the process is the analysis of the blueprint 
  * and the construction of the new record view class.

@@ -16,13 +16,13 @@ public class RecordsPerf_01_Access {
 	public static void main(String[] args) throws IOException, InstantiationException, IllegalAccessException {
 
 		// access to the records is possible via the Records API or the Record Adapter
-		RecordAdapter<Foo> structAdapter = new RecordAdapter<Foo>(Foo.class);
-		int classId = Records.register(structAdapter);
+		RecordAdapter<Foo> recordAdapter = new RecordAdapter<Foo>(Foo.class);
+		int classId = Records.register(recordAdapter);
 		
 		// create a three new records
 		Foo obj = Records.create(Foo.class);
 		Foo otherObj = Records.create(classId); 	// faster
-		Foo anotherObj = structAdapter.create();	// the fastest
+		Foo anotherObj = recordAdapter.create();	// the fastest
 		
 		// a record id
 		long id = Records.id(obj);
@@ -30,7 +30,7 @@ public class RecordsPerf_01_Access {
 		// four record views pointing to the same record
 		Foo sameObj1 = Records.view(Foo.class, id);
 		Foo sameObj2 = Records.view(classId, id);	// fast
-		Foo sameObj3 = structAdapter.view(id);		// faster
+		Foo sameObj3 = recordAdapter.view(id);		// faster
 		Foo sameObj4 = obj.view();					// the fastest
 		
 		// re-use the record view

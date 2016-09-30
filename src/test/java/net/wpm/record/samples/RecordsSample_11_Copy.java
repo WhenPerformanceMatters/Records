@@ -6,9 +6,12 @@ import org.slf4j.LoggerFactory;
 import net.wpm.record.Records;
 
 /**
+ * The entire content of a record an be copied with the method Records.copy(fromRecord, toRecord)
+ * or the optional blueprint method toRecord.copyFrom(fromRecord). If the target record does not
+ * exist yet, a simple call to Records.copy(fromRecord) or fromRecord.copy() is enough to create 
+ * a new record view pointing to a new record and copying the content over.
  * 
- * 
- * @author Nico Hezzel
+ * @author Nico Hezel
  */
 public class RecordsSample_11_Copy {
 
@@ -27,18 +30,19 @@ public class RecordsSample_11_Copy {
 		Sample11 otherObj = Records.copy(obj);
 		otherObj.setFraction(0.5f);
 		
-		// a third record view pointing to the content of the record
-		long structId = Records.id(otherObj);
-		Sample11 thirdObj = Records.view(Sample11.class, structId);
-		
-		// prints -> {Number: 0, Fraction: 0.5}
-		log.info(thirdObj.toString());
-		
-		// copy the content from the first object to the thirdObj/otherObj 
-		thirdObj.copyFrom(obj);
+		// copy the content from the first object to the otherObj 
+		otherObj.copyFrom(obj);
 		
 		// prints -> {Number: 0, Fraction: 0.3}
-		log.info(otherObj.toString());			
+		log.info(otherObj.toString());		
+		
+		// obj and otherObj are different record views
+		if(obj == otherObj)
+			log.info("obj and otherObj are different record views ...");
+		
+		// pointing to different records
+		if(Records.id(obj) != Records.id(otherObj))
+			log.info("pointing to different records");
 	}	
 
 	protected static interface Sample11 {
@@ -49,7 +53,11 @@ public class RecordsSample_11_Copy {
 		public float getFraction();
 		public void setFraction(float fraction);
 		
+		// allocates memory for a new record, copies the data to the new 
+		// record and returns a new record view pointing to the new record
 		public Sample11 copy();
+		
+		// copies the data from the given record to the current record
 		public void copyFrom(Sample11 to);
 	}
 }

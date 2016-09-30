@@ -14,16 +14,16 @@ public class RecordsSample_xx {
 	/**
 	 * Avoid interfaces with common methods only for convenient reasons. Those methods are subject to polymorphic effects and therefor slow.
 	 */	
-	public static interface StructCommon {
-		public int structId();
+	public static interface RecordCommon {
+		public int recordId();
 	}
-	public static interface Foo1 extends StructCommon {
+	public static interface Foo1 extends RecordCommon {
 		public int getNumber();
 	}
-	public static interface Foo2 extends StructCommon {
+	public static interface Foo2 extends RecordCommon {
 		public int getNumber();
 	}
-	public static interface Foo3 extends StructCommon {
+	public static interface Foo3 extends RecordCommon {
 		public int getNumber();
 	}
 }

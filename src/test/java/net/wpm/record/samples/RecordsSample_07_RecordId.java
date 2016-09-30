@@ -40,24 +40,14 @@ public class RecordsSample_07_RecordId {
 		log.info(obj.toString());
 		
 		// the id is enough to change the content elsewhere
-		long recordId = Records.id(obj);
+		long recordId = obj.recordId();
 		changeNumberOf(recordId);
 		
 		// prints -> {Number: 3, Fraction: 0.1}
 		log.info(obj.toString());
-				
-		// a new record view object, pointing to the same record
-		Sample07 otherObj = Records.view(blueprintId, recordId);
-		
-		// the record id can be obtained with the optional recordId() method
-		if(otherObj.recordId() == recordId)
-			log.info("Record id is "+recordId);
-		
-		// reuse the record view and point it to a new record
-		otherObj = Records.create(otherObj);
-		
-		// prints -> {Number: 0, Fraction: 0}
-		log.info(otherObj.toString());
+						
+		// a new record
+		Sample07 otherObj = Records.create(blueprintId);		
 		
 		// pointing it back to the first record
 		// Attention: this will create a memory leak because the record id

@@ -7,8 +7,8 @@ import net.wpm.record.Records;
 
 /**
  * The Records.view(record) method is a shortcut for Records.view(blueprint, Records.id(record)) 
- * and is overall faster. It creates a copy of the record view object. Even better is the 
- * optional view() method for a blueprint.
+ * and is overall faster. It creates a copy of the record view object. Even faster is the
+ * optional view() blueprint method.
  * 
  * Since a record view can point to different records, a copy of the view object is needed when 
  * storing a reference of it for later use. Keep in mind each view object is a Java object with 
@@ -47,10 +47,10 @@ public class RecordsSample_09_View {
 		// prints -> {Fraction: 0.1}
 		log.info(obj.toString());
 				
-		// another record
-		Sample09 otherObj = Records.of(Sample09.class);
+		// a new record view pointing to no record
+		Sample09 otherObj = Records.view(Sample09.class);
 		
-		// point a existing record view to another record
+		// point to an existing record
 		otherView.viewAt(otherObj);
 		otherView.setFraction(0.99f);
 		
