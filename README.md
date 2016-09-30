@@ -1,5 +1,6 @@
 Records
 =======
+[![Latest Version](https://img.shields.io/maven-central/v/net.whenperformancematters/records.svg?maxAge=2592000&label=Latest%20Release)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22records%22)
 
 An open-source Java library to improve the memory object layout of the JVM. Relying heavily on sun.misc.Unsafe to store data off heap, it is designed for high performance applications. The new layout has features similar to C-structs, like unions and allocating consecutive memory for multiple Java objects. 
 
