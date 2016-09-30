@@ -114,6 +114,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	
 	/**
 	 * Releases all allocated memory.
+	 * Start over with a single chunk of unused memory.
 	 * 
 	 * @costs 0C ?B ?A ?P 0M 1N
 	 */
@@ -123,6 +124,9 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 			memory.release();
 		}
 		addressToBytes.clear();
+		freeBytes.clear();
+		
+		freeBytes.add(allocate(BlockSize));
 	}
 
 	/**

@@ -10,7 +10,9 @@ import net.wpm.record.Records;
  * A nested record uses the memory of the outer record. It can still be allocated as stand alone record, 
  * but will be copied to the outer record memory if a set-record method is used.
  * 
- * Right now it is not possible to store only the reference to another record.
+ * Right now it is not possible to store the reference to another record. Furthermore a nested record
+ * can not be of the same type as the outer record and is not allowed to contain the outer record type 
+ * as another nested record.
  *
  * @author Nico Hezel
  */

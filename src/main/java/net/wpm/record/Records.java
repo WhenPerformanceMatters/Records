@@ -6,6 +6,7 @@ import java.util.List;
 import com.koloboke.collect.map.hash.HashIntIntMap;
 import com.koloboke.collect.map.hash.HashIntIntMaps;
 
+import net.wpm.record.bytes.UnsafeMemoryAdapter;
 import net.wpm.record.collection.RecordSequence;
 
 /**
@@ -381,26 +382,34 @@ public class Records {
 		return ((RecordView) record).getBlueprintId();
 	}
 	
-	/**
-	 * Removes all records of a blueprint
-	 * 
-	 * @costs 0C ?B ?A ?P 0M 1N
-	 * @param blueprintId
-	 */
-	public static final void deleteAll(final int blueprintId) {
-		getRecordAdapter(blueprintId).releaseAll();
-		
-		// TODO blueprintId muss weggeworfen werden?
-	}
+//	/**
+//	 * Removes all records of a blueprint
+//	 * 
+//	 * @costs 0C ?B ?A ?P 0M 1N
+//	 * @param blueprintId
+//	 */
+//	public static final void deleteAll(final int blueprintId) {
+//		getRecordAdapter(blueprintId).releaseAll();
+//	}
+//	
+//	/**
+//	 * Removes all records of a blueprint
+//	 * 
+//	 * @costs 0C ?B ?A ?P 1M 1N
+//	 * @param blueprint
+//	 */
+//	public static final <B> void deleteAll(final Class<B> blueprint) {
+//		deleteAll(blueprintId(blueprint));
+//	}
 	
 	/**
-	 * Removes all records of a blueprint
+	 * Deletes all records ever created by Records. 
+	 * Makes every existing record view or record id useless.
 	 * 
-	 * @costs 0C ?B ?A ?P 1M 1N
 	 * @param blueprint
 	 */
 	public static final <B> void deleteAll(final Class<B> blueprint) {
-		deleteAll(blueprintId(blueprint));
+		UnsafeMemoryAdapter.getInstance().releaseAll();
 	}
 
 	/**
