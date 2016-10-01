@@ -1,7 +1,10 @@
 package net.wpm.record.blueprint;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BlueprintClass {
@@ -75,8 +78,25 @@ public class BlueprintClass {
 	 * Adjust the offset of the variables.
 	 */
 	public void adjustVariableOffset() {
+		
+		// compare variables by their size of bytes
+		Comparator<BlueprintVariable> cmp = new Comparator<BlueprintVariable>() {			
+			@Override
+			public int compare(BlueprintVariable o1, BlueprintVariable o2) {
+				int cmp = Integer.compare(o1.getSizeInBytes(), o2.getSizeInBytes());
+				if(cmp == 0)
+					cmp = Integer.compare(o1.hashCode(), o2.hashCode());
+				return cmp;
+			}
+		};
+		
+		// sort the variables by their size of bytes
+		List<BlueprintVariable> vars = new ArrayList<>(variables.values());
+		vars.sort(cmp);
+		
+		// change the offset of the variables
 		int offset = 0;
-		for (BlueprintVariable var : variables.values()) {			
+		for (BlueprintVariable var : vars) {			
 			var.setOffset(offset);
 			offset += var.getSizeInBytes();
 		}

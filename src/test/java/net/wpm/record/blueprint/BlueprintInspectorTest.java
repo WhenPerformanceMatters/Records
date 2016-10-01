@@ -47,7 +47,8 @@ public class BlueprintInspectorTest {
 		Collection<BlueprintVariable> vars = blueprintClass.getVariables();	
 		Set<String> varNameSet = vars.stream().map(var -> var.getName()).collect(Collectors.toSet());
 		
-		String[] names = new String[] { "SimpleValue" };
+		String[] names = new String[] { "ShortBoxed", "BooleanBoxed", "Double", "Int", "SimpleValue", "IntBoxed", "Float", 
+					"Number", "LongBoxed", "FloatBoxed", "Byte", "ByteBoxed", "Long", "DoubleBoxed", "Boolean", "Short" };
 		for (String name : names)			
 			assertEquals("Could not find variable " + name, true, varNameSet.contains(name));
 	}
@@ -134,6 +135,13 @@ public class BlueprintInspectorTest {
 		for (BlueprintVariable var : sortedVars) {
 			assertEquals("Variable " + var.getName() + " should have an offset of " + expected, expected, var.getOffset());			
 			expected += var.getSizeInBytes();
+		}
+		
+		// smaller variables come first
+		int lastSize = 0;
+		for (BlueprintVariable var : sortedVars) {
+			assertTrue("Variable " + var.getName() + " should have a size in bytes higher or equal " + lastSize, lastSize <= var.getSizeInBytes());			
+			lastSize = var.getSizeInBytes();
 		}
 	}
 	
@@ -325,6 +333,10 @@ public class BlueprintInspectorTest {
 			BlueprintMethod method = blueprintClass.getMethod("view()");	
 			assertEquals(ActionType.View, method.getActionType());
 		}
+		{
+			BlueprintMethod method = blueprintClass.getMethod("viewAt(" + TestBlueprint.class.getName() + ")");	
+			assertEquals(ActionType.ViewAt, method.getActionType());
+		}		
 		{
 			BlueprintMethod method = blueprintClass.getMethod("recordId()");	
 			assertEquals(ActionType.GetRecordId, method.getActionType());
