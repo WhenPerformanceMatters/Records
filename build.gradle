@@ -1,0 +1,182 @@
+plugins {
+	id 'java'
+	id 'idea'
+	id 'eclipse'
+	id 'maven'
+	//id 'maven-publish'
+	id 'signing'
+}
+
+// character encoding
+tasks.withType(AbstractCompile)*.options*.encoding = "UTF-8"
+
+// Java compatibility
+sourceCompatibility = targetCompatibility = 1.6
+
+// name of the project in Eclipse and IntelliJ
+def projectName = 'Records'
+eclipse.project.name = projectName
+idea.module.name = projectName
+
+version = '1.0.1-SNAPSHOT'
+group = 'net.whenperformancematters'
+archivesBaseName = "records"
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': projectName, 'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.20'
+	compile group: 'com.koloboke', name: 'koloboke-api-jdk8', version: '1.0.0'
+	compile group: 'com.koloboke', name: 'koloboke-impl-jdk8', version: '1.0.0'
+	compile group: 'com.koloboke', name: 'koloboke-impl-common-jdk8', version: '1.0.0'
+	compile group: 'net.openhft', name: 'chronicle-bytes', version: '1.7.15'	
+	
+	// compile group: 'io.datakernel', name: 'codegen', version: '1.1.4'	// not yet released
+	compile group: 'org.ow2.asm', name: 'asm', version: '5.1'				// codegen dependencies
+	compile group: 'org.ow2.asm', name: 'asm-all', version: '5.1'			// codegen dependencies
+	
+	testCompile 'junit:junit:4.12';											// only for tests
+	testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+}
+
+/**
+ * Creates a gradle wrapper gradlew
+ */
+task wrapper(type: Wrapper) {
+	distributionUrl = 'https://services.gradle.org/distributions/gradle-2.14.1-rc-1-all.zip';	
+}
+
+//--------------------------------------------------------------------------------------------------
+//------------------------------------- Publish to Maven -------------------------------------------
+//--------------------------------------------------------------------------------------------------
+/*
+publishing {
+	publications {
+		records(MavenPublication) {
+			from(components.java) // as java app
+			
+			groupId 'net.whenperformancematters'
+			artifactId 'records'
+            version '1.0.0'
+            
+            artifact sourceJar
+            artifact javadocJar
+            
+			pom.withXml {
+				def root = asNode();
+				root.appendNode('packaging', 'jar')
+				
+            	root.appendNode('name', 'Records')
+            	root.appendNode('description', 'C-Struct like features for Java 6+ to improve performance.')
+            	root.appendNode('url', 'http://records.whenperformancematters.com')
+            	
+            	def licenses = root.appendNode('')
+            	def license1 = licenses.appendNode('license')
+            	license1.appendNode('name', 'MIT License')
+            	license1.appendNode('url', 'https://opensource.org/licenses/MIT')            	
+            	
+            	def developers = root.appendNode('developers')
+            	def developer1 = developers.appendNode('developer')
+            	developer1.appendNode('name', 'Nico Hezel')
+            	developer1.appendNode('email', 'nico@whenperformancematters.net')
+            	developer1.appendNode('organization', 'WhenPerformanceMatters')
+            	developer1.appendNode('organizationUrl', 'www.whenperformancematters.net')
+            	
+            	def scm = root.appendNode('scm')
+            	scm.appendNode('connection', 'scm:git:git://github.com:WhenPerformanceMatters/Records.git')
+            	scm.appendNode('developerConnection', 'scm:git:ssh://github.com:WhenPerformanceMatters/Records.git')
+            	scm.appendNode('url', 'https://github.com/whenperformancematters/records/tree/master')
+        	}       	
+		}
+	}
+
+	repositories {
+		maven {
+			url "$buildDir/repo"
+		}
+	}
+}
+*/
+
+task sourceJar(type: Jar) {
+	from sourceSets.main.allJava
+	classifier "sources"
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	from javadoc.destinationDir
+	classifier = 'javadoc'
+}   
+
+artifacts {
+    archives sourceJar
+    archives javadocJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+/**
+ * Publish to Maven Central Repository
+ */
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+	  // local repository
+      repository(url: uri('build/publications/'))
+      
+      // Maven central repository
+      //repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+      //  authentication(userName: ossrhUsername, password: ossrhPassword)
+      //}
+      
+      // https://oss.sonatype.org/content/repositories/snapshots/net/whenperformancematters/records/
+      //snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+      //  authentication(userName: ossrhUsername, password: ossrhPassword)
+      //}     
+
+      pom.project {
+        packaging 'jar'
+        
+        // optionally artifactId can be defined here 
+        name 'Records'
+        description 'C-Struct like features for Java 6+ to improve performance.'
+        url 'http://records.whenperformancematters.com'
+
+        scm {
+          connection 'scm:git:git://github.com:WhenPerformanceMatters/Records.git'
+          developerConnection 'scm:git:ssh://github.com:WhenPerformanceMatters/Records.git'
+          url 'https://github.com/whenperformancematters/records/tree/master/'
+        }
+
+        licenses {
+          license {
+            name 'MIT License'
+            url 'https://opensource.org/licenses/MIT'
+          }
+        }
+
+        developers {
+          developer {
+            id 'Neiko2002'
+            name 'Nico Hezel'
+            email 'nico@whenperformancematters.net'
+            organization 'WhenPerformanceMatters'
+            organizationUrl 'www.whenperformancematters.net'
+          }
+        }
+      }
+    }
+  }
+}
