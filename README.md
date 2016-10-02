@@ -48,7 +48,7 @@ public static void main(String[] args) {
 		// create a record implementing the Foo interface
 		Foo obj = Records.of(Foo.class);
 		
-		// writes the number 5 in the record
+		// writes the number 5 into the record
 		obj.setNumber(5);
 		
 		// prints -> "{Number: 5, Fraction: 0.0}"
@@ -61,8 +61,8 @@ Limitations
 
 Right now Records has some limitations which might be crucial for other project. We nevertheless released a version 1.0.0 of it. With the knowledge about the shortcomings we still use Records in many closed source projects and think it is ready to enter the lime light.
 
-##### Records can not be deleted
-The current API allows the creation single records and record sequences, but lacks ability to delete those. It is only possible to release all the memory allocated by Records and start over again. Developer are advised to allocate the POJO like objects once at program start and reuse their memory afterwards. Not affected are the record views, they can be created and deleted at will.
+#### Records can not be deleted
+The current API allows the creation of single records and record sequences, but lacks the ability to delete those. It is only possible to release all the memory allocated by Records and start over again. Developer are advised to allocate the POJO like objects once at program start and reuse their memory afterwards. Not affected by this limitation are the record views, they can be created and deleted at will.
 
-##### References to objects and records
-A record can not hold a reference to another Java object or record. There exists a set-record method which works for other records but fails upon reciving a Java object. This method will only copy the content from one record to another instead of storing a reference. While this improves the performance for later access it still is counterintuitive to the normal Java behaviour. 
+#### References to objects and records
+A record can not hold a reference to another record or Java object. There exists a set-record method which works for records but fails upon receiving a Java object. This method however will copy the content from one record to another instead of storing a reference. While this improves the performance for later access it still is counterintuitive to the normal Java behavior. 

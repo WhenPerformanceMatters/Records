@@ -99,7 +99,7 @@ public class RecordClassGenerator {
 		// to String method
 		addToString(builder, blueprintClass.isCustomToString(), blueprintClass.getVariables());		
 				
-		String className = blueprintClass.getBlueprint().getName() + "Record";
+		String className = blueprintClass.getBlueprint().getName() + "RecordView";
 		return builder.defineClass(className);
 	}	
 	
