@@ -3,13 +3,18 @@ package net.wpm.record.bytecode;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import java.lang.reflect.Array;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import net.wpm.codegen.utils.DefiningClassLoader;
 import net.wpm.record.RecordView;
+import net.wpm.record.Records;
 import net.wpm.record.blueprint.BlueprintClass;
 import net.wpm.record.blueprint.BlueprintMethod;
 import net.wpm.record.blueprint.BlueprintMethod.ActionType;
@@ -27,26 +32,36 @@ import net.wpm.reflectasm.FieldAccess;
  * @author Nico Hezel
  */
 public class RecordClassGeneratorTest {
-
-	protected static Class<? extends TestBlueprint> blueprint = TestBlueprint.class;
 	
+	protected static Class<? extends TestBlueprint> blueprint = TestBlueprint.class;
+
+	@BeforeClass 
+	public static void setupClass() {
+		Records.register(SimpleValue.class);
+	}	
+		
 	protected UnsafeMemoryAdapter memoryAccess = UnsafeMemoryAdapter.getInstance();
 	
 	/**
-	 * Create a record view out of the given methods
+	 * Create many record views out of the given methods
 	 * 
+	 * @param capacity
+	 * @param clazz
 	 * @param methods
 	 * @return
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
 	@SuppressWarnings("unchecked")
-	protected <B> B createRecordView(Class<B> clazz, BlueprintMethod ... methods) throws InstantiationException, IllegalAccessException {
+	protected <B> B[] createRecordView(int capacity, Class<B> clazz, BlueprintMethod ... methods) throws InstantiationException, IllegalAccessException {
 		
 		// define the blueprint class
 		BlueprintClass blueprintClass = new BlueprintClass(clazz);
-		for (BlueprintMethod blueprintMethod : methods)			
+		for (BlueprintMethod blueprintMethod : methods)	{		
 			blueprintClass.addMethod(blueprintMethod);
+			if(blueprintMethod.getVariable() != null)
+				blueprintClass.addVariable(blueprintMethod.getVariable());
+		}
 	
 		// create the record view class
 		RecordClassGenerator classGenerator = new RecordClassGenerator(blueprintClass);
@@ -58,12 +73,29 @@ public class RecordClassGeneratorTest {
 				
 		// inform the recordView about the adapter and its buffer 
 		fieldAccess.set(null, "memoryAccess", memoryAccess);
-		
 		// instantiate a record object
-		RecordView recordView = recordViewClass.newInstance();
-		recordView.setRecordId(memoryAccess.reserve(10));
-		return (B)recordView;
+		int size = blueprintClass.getSizeInBytes();
+		B[] recordViews =  (B[])Array.newInstance(clazz, capacity);
+		for (int i = 0; i < recordViews.length; i++) {
+			RecordView recordView = recordViewClass.newInstance();
+			recordView.setRecordId(memoryAccess.reserve(size));
+			recordViews[i] = (B)recordView; 
+		}
+		return recordViews;
 	}
+
+	/**
+	 * Create a record view out of the given methods
+	 * 
+	 * @param methods
+	 * @return
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
+	protected <B> B createRecordView(Class<B> clazz, BlueprintMethod ... methods) throws InstantiationException, IllegalAccessException {
+		return createRecordView(1, clazz, methods)[0];
+	}
+		
 	
 	@Before
 	public void setup() {
@@ -113,43 +145,34 @@ public class RecordClassGeneratorTest {
 	}
 	
 	@Test
-	@Ignore
-	public void viewTest() throws InstantiationException, IllegalAccessException {		
-		TestBlueprint record = createRecordView(blueprint,
-				new BlueprintMethod(TestBlueprint.class, "view", ActionType.View)
-		);
-		TestBlueprint otherView = record.view();
-		assertNotEquals(record, otherView);
-	}
-	
-	@Test
-	@Ignore
 	public void viewAtTest() throws InstantiationException, IllegalAccessException {		
-		TestBlueprint record = createRecordView(blueprint,
+		TestBlueprint[] records = createRecordView(2, blueprint,
 				new BlueprintMethod(TestBlueprint.class, "viewAt", ActionType.ViewAt)
 		);
-		assertNotEquals(record, null);
+		TestBlueprint record = records[0];
+		TestBlueprint otherRecord = records[1];		
+		record.viewAt(otherRecord);
+		
+		assertNotEquals(record, otherRecord);
+		assertEquals(((RecordView)record).getRecordId(), ((RecordView)otherRecord).getRecordId());
 	}
 	
 	@Test
-	@Ignore
-	public void copyTest() throws InstantiationException, IllegalAccessException {		
-		TestBlueprint record = createRecordView(blueprint,
-				new BlueprintMethod(TestBlueprint.class, "copy", ActionType.Copy)
-		);
-		TestBlueprint otherView = record.copy();
-		assertNotEquals(record, otherView);
-	}
-	
-	@Test
-	@Ignore
 	public void copyFromTest() throws InstantiationException, IllegalAccessException {		
-		TestBlueprint record = createRecordView(blueprint,
-				new BlueprintMethod(TestBlueprint.class, "copyFrom", ActionType.CopyFrom)
+		BlueprintVariable var = BlueprintVariable.of(blueprint, "number", int.class);
+		TestBlueprint[] records = createRecordView(2, blueprint,
+				new BlueprintMethod(TestBlueprint.class, "copyFrom", ActionType.CopyFrom),
+				new BlueprintMethod(TestBlueprint.class, "getNumber", ActionType.GetValue, var),
+				new BlueprintMethod(TestBlueprint.class, "setNumber", ActionType.SetValue, var)
 		);
-		TestBlueprint otherView = record; // TODO new record
-		record.copyFrom(record);
-		assertNotEquals(record, otherView);
+		TestBlueprint record = records[0];
+		TestBlueprint otherRecord = records[1];
+		otherRecord.setNumber(5);		
+		record.copyFrom(otherRecord);
+		
+		assertNotEquals(record, otherRecord);
+		assertNotEquals(((RecordView)record).getRecordId(), ((RecordView)otherRecord).getRecordId());
+		assertEquals(5, record.getNumber());
 	}
 	
 	@Test
