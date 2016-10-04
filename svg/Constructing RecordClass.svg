@@ -3,87 +3,87 @@
 
  <g>
   <title>background</title>
-  <rect fill="#fff" id="canvas_background" height="192" width="722" y="-1" x="-1"/>
-  <g display="none" id="canvasGrid">
-   <rect fill="url(#gridpattern)" stroke-width="0" y="4" x="4" height="480" width="640" id="svg_1"/>
+  <rect x="-1" y="-1" width="722" height="192" id="canvas_background" fill="#fff"/>
+  <g id="canvasGrid" display="none">
+   <rect id="svg_1" width="640" height="480" x="4" y="4" stroke-width="0" fill="url(#gridpattern)"/>
   </g>
  </g>
  <g>
   <title>Layer 1</title>
-  <rect id="svg_22" height="60" width="135.498174" y="122.751978" x="36" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none" stroke="#000"/>
+  <rect stroke="#000" fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x="36" y="122.751978" width="135.498174" height="60" id="svg_22"/>
   <g id="svg_37">
-   <rect id="svg_5" height="54.000009" width="135.498174" y="31.252104" x="35.000001" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none" stroke="#000"/>
-   <rect fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x="40.830894" y="57.750008" width="23" height="23" id="svg_6" stroke="#000"/>
-   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="46.330891" y="53.750049" id="svg_17" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">0</text>
-   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="78.330848" y="53.250049" id="svg_18" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">1</text>
-   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="1.830949" y="22.750091" id="svg_20" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">BlueprintVariable[]</text>
-   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="45.830889" y="75.750033" id="svg_28" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">x</text>
-   <rect fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x="75.330847" y="57.250008" width="23" height="23" id="svg_30" stroke="#000"/>
-   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="81.33084" y="74.250035" id="svg_29" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">y</text>
+   <rect stroke="#000" fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x="35.000001" y="31.252104" width="135.498174" height="54.000009" id="svg_5"/>
+   <rect stroke="#000" id="svg_6" height="23" width="23" y="57.750008" x="40.830894" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none"/>
+   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_17" y="53.750049" x="46.330891" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">0</text>
+   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_18" y="53.250049" x="78.330848" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">1</text>
+   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_20" y="22.750091" x="1.830949" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">BlueprintVariable[]</text>
+   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_28" y="75.750033" x="45.830889" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">x</text>
+   <rect stroke="#000" id="svg_30" height="23" width="23" y="57.250008" x="75.330847" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none"/>
+   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_29" y="74.250035" x="81.33084" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">y</text>
   </g>
   <g id="svg_38">
-   <rect fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x="40.749755" y="151.749878" width="58.499968" height="26.499963" id="svg_23" stroke="#000"/>
-   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="46.249753" y="146.74992" id="svg_24" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">0</text>
-   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="1.749811" y="115.249963" id="svg_27" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">BlueprintMethod[]</text>
-   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="43.749753" y="170.249904" id="svg_31" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">copy</text>
+   <rect stroke="#000" id="svg_23" height="26.499963" width="58.499968" y="151.749878" x="40.749755" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none"/>
+   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_24" y="146.74992" x="46.249753" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">0</text>
+   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_27" y="115.249963" x="1.749811" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">BlueprintMethod[]</text>
+   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_31" y="170.249904" x="43.749753" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">copy</text>
   </g>
-  <line stroke="#000" fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="546.500302" y1="72.13463" x2="577.750275" y2="72.13463" id="svg_40" stroke-linejoin="null" stroke-linecap="null"/>
-  <line stroke="#000" fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="178.916584" y1="59.62126" x2="244.926579" y2="59.62126" id="svg_42" stroke-linejoin="null" stroke-linecap="null"/>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_40" y2="72.13463" x2="577.750275" y1="72.13463" x1="546.500302" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none" stroke="#000"/>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_42" y2="59.62126" x2="244.926579" y1="59.62126" x1="178.916584" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none" stroke="#000"/>
   <g id="svg_81">
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="390.558053" y1="71.335879" x2="399.580349" y2="71.335879" id="svg_41" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="399.308138" y1="70.83588" x2="394.55157" y2="66.079312" id="svg_46" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="399.808137" y1="71.335879" x2="394.558053" y2="76.36081" id="svg_47" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="394.183185" y1="65.210845" x2="394.183185" y2="77.210845" id="svg_48" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="395.423081" y1="67.958041" x2="395.423081" y2="74.835859" id="svg_78" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="397.173016" y1="68.958004" x2="397.173016" y2="73.707828" id="svg_79" stroke-linejoin="null" stroke-linecap="null"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_41" y2="71.335879" x2="399.580349" y1="71.335879" x1="390.558053" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_46" y2="66.079312" x2="394.55157" y1="70.83588" x1="399.308138" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_47" y2="76.36081" x2="394.558053" y1="71.335879" x1="399.808137" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_48" y2="77.210845" x2="394.183185" y1="65.210845" x1="394.183185" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_78" y2="74.835859" x2="395.423081" y1="67.958041" x1="395.423081" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_79" y2="73.707828" x2="397.173016" y1="68.958004" x1="397.173016" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
   </g>
   <g id="svg_88">
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="573.230244" y1="72.018997" x2="582.252539" y2="72.018997" id="svg_82" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="581.980329" y1="71.518998" x2="577.223761" y2="66.76243" id="svg_83" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="582.480328" y1="72.018997" x2="577.230244" y2="77.043928" id="svg_84" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="576.855376" y1="65.893964" x2="576.855376" y2="77.893964" id="svg_85" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="578.095272" y1="68.641159" x2="578.095272" y2="75.518977" id="svg_86" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="579.845207" y1="69.641122" x2="579.845207" y2="74.390946" id="svg_87" stroke-linejoin="null" stroke-linecap="null"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_82" y2="72.018997" x2="582.252539" y1="72.018997" x1="573.230244" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_83" y2="66.76243" x2="577.223761" y1="71.518998" x1="581.980329" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_84" y2="77.043928" x2="577.230244" y1="72.018997" x1="582.480328" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_85" y2="77.893964" x2="576.855376" y1="65.893964" x1="576.855376" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_86" y2="75.518977" x2="578.095272" y1="68.641159" x1="578.095272" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_87" y2="74.390946" x2="579.845207" y1="69.641122" x1="579.845207" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
   </g>
-  <line stroke="#000" fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="365.615584" y1="71.336128" x2="400.307678" y2="71.336128" id="svg_89" stroke-linejoin="null" stroke-linecap="null"/>
-  <g transform="rotate(-180 175.37567138671875,59.54096603393555) " id="svg_103">
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="170.750604" y1="59.665995" x2="179.772899" y2="59.665995" id="svg_97" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="179.500689" y1="59.165995" x2="174.744121" y2="54.409427" id="svg_98" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="180.000688" y1="59.665995" x2="174.750604" y2="64.690926" id="svg_99" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="174.375736" y1="53.540961" x2="174.375736" y2="65.540961" id="svg_100" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="175.615632" y1="56.288157" x2="175.615632" y2="63.165975" id="svg_101" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="177.365567" y1="57.288119" x2="177.365567" y2="62.037944" id="svg_102" stroke-linejoin="null" stroke-linecap="null"/>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_89" y2="71.336128" x2="400.307678" y1="71.336128" x1="365.615584" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none" stroke="#000"/>
+  <g id="svg_103" transform="rotate(-180 175.37567138671875,59.54096603393555) ">
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_97" y2="59.665995" x2="179.772899" y1="59.665995" x1="170.750604" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_98" y2="54.409427" x2="174.744121" y1="59.165995" x1="179.500689" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_99" y2="64.690926" x2="174.750604" y1="59.665995" x1="180.000688" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_100" y2="65.540961" x2="174.375736" y1="53.540961" x1="174.375736" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_101" y2="63.165975" x2="175.615632" y1="56.288157" x1="175.615632" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_102" y2="62.037944" x2="177.365567" y1="57.288119" x1="177.365567" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
   </g>
-  <g transform="rotate(-180 176.37567138671875,152.62429809570312) " id="svg_39">
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="171.750604" y1="152.749329" x2="180.772899" y2="152.749329" id="svg_19" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="180.500689" y1="152.249329" x2="175.744121" y2="147.492761" id="svg_21" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="181.000688" y1="152.749329" x2="175.750604" y2="157.77426" id="svg_25" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="175.375736" y1="146.624295" x2="175.375736" y2="158.624295" id="svg_26" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="176.615632" y1="149.371491" x2="176.615632" y2="156.249309" id="svg_34" stroke-linejoin="null" stroke-linecap="null"/>
-   <line fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="178.365567" y1="150.371453" x2="178.365567" y2="155.121278" id="svg_36" stroke-linejoin="null" stroke-linecap="null"/>
+  <g id="svg_39" transform="rotate(-180 176.37567138671875,152.62429809570312) ">
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_19" y2="152.749329" x2="180.772899" y1="152.749329" x1="171.750604" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_21" y2="147.492761" x2="175.744121" y1="152.249329" x1="180.500689" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_25" y2="157.77426" x2="175.750604" y1="152.749329" x1="181.000688" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_26" y2="158.624295" x2="175.375736" y1="146.624295" x1="175.375736" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_34" y2="156.249309" x2="176.615632" y1="149.371491" x1="176.615632" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_36" y2="155.121278" x2="178.365567" y1="150.371453" x1="178.365567" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
   </g>
-  <line stroke="#000" fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="180.583253" y1="152.416714" x2="215.426492" y2="152.416714" id="svg_53" stroke-linejoin="null" stroke-linecap="null"/>
-  <line stroke="#000" fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="213.416707" y1="86.916726" x2="245.093262" y2="86.916726" id="svg_54" stroke-linejoin="null" stroke-linecap="null"/>
-  <line stroke="#000" transform="rotate(90 214.42155456542972,119.75009155273439) " fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x1="180.916666" y1="119.750095" x2="247.926451" y2="119.750095" id="svg_55" stroke-linejoin="null" stroke-linecap="null"/>
-  <g id="svg_57">
-   <rect id="svg_15" height="60" width="135.498174" y="43" x="229.999995" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none" stroke="#000"/>
-   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_16" y="67.49968" x="263.999965" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">Variables</text>
-   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="265.9999" y="96.497868" id="svg_2" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">Methods</text>
-   <rect fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x="236.499754" y="49.49793" width="20" height="20" id="svg_3"/>
-   <rect fill="none" stroke="#000" stroke-width="2" stroke-opacity="null" fill-opacity="null" x="236.499755" y="76.997892" width="20" height="20" id="svg_4"/>
-   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_56" y="33.906182" x="219.610248" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">BlueprintClass</text>
-  </g>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_53" y2="152.416714" x2="215.426492" y1="152.416714" x1="180.583253" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none" stroke="#000"/>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_54" y2="86.916726" x2="245.093262" y1="86.916726" x1="213.416707" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none" stroke="#000"/>
+  <line stroke-linecap="null" stroke-linejoin="null" id="svg_55" y2="119.750095" x2="247.926451" y1="119.750095" x1="180.916666" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none" transform="rotate(90 214.42155456542972,119.75009155273439) " stroke="#000"/>
   <g id="svg_58">
-   <rect stroke="#000" id="svg_12" height="60" width="144.615395" y="42.96447" x="400.998197" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none"/>
-   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_13" y="69.425639" x="404.651962" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">RecordClass</text>
-   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_14" y="95.348386" x="418.921213" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">Generator</text>
+   <rect fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x="400.998197" y="42.96447" width="144.615395" height="60" id="svg_12" stroke="#000"/>
+   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="404.651962" y="69.425639" id="svg_13" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">RecordClass</text>
+   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="418.921213" y="95.348386" id="svg_14" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">Generator</text>
   </g>
   <g id="svg_32">
-   <text font-style="italic" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_8" y="34.572853" x="565.945713" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">ARecordView</text>
-   <rect stroke="#000" id="svg_7" height="101.49863" width="109.99852" y="43.406094" x="582.946218" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="none"/>
-   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_9" y="69.905744" x="590.946108" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">int getX()</text>
-   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_10" y="100.905324" x="590.446118" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">int getY()</text>
-   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_11" y="130.904914" x="598.446008" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">A copy()</text>
+   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="565.945713" y="34.572853" id="svg_8" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" font-style="italic">ARecordView</text>
+   <rect fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x="582.946218" y="43.406094" width="109.99852" height="101.49863" id="svg_7" stroke="#000"/>
+   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="590.946108" y="69.905744" id="svg_9" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">int getX()</text>
+   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="590.446118" y="100.905324" id="svg_10" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">int getY()</text>
+   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="598.446008" y="130.904914" id="svg_11" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">A copy()</text>
+  </g>
+  <g id="svg_33">
+   <rect stroke="#000" fill="none" stroke-width="2" stroke-opacity="null" fill-opacity="null" x="229.999995" y="43" width="135.498174" height="60" id="svg_15"/>
+   <text style="cursor: move;" fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="263.999965" y="67.49968" id="svg_16" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">variables</text>
+   <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_2" y="96.497868" x="265.9999" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">methods</text>
+   <rect id="svg_3" height="20" width="20" y="49.49793" x="236.499754" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <rect id="svg_4" height="20" width="20" y="76.997892" x="236.499755" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+   <text fill="#000000" stroke="#000" stroke-width="0" stroke-opacity="null" fill-opacity="null" x="219.610248" y="33.906182" id="svg_56" font-size="24" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve">BlueprintClass</text>
   </g>
  </g>
 </svg>
