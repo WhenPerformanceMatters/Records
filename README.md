@@ -66,3 +66,8 @@ The current API allows the creation of single records and record sequences, but 
 
 #### References to objects and records
 A record can not hold a reference to another record or Java object. There exists a set-record method which works for records but fails upon receiving a Java object. This method however will copy the content from one record to another instead of storing a reference. While this improves the performance for later access it still is counterintuitive to the normal Java behavior. 
+
+Questions, comments and Ideas
+=======
+
+We love to get in contact with the community. Feel free to [e-mail](mailto:records@whenperformancematters.net) us or use the [issuse system](https://github.com/WhenPerformanceMatters/Records/issues) to suggest new features and ask questions. Pull requests are always welcome, we try to incorporate them into the master branch as fast as possible. Not sure if that typo is worth a pull request? Do it! We will appreciate it.
