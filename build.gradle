@@ -18,7 +18,7 @@ def projectName = 'Records'
 eclipse.project.name = projectName
 idea.module.name = projectName
 
-version = '1.0.1-SNAPSHOT'
+version = '1.1.0-SNAPSHOT'
 group = 'net.whenperformancematters'
 archivesBaseName = "records"
 
