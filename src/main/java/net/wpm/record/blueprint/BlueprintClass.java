@@ -91,7 +91,7 @@ public class BlueprintClass {
 		};
 		
 		// sort the variables by their size of bytes
-		List<BlueprintVariable> vars = new ArrayList<>(variables.values());
+		List<BlueprintVariable> vars = new ArrayList<BlueprintVariable>(variables.values());
 		vars.sort(cmp);
 		
 		// change the offset of the variables

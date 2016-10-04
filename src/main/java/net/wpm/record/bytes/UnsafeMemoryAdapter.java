@@ -44,7 +44,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	/**
 	 * Start with an initial allocation of 4096 bytes
 	 * 
-	 * @costs 0C 0B 2A 1P 1M 4N
+	 * costs 0C 0B 2A 1P 1M 4N
 	 */
 	private UnsafeMemoryAdapter() {
 		freeBytes.add(allocate(BlockSize));
@@ -53,7 +53,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	/**
 	 * Allocate a new piece of memory
 	 * 
-	 * @costs 0C 0B 1A 1P 1M 4N
+	 * costs 0C 0B 1A 1P 1M 4N
 	 * @param size
 	 */
 	protected final UnsafeBytes allocate(int size) {	
@@ -67,7 +67,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	 * The memory is either retrieved from the list of FreeBytes or has been 
 	 * newly allocated.
 	 * 
-	 * @costs 0C ?B ?A ?P 1M 5N
+	 * costs 0C ?B ?A ?P 1M 5N
 	 * @param size in bytes
 	 * @return
 	 */
@@ -91,7 +91,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	 * Reserve a specific amount of memory. 
 	 * Returns the starting address of reserved region.
 	 * 
-	 * @costs 0C ?B ?A ?P 1M 5N
+	 * costs 0C ?B ?A ?P 1M 5N
 	 */
 	@Override
 	public final long reserve(final int size) {
@@ -116,7 +116,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	 * Releases all allocated memory.
 	 * Start over with a single chunk of unused memory.
 	 * 
-	 * @costs 0C ?B ?A ?P 0M 1N
+	 * costs 0C ?B ?A ?P 0M 1N
 	 */
 	@Override
 	public void releaseAll() {
@@ -132,7 +132,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	/**
 	 * Maximum amount of allocatable memory. Including memory allocated by DirectByteBuffers.
 	 * 
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public int capacity() {
@@ -142,7 +142,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 1B 0A 0P 0M 0N
+	 * costs 0C 1B 0A 0P 0M 0N
 	 */
 	@Override
 	public boolean getBoolean(long address) {
@@ -150,7 +150,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 1B 0A 0P 0M 0N
+	 * costs 0C 1B 0A 0P 0M 0N
 	 */
 	@Override
 	public void setBoolean(long address, boolean value) {
@@ -158,7 +158,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public byte getByte(long address) {
@@ -166,7 +166,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public void setByte(long address, byte value) {
@@ -174,7 +174,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public short getShort(long address) {
@@ -182,7 +182,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public void setShort(long address, short value) {
@@ -190,7 +190,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public int getInt(long address) {
@@ -198,7 +198,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public void setInt(long address, int value) {
@@ -206,7 +206,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public float getFloat(long address) {
@@ -214,7 +214,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public void setFloat(long address, float value) {
@@ -222,7 +222,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public long getLong(long address) {
@@ -230,7 +230,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public void setLong(long address, long value) {
@@ -238,7 +238,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public double getDouble(long address) {
@@ -246,7 +246,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public void setDouble(long address, double value) {
@@ -254,7 +254,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	}
 
 	/**
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
 	public void copy(long fromAddress, long toAddress, int length) {

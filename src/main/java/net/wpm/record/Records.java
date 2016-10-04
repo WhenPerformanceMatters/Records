@@ -48,7 +48,7 @@ public class Records {
 	/**
 	 * Get the record adapter for a specific blueprint id
 	 * 
-	 * @costs 0C 0B 1A 0P 0M 0N
+	 * costs 0C 0B 1A 0P 0M 0N
 	 * @param blueprintId
 	 * @return
 	 */
@@ -60,7 +60,7 @@ public class Records {
 	/**
 	 * Get the record adapter for a record
 	 * 
-	 * @costs 1C 0B 0A 0P 0M 0N
+	 * costs 1C 0B 0A 0P 0M 0N
 	 * @param record
 	 * @return
 	 */
@@ -73,7 +73,7 @@ public class Records {
 	 * Create a new record and a record view pointing to it, with the help of the record adapter.
 	 * The underlying blueprint does not has to be registered.
 	 * 
-	 * @costs 2C ?B ?A ?P 1M 6N
+	 * costs 2C ?B ?A ?P 1M 6N
 	 * @param adapter
 	 * @return
 	 */
@@ -84,7 +84,7 @@ public class Records {
 	/**
 	 * Create a new record view pointing to the data of another record.
 	 * 
-	 * @costs 2C 0B 0A 0P 0M 1N
+	 * costs 2C 0B 0A 0P 0M 1N
 	 * @param adapter
 	 * @param recordId
 	 * @return
@@ -96,7 +96,7 @@ public class Records {
 	/**
 	 * Creates multiple records and make them accessible via a RecordSequence.
 	 * 
-	 * @costs 0C ?B ?A ?P 1M 6N
+	 * costs 0C ?B ?A ?P 1M 6N
 	 * @param adapter
 	 * @return
 	 */
@@ -119,7 +119,7 @@ public class Records {
 	 * 
 	 * Expert API
 	 * 
-	 * @costs 0C ?B ?A 0P 1M 0N
+	 * costs 0C ?B ?A 0P 1M 0N
 	 * @param adapter
 	 * @return blueprintId
 	 */
@@ -138,7 +138,7 @@ public class Records {
 	/**
 	 * Register a blueprint. Returns its blueprint id.
 	 * 
-	 * @costs ?C ?B ?A ?P 2M ?N
+	 * costs ?C ?B ?A ?P 2M ?N
 	 * @param blueprint
 	 * @return blueprintId
 	 */
@@ -157,7 +157,7 @@ public class Records {
 	 * Creates a record view based on the blueprint structure.
 	 * Allocates memory for a new record and points the record view to it.
 	 * 
-	 * @costs ?C ?B ?A ?P 4M ?N
+	 * costs ?C ?B ?A ?P 4M ?N
 	 * @param blueprint
 	 * @return record view pointing to the data of a empty record
 	 */
@@ -180,7 +180,7 @@ public class Records {
 	 * Create a record view from a registered blueprint.
 	 * Allocates memory for a new record and points the record view to it.
 	 *  
-	 * @costs 2C ?B ?A ?P 2M 6N
+	 * costs 2C ?B ?A ?P 2M 6N
 	 * @param blueprint
 	 * @return Record extends RecordView
 	 * @throws NullPointerException if blueprint is not registered or null
@@ -194,7 +194,7 @@ public class Records {
 	 * Allocates memory for a new record and points the record view to it.
 	 * Faster then using the blueprint itself.
 	 * 
-	 * @costs 2C ?B ?A ?P 1M 6N
+	 * costs 2C ?B ?A ?P 1M 6N
 	 * @param blueprintId
 	 * @return Record extends RecordView
 	 * @throws NullPointerException if blueprint is not registered 
@@ -209,7 +209,7 @@ public class Records {
 	 * Faster then creating a new record view and does not waste additional memory. 
 	 * The underlying blueprint does not have to be registered.
 	 * 
-	 * @costs 3C ?B ?A ?P 1M 6N
+	 * costs 3C ?B ?A ?P 1M 6N
 	 * @param reuse
 	 * @return Record extends RecordView
 	 */
@@ -222,7 +222,7 @@ public class Records {
 	/**
 	 * Get the record id of a record which identifies its content.
 	 * 
-	 * @costs 1C 0B 0A 0P 0M 0N
+	 * costs 1C 0B 0A 0P 0M 0N
 	 * @param record
 	 * @return record id
 	 */
@@ -233,7 +233,7 @@ public class Records {
 	/**
 	 * Create a new record view pointing no-where.
 	 * 
-	 * @costs 2C 0B 1A 0P 0M 1N
+	 * costs 2C 0B 1A 0P 0M 1N
 	 * @param blueprint
 	 * @return Record extends RecordView
 	 */
@@ -244,7 +244,7 @@ public class Records {
 	/**
 	 * Create a new record view pointing no-where.
 	 * 
-	 * @costs 2C 0B 1A 0P 0M 1N
+	 * costs 2C 0B 1A 0P 0M 1N
 	 * @param blueprintId
 	 * @return Record extends RecordView
 	 */
@@ -255,7 +255,7 @@ public class Records {
 	/**
 	 * Create a new record view pointing to the data of another record.
 	 * 
-	 * @costs 0C 0B 0A 0P 1M 0N
+	 * costs 0C 0B 0A 0P 1M 0N
 	 * @param blueprint
 	 * @param recordId
 	 * @return Record extends RecordView
@@ -267,7 +267,7 @@ public class Records {
 	/**
 	 * Create a new record view pointing to the data of another record.
 	 * 
-	 * @costs 2C 0B 1A 0P 0M 1N 
+	 * costs 2C 0B 1A 0P 0M 1N 
 	 * @param blueprintId
 	 * @param recordId
 	 * @return Record extends RecordView
@@ -280,7 +280,7 @@ public class Records {
 	/**
 	 * Create a new record view and pointing to the data of the given record
 	 * 
-	 * @costs 4C 0B 0A 0P 0M 1N
+	 * costs 4C 0B 0A 0P 0M 1N
 	 * @param record
 	 * @return Record extends RecordView
 	 */
@@ -292,7 +292,7 @@ public class Records {
 	 * Reuse an existing record view, pointing to the data of another record. 
 	 * Faster then other view-methods because it does not create a new record view.
 	 *  
-	 * @costs 1C 0B 0A 0P 0M 0N
+	 * costs 1C 0B 0A 0P 0M 0N
 	 * @param record
 	 * @param recordId
 	 * @return Record extends RecordView
@@ -307,7 +307,7 @@ public class Records {
 	/**
 	 * Size of the corresponding record in bytes 
 	 * 
-	 * @costs 0C 0B 1A 1P 1M 0N
+	 * costs 0C 0B 1A 1P 1M 0N
 	 * @param blueprint
 	 * @return size of the record in bytes
 	 */
@@ -318,7 +318,7 @@ public class Records {
 	/**
 	 * Size of the corresponding record in bytes 
 	 * 
-	 * @costs 0C 0B 1A 1P 0M 0N
+	 * costs 0C 0B 1A 1P 0M 0N
 	 * @param blueprintId
 	 * @return size of the record in bytes
 	 */
@@ -329,7 +329,7 @@ public class Records {
 	/**
 	 * Size of the record in bytes 
 	 * 
-	 * @costs 0C 0B 0A 1P 0M 0N
+	 * costs 0C 0B 0A 1P 0M 0N
 	 * @param record
 	 * @return size of the record in bytes
 	 */
@@ -341,7 +341,7 @@ public class Records {
 	 * Creates a new record view pointing to a new Record.
 	 * Copies the underlying data from the given record to the new one.
 	 * 
-	 * @costs 3C ?B ?A ?P 1M 6N
+	 * costs 3C ?B ?A ?P 1M 6N
 	 * @param record
 	 * @return new record view pointing to a copy of the record
 	 */
@@ -352,7 +352,7 @@ public class Records {
 	/**
 	 * Copy the data from one record to another
 	 * 
-	 * @costs 3C 0B 0A 0P 0M 0N
+	 * costs 3C 0B 0A 0P 0M 0N
 	 * @param fromRecord
 	 * @param toRecord
 	 */
@@ -363,7 +363,7 @@ public class Records {
 	/**
 	 * Get the id of the blueprint. Zero means the blueprint is not registered.
 	 * 
-	 * @costs 0C 0B 0A 0P 1M 0N
+	 * costs 0C 0B 0A 0P 1M 0N
 	 * @param blueprint
 	 * @return blueprint id
 	 */
@@ -374,7 +374,7 @@ public class Records {
 	/**
 	 * Get the underlying blueprint id 
 	 * 
-	 * @costs 1C 0B 0A 1P 0M 0N
+	 * costs 1C 0B 0A 1P 0M 0N
 	 * @param record
 	 * @return blueprint id
 	 */
@@ -385,7 +385,7 @@ public class Records {
 //	/**
 //	 * Removes all records of a blueprint
 //	 * 
-//	 * @costs 0C ?B ?A ?P 0M 1N
+//	 * costs 0C ?B ?A ?P 0M 1N
 //	 * @param blueprintId
 //	 */
 //	public static final void deleteAll(final int blueprintId) {
@@ -395,7 +395,7 @@ public class Records {
 //	/**
 //	 * Removes all records of a blueprint
 //	 * 
-//	 * @costs 0C ?B ?A ?P 1M 1N
+//	 * costs 0C ?B ?A ?P 1M 1N
 //	 * @param blueprint
 //	 */
 //	public static final <B> void deleteAll(final Class<B> blueprint) {
@@ -415,7 +415,7 @@ public class Records {
 	/**
 	 * Creates multiple records and makes them accessible via a RecordSequence.
 	 *  
-	 * @costs 1C ?B ?A ?P 1M 6N
+	 * costs 1C ?B ?A ?P 1M 6N
 	 * @param blueprint
 	 * @return RecordSequence containing the array
 	 * @throws NullPointerException if blueprint is not registered or null
@@ -427,7 +427,7 @@ public class Records {
 	/**
 	 * Creates multiple records and makes them accessible via a RecordSequence.
 	 * 
-	 * @costs 0C ?B ?A ?P 1M 6N
+	 * costs 0C ?B ?A ?P 1M 6N
 	 * @param blueprintId
 	 * @return RecordSequence containing the array
 	 * @throws NullPointerException if blueprint is not registered

@@ -48,7 +48,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Analyze the blueprint and constructs a record view class.
 	 * 
-	 * @costs ?C ?B ?A ?P 0M ?N
+	 * costs ?C ?B ?A ?P 0M ?N
 	 * @param blueprint
 	 */
 	public RecordAdapter(final Class<B> blueprint) {
@@ -58,7 +58,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * The record view class needs implements all methods of the blueprint.
 	 * 
-	 * @costs ?C ?B ?A ?P 0M ?N
+	 * costs ?C ?B ?A ?P 0M ?N
 	 * @param blueprint
 	 * @param recordViewClass
 	 */
@@ -102,7 +102,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Get a record id pointing to an empty record
 	 * 
-	 * @costs 0C ?B ?A ?P 1M 5N
+	 * costs 0C ?B ?A ?P 1M 5N
 	 * @return
 	 */
 	protected final long nextId() {			
@@ -112,7 +112,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a new array
 	 * 
-	 * @costs 0C ?B ?A ?P 1M 6N
+	 * costs 0C ?B ?A ?P 1M 6N
 	 * @param count
 	 * @return RecordSequence containing the new array
 	 */
@@ -124,7 +124,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a new record view, pointing no-where
 	 * 
-	 * @costs 1C 0B 0A 0P 0M 1N
+	 * costs 1C 0B 0A 0P 0M 1N
 	 * @return RecordView
 	 */
 	public final RecordView newInstance() {
@@ -134,7 +134,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a new record view pointing to an empty record
 	 * 
-	 * @costs 2C ?B ?A ?P 1M 6N
+	 * costs 2C ?B ?A ?P 1M 6N
 	 * @return Record extends RecordView
 	 */
 	@SuppressWarnings("unchecked")
@@ -158,7 +158,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a new record, pointing to the data of another record.
 	 * 
-	 * @costs 2C 0B 0A 0P 0M 1N
+	 * costs 2C 0B 0A 0P 0M 1N
 	 * @param recordId
 	 * @return Record extends RecordView
 	 */
@@ -172,7 +172,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a new record view, pointing to the data of the given record.
 	 * 
-	 * @costs 3C 0B 0A 0P 0M 1N
+	 * costs 3C 0B 0A 0P 0M 1N
 	 * @param record
 	 * @return Record extends RecordView
 	 */
@@ -184,7 +184,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Create a copy of the record and return the copy.
 	 * 
-	 * @costs 3C ?B ?A ?P 1M 6N
+	 * costs 3C ?B ?A ?P 1M 6N
 	 * @return Record extends RecordView
 	 */
 	@SuppressWarnings("unchecked")
@@ -202,7 +202,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * Copy the data of one record to another one
 	 * 
-	 * @costs 2C 0B 0A 0P 0M 0N
+	 * costs 2C 0B 0A 0P 0M 0N
 	 * @param from
 	 * @param to
 	 */
@@ -219,7 +219,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * get the blueprint id used by the adapter 
 	 * 
-	 * @costs 0C 0B 0A 0P 0M 0N
+	 * costs 0C 0B 0A 0P 0M 0N
 	 * @return blueprint id
 	 */
 	public final int getBlueprintId() {
@@ -229,7 +229,7 @@ public final class RecordAdapter<B> {
 	/**
 	 * set the blueprint id used by the adapter 
 	 * 
-	 * @costs 0C ?B ?A 0P 0M 0N
+	 * costs 0C ?B ?A 0P 0M 0N
 	 * @param blueprintId
 	 */
 	public final void setBlueprintId(final int blueprintId) {
@@ -242,7 +242,7 @@ public final class RecordAdapter<B> {
 	}
 
 	/**
-	 * @costs 0C ?B ?A ?P 0M 1N
+	 * costs 0C ?B ?A ?P 0M 1N
 	 */
 	public final void releaseAll() {
 		memoryAccess.releaseAll();
