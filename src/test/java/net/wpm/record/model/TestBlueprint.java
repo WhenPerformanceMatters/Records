@@ -9,6 +9,15 @@ import net.wpm.record.annotation.Array;
  */
 public interface TestBlueprint {
 	
+	public static enum PlantEnum { Tree, Flower, Meadow }
+	
+	@Array(size=3)
+	public int getPlantEnumSize();
+	public PlantEnum getPlantEnum();
+	public PlantEnum getPlantEnumAt(int index);
+	public void setPlantEnum(PlantEnum plant);	
+	public void setPlantEnumAt(int index, PlantEnum plant);
+	
 	@Array(size=10)
 	public int getSimpleValueSize();
 	public SimpleValue getSimpleValue();

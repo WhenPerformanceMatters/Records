@@ -2,9 +2,9 @@ Records
 =======
 [![Latest Version](https://img.shields.io/maven-central/v/net.whenperformancematters/records.svg?maxAge=2592000&label=Latest%20Release)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22records%22)
 
-An open-source Java library to improve the memory object layout of the JVM. Relying heavily on sun.misc.Unsafe to store data off heap, it is designed for high performance applications. The new layout has features similar to C-structs, like unions and allocating consecutive memory for multiple Java objects. 
+An open-source Java library to improve the memory object layout of the JVM. Relying heavily on sun.misc.Unsafe to store data off heap. It is designed for high performance applications. The new layout has features similar to C-structs, like unions and allocating consecutive memory for multiple Java objects. 
 
-At the same time Records provides a convenient API and keeps the Java OOP feeling. Depending on the application a speed up and memory reduction of factor two can be archived. In case of projects with a lot of parallel process the scalability gets improved.
+At the same time Records provides a convenient API and keeps the Java OOP feeling. Depending on the application a speed up and memory reduction of factor two can be archived. In case of projects with a lot of parallel processes the scalability will see a big improvement.
 
 Quick start
 =======
@@ -65,9 +65,9 @@ Right now Records has some limitations which might be crucial for other project.
 The current API allows the creation of single records and record sequences, but lacks the ability to delete those. It is only possible to release all the memory allocated by Records and start over again. Developer are advised to allocate the POJO like objects once at program start and reuse their memory afterwards. Not affected by this limitation are the record views, they can be created and deleted at will.
 
 #### References to objects and records
-A record can not hold a reference to another record or Java object. There exists a set-record method which works for records but fails upon receiving a Java object. This method however will copy the content from one record to another instead of storing a reference. While this improves the performance for later access it still is counterintuitive to the normal Java behavior. 
+A record can not hold a reference to another record or Java object. There exists a set-record method which works for records but fails upon receiving a Java object. However this method will copy the content from one record to another instead of storing a reference. While this improves the performance for later access, it is still counterintuitive to the normal Java behavior. 
 
-Questions, comments and Ideas
+Questions, Comments and Ideas
 =======
 
-We love to get in contact with the community. Feel free to [e-mail](mailto:records@whenperformancematters.net) us or use the [issuse system](https://github.com/WhenPerformanceMatters/Records/issues) to suggest new features and ask questions. Pull requests are always welcome, we try to incorporate them into the master branch as fast as possible. Not sure if that typo is worth a pull request? Do it! We will appreciate it.
+We love to get in contact with the community. Feel free to [e-mail](mailto:records@whenperformancematters.net) us or use the [issue system](https://github.com/WhenPerformanceMatters/Records/issues) to suggest new features and ask questions. Pull requests are always welcome, we try to incorporate them into the master branch as fast as possible. Not sure if that typo is worth a pull request? Do it! We will appreciate it.

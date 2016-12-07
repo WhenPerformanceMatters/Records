@@ -19,6 +19,7 @@ import net.wpm.record.blueprint.BlueprintMethod.ActionType;
 import net.wpm.record.blueprint.BlueprintVariable;
 import net.wpm.record.bytes.UnsafeMemoryAdapter;
 import net.wpm.record.model.TestBlueprint;
+import net.wpm.record.model.TestBlueprint.PlantEnum;
 import net.wpm.record.model.TestBlueprint.SimpleValue;
 import net.wpm.reflectasm.ClassAccess;
 import net.wpm.reflectasm.FieldAccess;
@@ -171,6 +172,50 @@ public class RecordClassGeneratorTest {
 		assertNotEquals(record, otherRecord);
 		assertNotEquals(((RecordView)record).getRecordId(), ((RecordView)otherRecord).getRecordId());
 		assertEquals(5, record.getNumber());
+	}
+	
+	@Test
+	public void getEnumTest() throws InstantiationException, IllegalAccessException {		
+		BlueprintVariable var = BlueprintVariable.of(blueprint, "PlantEnum", PlantEnum.class);
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getPlantEnum", ActionType.GetValue, var)
+		);
+		PlantEnum plant = record.getPlantEnum();
+		assertEquals(PlantEnum.Tree, plant);
+	}
+	
+	@Test
+	public void getEnumAtTest() throws InstantiationException, IllegalAccessException {		
+		BlueprintVariable var = BlueprintVariable.of(blueprint, "PlantEnum", PlantEnum.class);
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getPlantEnumAt", ActionType.GetValueAt, var)
+		);
+		PlantEnum plant = record.getPlantEnumAt(2);
+		assertEquals(PlantEnum.Tree, plant);
+	}
+	
+	@Test
+	public void setEnumTest() throws InstantiationException, IllegalAccessException {		
+		BlueprintVariable var = BlueprintVariable.of(blueprint, "PlantEnum", PlantEnum.class);
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getPlantEnum", ActionType.GetValue, var),
+				new BlueprintMethod(TestBlueprint.class, "setPlantEnum", ActionType.SetValue, var)
+		);
+		record.setPlantEnum(PlantEnum.Meadow);
+		PlantEnum plant = record.getPlantEnum();
+		assertEquals(PlantEnum.Meadow, plant);
+	}
+	
+	@Test
+	public void setEnumAtTest() throws InstantiationException, IllegalAccessException {		
+		BlueprintVariable var = BlueprintVariable.of(blueprint, "PlantEnum", PlantEnum.class);
+		TestBlueprint record = createRecordView(blueprint,
+				new BlueprintMethod(TestBlueprint.class, "getPlantEnumAt", ActionType.GetValueAt, var),
+				new BlueprintMethod(TestBlueprint.class, "setPlantEnumAt", ActionType.SetValueAt, var)
+		);
+		record.setPlantEnumAt(2, PlantEnum.Flower);
+		PlantEnum plant = record.getPlantEnumAt(2);
+		assertEquals(PlantEnum.Flower, plant);
 	}
 	
 	@Test

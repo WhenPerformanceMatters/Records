@@ -3,6 +3,7 @@ package net.wpm.record.bytecode.template;
 import static net.wpm.codegen.Expressions.add;
 import static net.wpm.codegen.Expressions.call;
 import static net.wpm.codegen.Expressions.callStatic;
+import static net.wpm.codegen.Expressions.getArrayItem;
 import static net.wpm.codegen.Expressions.cast;
 import static net.wpm.codegen.Expressions.getter;
 import static net.wpm.codegen.Expressions.mul;
@@ -45,9 +46,18 @@ public abstract class TemplateBase implements ASMTemplate {
 	 * @param index of the array 
 	 * @return Expression
 	 */
-	protected Expression readValueExpression(BlueprintVariable variable, Expression index) {		
-		boolean isBlueprint = Records.blueprintId(variable.getInternalType()) > 0;
-		return isBlueprint ? readRecordExpression(variable, index) : readPrimitiveExpression(variable, index);
+	protected Expression readValueExpression(BlueprintVariable variable, Expression index) {
+		
+		// is enum
+		if(variable.getExternalType().isEnum())
+			return readEnumExpression(variable, index);
+		
+		// is blueprint
+		if(Records.blueprintId(variable.getInternalType()) > 0)
+			return readRecordExpression(variable, index);
+		
+		// is primitve type
+		return readPrimitiveExpression(variable, index);
 	}
 	
 	/**
@@ -70,10 +80,49 @@ public abstract class TemplateBase implements ASMTemplate {
 	 * @return Expression
 	 */
 	protected Expression writeValueExpression(BlueprintVariable variable, Expression index, Expression value) {
-		boolean isBlueprint = Records.blueprintId(variable.getInternalType()) > 0;
-		return isBlueprint ? writeRecordExpression(variable, index, value) : writePrimitiveExpression(variable, index, value);
+				
+		// is enum
+		if(variable.getExternalType().isEnum())
+			return writeEnumExpression(variable, index, value);
+		
+		// is blueprint
+		if(Records.blueprintId(variable.getInternalType()) > 0)
+			return writeRecordExpression(variable, index, value);
+		
+		// is primitve type
+		return writePrimitiveExpression(variable, index, value);
 	}
 	
+	// ----------------------------------------------------------------------------------------
+	// ----------------------------------- dealing with enums ---------------------------------
+	// ----------------------------------------------------------------------------------------
+
+	/**
+	 * Creates an expression to read the ordinal of an enum and returns the enum
+	 * 
+	 * @param variable which content is stored in memory
+	 * @param index of the array (1 = no array)
+	 * @return Expression
+	 */
+	protected Expression readEnumExpression(BlueprintVariable variable, Expression index) {		
+		Expression enumValues = callStatic(variable.getExternalType(), "values");
+		Expression ordinal = readPrimitiveExpression(variable, index);
+		return getArrayItem(enumValues, ordinal);
+	}
+	
+
+	/**
+	 * Creates an expression to write the ordinal of the enum
+	 * 
+	 * @param variable which content is stored in memory
+	 * @param index of the array (1 = no array)
+	 * @param value
+	 * @return Expression
+	 */
+	protected Expression writeEnumExpression(BlueprintVariable variable, Expression index, Expression value) {	
+		Expression ordinal = cast(call(value, "ordinal"), Byte.TYPE);
+		return writePrimitiveExpression(variable, index, ordinal);
+	}
 	
 	// ----------------------------------------------------------------------------------------
 	// -------------------------------- dealing with other records ----------------------------

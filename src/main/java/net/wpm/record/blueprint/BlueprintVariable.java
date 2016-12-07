@@ -167,13 +167,19 @@ public class BlueprintVariable {
 	 * @return BlueprintVariable
 	 */
 	public static BlueprintVariable of(Class<?> blueprint, String name, Class<?> type) {
+		
+		// check if type is an enum
+		if(type.isEnum()) 
+			return new BlueprintVariable(blueprint, name, 1, Byte.TYPE, type);
+
+		// is this type compatible to a Records primitive
 		BlueprintVariable defaultType = getDefault(type);
 		
 		// check if another blueprint of this type exists
-		if(defaultType == null) {
+		if(defaultType == null) {		
 			int blueprintId = Records.blueprintId(type);
 			int sizeInBytes = Records.size(blueprintId);
-			defaultType = new BlueprintVariable(blueprint, name, sizeInBytes, type, type);
+			defaultType = new BlueprintVariable(blueprint, name, sizeInBytes, type, type);			
 		}
 		
 		return new BlueprintVariable(blueprint, name, defaultType.elementSizeInBytes, defaultType.internalType, type);

@@ -48,7 +48,8 @@ public class BlueprintInspectorTest {
 		Set<String> varNameSet = vars.stream().map(var -> var.getName()).collect(Collectors.toSet());
 		
 		String[] names = new String[] { "ShortBoxed", "BooleanBoxed", "Double", "Int", "SimpleValue", "IntBoxed", "Float", 
-					"Number", "LongBoxed", "FloatBoxed", "Byte", "ByteBoxed", "Long", "DoubleBoxed", "Boolean", "Short" };
+					"Number", "LongBoxed", "FloatBoxed", "Byte", "ByteBoxed", "Long", "DoubleBoxed", "Boolean", "Short",
+					"PlantEnum" };
 		for (String name : names)			
 			assertEquals("Could not find variable " + name, true, varNameSet.contains(name));
 	}
@@ -64,7 +65,7 @@ public class BlueprintInspectorTest {
 	public void sizeInBytesTest() {
 		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		int size = blueprintClass.getSizeInBytes();					
-		assertEquals(96+40, size);
+		assertEquals(99+40, size);
 	}
 	
 	@Test
@@ -87,6 +88,7 @@ public class BlueprintInspectorTest {
 		Set<String> methodNameSet = methods.stream().map(method -> method.getSignature()).collect(Collectors.toSet());
 		
 		String[] names = new String[] { 
+			"getPlantEnum()", "setPlantEnum("+TestBlueprint.PlantEnum.class.getName()+")", 			
 			"getSimpleValueSize()", "getSimpleValue()", "getSimpleValueAt(int)", "getSimpleValue(" + SimpleValue.class.getName() + ")", 
 			"getSimpleValueAt(int, " + SimpleValue.class.getName() + ")", "setSimpleValue(" + SimpleValue.class.getName() + ")", 
 			"setSimpleValueAt(int, " + SimpleValue.class.getName() + ")", "getNumber()", "increaseNumber()", "increaseNumberBy(int)", 
@@ -209,6 +211,12 @@ public class BlueprintInspectorTest {
 			BlueprintVariable var = blueprintClass.getVariable("DoubleBoxed");		
 			assertEquals(double.class, var.getInternalType());
 		}
+		
+		// enums
+		{
+			BlueprintVariable var = blueprintClass.getVariable("PlantEnum");		
+			assertEquals(byte.class, var.getInternalType());
+		}
 	}
 		
 	@Test
@@ -275,12 +283,26 @@ public class BlueprintInspectorTest {
 			BlueprintVariable var = blueprintClass.getVariable("DoubleBoxed");		
 			assertEquals(Double.class, var.getExternalType());
 		}
+		
+		// enums
+		{
+			BlueprintVariable var = blueprintClass.getVariable("PlantEnum");		
+			assertEquals(TestBlueprint.PlantEnum.class, var.getExternalType());
+		}
 	}
 	
 	@Test
 	public void actionTypeTest() {
 		BlueprintClass blueprintClass = inspect(TestBlueprint.class);
 		
+		{
+			BlueprintMethod method = blueprintClass.getMethod("getPlantEnum()");	
+			assertEquals(ActionType.GetValue, method.getActionType());
+		}
+		{
+			BlueprintMethod method = blueprintClass.getMethod("setPlantEnum(" + TestBlueprint.PlantEnum.class.getName() + ")");	
+			assertEquals(ActionType.SetValue, method.getActionType());
+		}
 		{
 			BlueprintMethod method = blueprintClass.getMethod("getSimpleValue()");	
 			assertEquals(ActionType.GetValue, method.getActionType());

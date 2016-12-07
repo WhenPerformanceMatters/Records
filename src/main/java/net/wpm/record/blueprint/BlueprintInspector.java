@@ -617,7 +617,7 @@ public class BlueprintInspector {
 			variable.setElementCount(arrayAnnotation.size());
 		}
 		
-		// TODO andere Annotationen auslesen
+		// TODO read and process other annotations
 		
 		return variable;
 	}
