@@ -48,6 +48,25 @@ public class RecordSequence<B> implements Iterable<B> {
 	public B get(final int index) {
 		return adapter.view(fromAddress + index * recordSize);
 	}
+	
+	/**
+	 * Set the content of the element at the given index. 
+	 * Makes a copy of the content and stores is in the sequence.
+	 * 
+	 * costs 1C 0B 0A 2P 0M 0N
+	 * @param index
+	 * @param value
+	 */
+	public void set(final int index, final B value) {
+		RecordView fromValue = ((RecordView)value);
+		
+		// use the memory access of the value if it has the correct adapter 
+		if(fromValue.getRecordAdapter() == adapter) {
+			long copyFromAddress = fromValue.getRecordId();
+			long copyToAddress = fromAddress + index * recordSize;
+			fromValue.getMemoryAccess().copy(copyFromAddress, copyToAddress, recordSize);
+		}
+	}
 
 	/**
 	 * Get the element at index and reuse the record view
@@ -87,7 +106,7 @@ public class RecordSequence<B> implements Iterable<B> {
 	}
 
 	/**
-	 * A iterator using reusing a single record view to access all records.
+	 * A iterator reusing a single record view to access all records.
 	 * 
 	 * @author Nico Hezel
 	 */

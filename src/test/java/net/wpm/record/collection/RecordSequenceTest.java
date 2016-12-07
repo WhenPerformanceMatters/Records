@@ -6,11 +6,11 @@ import static org.junit.Assert.assertNotEquals;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import net.wpm.record.RecordAdapter;
-import net.wpm.record.RecordView;
 import net.wpm.record.model.TestBlueprint.SimpleValue;
 
 /**
@@ -20,44 +20,55 @@ import net.wpm.record.model.TestBlueprint.SimpleValue;
  */
 public class RecordSequenceTest {
 
-	private static SimpleValue record;
 	private static Class<SimpleValue> blueprint;
 	private static RecordAdapter<SimpleValue> recordAdapter;
 	
+	private static SimpleValue record;
+	private static RecordSequence<SimpleValue> seq;
+	
 	@Before
-	public void setUpBeforeClass() throws Exception {
+	public void setUpBefore() throws Exception {
 		blueprint = SimpleValue.class;
 		recordAdapter = new RecordAdapter<SimpleValue>(blueprint);
+		
 		record = recordAdapter.create();
+		seq = recordAdapter.array(10);
+	}
+	
+	@After
+	public void setupAfterClass() throws Exception {
+		recordAdapter.releaseAll();
 	}
 	
 	@Test
 	public void sizeTest() {
-		long address = ((RecordView)record).getRecordId();
-		RecordSequence<SimpleValue> seq = new RecordSequence<>(recordAdapter, address, 10);
 		assertEquals(10, seq.size());
 	}
 	
 	@Test
 	public void getTest() {
-		long address = ((RecordView)record).getRecordId();
-		RecordSequence<SimpleValue> seq = new RecordSequence<>(recordAdapter, address, 10);
-		SimpleValue record2 = seq.get(5);
-		assertNotEquals(record, record2);
+		SimpleValue record5 = seq.get(5);
+		assertNotEquals(record, record5);
+	}
+	
+	@Test
+	public void setTest() {
+		record.setValue(77);
+		seq.set(3, record);
+		
+		SimpleValue record3 = seq.get(3);
+		assertEquals(77, record3.getValue());
+		assertNotEquals(record, record3);
 	}
 	
 	@Test
 	public void getWithTest() {
-		long address = ((RecordView)record).getRecordId();
-		RecordSequence<SimpleValue> seq = new RecordSequence<>(recordAdapter, address, 10);
-		SimpleValue record2 = seq.get(5, record);
-		assertEquals(record, record2);
+		SimpleValue record5 = seq.get(5, record);
+		assertEquals(record, record5);
 	}
 	
 	@Test
 	public void forEachTest() {
-		long address = ((RecordView)record).getRecordId();
-		RecordSequence<SimpleValue> seq = new RecordSequence<>(recordAdapter, address, 10);
 		AtomicInteger ai = new AtomicInteger();
 		seq.forEach(rec -> rec.setValue(ai.getAndIncrement()));
 		
@@ -69,8 +80,6 @@ public class RecordSequenceTest {
 	
 	@Test
 	public void iteratorTest() {
-		long address = ((RecordView)record).getRecordId();
-		RecordSequence<SimpleValue> seq = new RecordSequence<>(recordAdapter, address, 10);
 		
 		// set values
 		Iterator<SimpleValue> itr = seq.iterator();
@@ -89,8 +98,6 @@ public class RecordSequenceTest {
 	
 	@Test
 	public void iteratableTest() {
-		long address = ((RecordView)record).getRecordId();
-		RecordSequence<SimpleValue> seq = new RecordSequence<>(recordAdapter, address, 10);
 		
 		// set values
 		int counter = 0;
