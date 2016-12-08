@@ -117,7 +117,7 @@ public class BlueprintVariable {
 	
 
 	public void setType(Class<?> type) {
-		BlueprintVariable defaultType = getDefault(type);
+		BlueprintVariable defaultType = of(blueprint, name, type);
 		this.elementSizeInBytes = defaultType.elementSizeInBytes; 
 		this.internalType = defaultType.internalType; 
 		this.externalType = type;		
@@ -142,7 +142,7 @@ public class BlueprintVariable {
 	
 	@Override
 	public String toString() {	
-		return externalType.getName() + (elementSizeInBytes * 8) + " " + getName();
+		return externalType.getName() + " " + (elementSizeInBytes * 8) + " " + getName();
 	}
 	
 	/**
