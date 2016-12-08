@@ -1,6 +1,7 @@
 package net.wpm.record.collection;
 
 import java.util.Iterator;
+import java.util.RandomAccess;
 import java.util.function.Consumer;
 
 import net.wpm.record.RecordAdapter;
@@ -11,7 +12,7 @@ import net.wpm.record.RecordView;
  * 
  * @author Nico Hezel
  */
-public class RecordSequence<B> implements Iterable<B> {
+public class RecordSequence<B> implements Iterable<B>, RandomAccess {
 
 	protected final RecordAdapter<B> adapter;
 	protected final int recordSize;		// record size in bytes	

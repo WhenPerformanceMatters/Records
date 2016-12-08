@@ -159,21 +159,33 @@ public class Records {
 	 * 
 	 * costs ?C ?B ?A ?P 4M ?N
 	 * @param blueprint
-	 * @return record view pointing to the data of a empty record
+	 * @return record view pointing to an empty record
 	 */
 	public static <B> B of(final Class<B> blueprint) {
-		final int blueprintId = blueprintId(blueprint);
-		final RecordAdapter<B> adapter;
-		
-		// register or get existing record adapter
-		if(blueprintId == 0) {
-			adapter = new RecordAdapter<B>(blueprint);
-			register(adapter);
-		} else
-			adapter = getRecordAdapter(blueprintId);
+		final int blueprintId = register(blueprint);
+		final RecordAdapter<B> adapter = getRecordAdapter(blueprintId);
 		
 		// create a new record
 		return create(adapter);
+	}
+	
+	/**
+	 * Registers the blueprint if necessary. 
+	 * Creates a RecordSequence based on the blueprint structure.
+	 * Allocates memory for the new records and return a RecordSequence 
+	 * pointing to this new empty memory.
+	 * 
+	 * costs ?C ?B ?A ?P 4M ?N
+	 * @param blueprint
+	 * @param count amount of records
+	 * @return RecordSequence pointing to a sequence of empty records
+	 */
+	public static <B> RecordSequence<B> of(final Class<B> blueprint, int count) {
+		final int blueprintId = register(blueprint);
+		final RecordAdapter<B> adapter = getRecordAdapter(blueprintId);
+		
+		// create a new record
+		return array(adapter, count);
 	}
 	
 	/**
