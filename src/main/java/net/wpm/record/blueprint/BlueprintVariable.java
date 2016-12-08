@@ -178,6 +178,11 @@ public class BlueprintVariable {
 		// check if another blueprint of this type exists
 		if(defaultType == null) {		
 			int blueprintId = Records.blueprintId(type);
+			
+			// auto-register unknown type
+			if(blueprintId == 0)
+				blueprintId = Records.register(type);
+			
 			int sizeInBytes = Records.size(blueprintId);
 			defaultType = new BlueprintVariable(blueprint, name, sizeInBytes, type, type);			
 		}
