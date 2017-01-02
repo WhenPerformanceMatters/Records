@@ -23,6 +23,7 @@ import net.wpm.record.bytecode.template.TemplateGetArraySize;
 import net.wpm.record.bytecode.template.TemplateGetBlueprintId;
 import net.wpm.record.bytecode.template.TemplateGetRecordId;
 import net.wpm.record.bytecode.template.TemplateGetRecordSize;
+import net.wpm.record.bytecode.template.TemplateGetSequence;
 import net.wpm.record.bytecode.template.TemplateGetValue;
 import net.wpm.record.bytecode.template.TemplateGetValueAt;
 import net.wpm.record.bytecode.template.TemplateGetValueWith;
@@ -172,7 +173,9 @@ public class RecordClassGenerator {
 				return new TemplateDecreaseValueBy(method);
 			case GetArraySize:
 				return new TemplateGetArraySize(method);
-
+			case GetSequence:
+				return new TemplateGetSequence(method);
+				
 			case GetValueWith:
 				return new TemplateGetValueWith(method);
 			case GetValueWithAt:

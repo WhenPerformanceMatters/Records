@@ -15,13 +15,17 @@ import net.wpm.record.RecordView;
 public class RecordSequence<B> implements Iterable<B>, RandomAccess {
 
 	protected final RecordAdapter<B> adapter;
+	protected final B reuse;
+	
 	protected final int recordSize;		// record size in bytes	
 	protected final long fromAddress;	// starting address of the sequence
 	protected final long toAddress;		// end address
 	protected final int count;			// amount of records
 	
+	@SuppressWarnings("unchecked")
 	public RecordSequence(final RecordAdapter<B> adapter, final long fromAddress, final int count) {
 		this.adapter = adapter;
+		this.reuse = (B)adapter.newInstance();
 		this.recordSize = adapter.getRecordSize();
 		
 		this.fromAddress = fromAddress;
@@ -86,15 +90,13 @@ public class RecordSequence<B> implements Iterable<B>, RandomAccess {
 	 * costs 3C ?B 0A ?P 0M 1N
 	 */
 	@Override
-	public void forEach(Consumer<? super B> action) {
-		
-		final B record = adapter.view(0);
-		final RecordView recordView = ((RecordView)record);
+	public void forEach(Consumer<? super B> action) {		
+		final RecordView recordView = ((RecordView)reuse);
 		
 		long address = fromAddress;
 		for (int i = 0; i < count; i++) {
 			recordView.setRecordId(address += recordSize);
-			action.accept(record);
+			action.accept(reuse);
 		}
 	}
 
@@ -103,7 +105,7 @@ public class RecordSequence<B> implements Iterable<B>, RandomAccess {
 	 */
 	@Override
 	public final Iterator<B> iterator() {
-		return new Itr(adapter);
+		return new Itr(adapter, reuse);
 	}
 
 	/**
@@ -123,8 +125,8 @@ public class RecordSequence<B> implements Iterable<B>, RandomAccess {
 		 * costs 3C 0B 0A 0P 0M 1N
 		 * @param adapter
 		 */
-		public Itr(final RecordAdapter<B> adapter) {						
-			this.reuseRecord = adapter.view(0);
+		public Itr(final RecordAdapter<B> adapter, final B reuse) {						
+			this.reuseRecord = reuse;
 			this.reuseRecordView = (RecordView) reuseRecord;
 			this.address = fromAddress - recordSize;
 		}

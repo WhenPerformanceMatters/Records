@@ -2,16 +2,19 @@ package net.wpm.record.blueprint;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.wpm.record.RecordView;
 import net.wpm.record.annotation.Array;
+import net.wpm.record.collection.RecordSequence;
 import net.wpm.record.exception.InvalidBlueprintException;
 import net.wpm.reflectasm.ClassAccess;
 import net.wpm.reflectasm.ConstructorAccess;
 import net.wpm.reflectasm.FieldAccess;
 import net.wpm.reflectasm.MethodAccess;
+import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 /**
  * The BlueprintInspector analyzes the blueprint for declared getter and setter methods. 
@@ -507,7 +510,7 @@ public class BlueprintInspector {
 			throw new InvalidBlueprintException("Unable to declare "+methodName+" as a get-array-size method.", e);
 		}
 		
-		// add unknown variables to the variable map
+		// get the underlying variable for this get-array-size method
 		String variableName = methodName.substring(3, methodName.length() - 4);
 		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, Object.class);
 
@@ -524,7 +527,6 @@ public class BlueprintInspector {
 	 */
 	protected void analyseGetterMethod(int methodIndex, BlueprintClass blueprintClass) {
 		String methodName = getMethodName(methodIndex);
-		boolean zeroParam = (getMethodParameterTypes(methodIndex).length == 0);
 
 		try {
 			notOccupied(methodName);
@@ -535,12 +537,26 @@ public class BlueprintInspector {
 			throw new InvalidBlueprintException("Unable to declare "+methodName+" as a getter method.", e);
 		}	
 		
-		// add unknown variables to the variable map
-		String variableName = methodName.substring(3);
-		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, getMethodReturnType(methodIndex));
-		
 		// the type of the variable is another blueprint
+		boolean zeroParam = getMethodParameterTypes(methodIndex).length == 0;
 		BlueprintMethod.ActionType action = zeroParam ? BlueprintMethod.ActionType.GetValue : BlueprintMethod.ActionType.GetValueWith;
+		
+		// in case of iterable classes get the generic type
+		Class<?> returnType = getMethodReturnType(methodIndex);
+		if(returnType == java.lang.Iterable.class || returnType == RecordSequence.class) {
+			Class<?> genericType = (Class<?>)((ParameterizedTypeImpl)getMethodGenericReturnType(methodIndex)).getActualTypeArguments()[0];
+			
+			// TODO currently not supported
+			if(genericType.isPrimitive() || genericType.isEnum() || Enum.class.isAssignableFrom(genericType))
+				throw new InvalidBlueprintException("Unable to declare "+methodName+" as a get-sequence method. Enum and primitive iterable return types are not supported yet.");
+	
+			action = BlueprintMethod.ActionType.GetSequence;
+			returnType = genericType;
+		}
+		
+		// get the underlying variable for this get method
+		String variableName = methodName.substring(3);
+		BlueprintVariable variable = underlyingVariable(blueprintClass, methodIndex, variableName, returnType);
 							
 		// defines a valid get-method contained in the blueprint
 		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, action, variable));
@@ -717,5 +733,9 @@ public class BlueprintInspector {
 
 	protected Class<?> getMethodReturnType(int index) {
 		return methodAccess.getReturnTypes()[index];
+	}
+	
+	protected Type getMethodGenericReturnType(int index) {
+		return methodAccess.getGenericReturnTypes()[index];
 	}
 }

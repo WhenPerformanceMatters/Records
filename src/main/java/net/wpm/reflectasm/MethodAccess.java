@@ -2,6 +2,7 @@
 package net.wpm.reflectasm;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 
 /**
  * Copyright (c) 2008, Nathan Sweet
@@ -86,6 +87,10 @@ public class MethodAccess {
 
 	public Class<?>[] getReturnTypes() {
 		return classAccess.getReturnTypes();
+	}
+	
+	public Type[] getGenericReturnTypes() {
+		return classAccess.getGenericReturnTypes();
 	}
 
 	static public MethodAccess get(Class<?> type) {

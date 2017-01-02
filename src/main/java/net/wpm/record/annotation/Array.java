@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * http://www.mkyong.com/java/java-custom-annotations-example/
+ * Define the length of the array for all records of the same type.
  * 
  * @author Nico Hezel
  */

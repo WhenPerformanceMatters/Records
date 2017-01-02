@@ -20,7 +20,7 @@ public interface TestBlueprint {
 	
 	@Array(size=10)
 	public int getSimpleValueSize();
-	public SimpleValue getSimpleValue();
+	public Iterable<SimpleValue> getSimpleValue();
 	public SimpleValue getSimpleValueAt(int index);
 	public SimpleValue getSimpleValue(SimpleValue reuse);
 	public SimpleValue getSimpleValueAt(int index, SimpleValue reuse);		

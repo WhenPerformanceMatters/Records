@@ -12,6 +12,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import net.wpm.record.Records;
+import net.wpm.record.blueprint.BlueprintClass;
+import net.wpm.record.blueprint.BlueprintInspector;
+import net.wpm.record.blueprint.BlueprintMethod;
+import net.wpm.record.blueprint.BlueprintVariable;
 import net.wpm.record.blueprint.BlueprintMethod.ActionType;
 import net.wpm.record.model.TestBlueprint;
 import net.wpm.record.model.TestBlueprint.SimpleValue;
@@ -88,14 +92,40 @@ public class BlueprintInspectorTest {
 		Set<String> methodNameSet = methods.stream().map(method -> method.getSignature()).collect(Collectors.toSet());
 		
 		String[] names = new String[] { 
-			"getPlantEnum()", "setPlantEnum("+TestBlueprint.PlantEnum.class.getName()+")", 			
-			"getSimpleValueSize()", "getSimpleValue()", "getSimpleValueAt(int)", "getSimpleValue(" + SimpleValue.class.getName() + ")", 
-			"getSimpleValueAt(int, " + SimpleValue.class.getName() + ")", "setSimpleValue(" + SimpleValue.class.getName() + ")", 
-			"setSimpleValueAt(int, " + SimpleValue.class.getName() + ")", "getNumber()", "increaseNumber()", "increaseNumberBy(int)", 
-			"decreaseNumber()", "decreaseNumberBy(int)", "getBoolean()", "getByte()", "getShort()", "getInt()", "getLong()", 
-			"getFloat()", "getDouble()", "getBooleanBoxed()", "getByteBoxed()", "getShortBoxed()", "getIntBoxed()", "getLongBoxed()", 
-			"getFloatBoxed()", "getDoubleBoxed()", "blueprintId()", "view()", "viewAt(" + TestBlueprint.class.getName() + ")", 
-			"recordId()", "recordId(long)", "recordSize()",	"copy()", "copyFrom(" + TestBlueprint.class.getName() + ")", 
+			"getPlantEnum()", 
+			"setPlantEnum("+TestBlueprint.PlantEnum.class.getName()+")", 			
+			"getSimpleValueSize()", 
+			"getSimpleValue()", 
+			"getSimpleValueAt(int)", 
+			"getSimpleValue(" + SimpleValue.class.getName() + ")", 
+			"getSimpleValueAt(int, " + SimpleValue.class.getName() + ")", 
+			"setSimpleValue(" + SimpleValue.class.getName() + ")", 
+			"setSimpleValueAt(int, " + SimpleValue.class.getName() + ")", 
+			"getNumber()", "increaseNumber()", "increaseNumberBy(int)", 
+			"decreaseNumber()", 
+			"decreaseNumberBy(int)", 
+			"getBoolean()", 
+			"getByte()", 
+			"getShort()", 
+			"getInt()", 
+			"getLong()", 
+			"getFloat()", 
+			"getDouble()", 
+			"getBooleanBoxed()", 
+			"getByteBoxed()", 
+			"getShortBoxed()", 
+			"getIntBoxed()", 
+			"getLongBoxed()", 
+			"getFloatBoxed()", 
+			"getDoubleBoxed()", 
+			"blueprintId()", 
+			"view()", 
+			"viewAt(" + TestBlueprint.class.getName() + ")", 
+			"recordId()", 
+			"recordId(long)", 
+			"recordSize()",	
+			"copy()", 
+			"copyFrom(" + TestBlueprint.class.getName() + ")", 
 		};
 		for (String name : names)			
 			assertTrue("Could not find method " + name, methodNameSet.contains(name));
@@ -212,10 +242,14 @@ public class BlueprintInspectorTest {
 			assertEquals(double.class, var.getInternalType());
 		}
 		
-		// enums
+		// enums and classes
 		{
 			BlueprintVariable var = blueprintClass.getVariable("PlantEnum");		
 			assertEquals(byte.class, var.getInternalType());
+		}
+		{
+			BlueprintVariable var = blueprintClass.getVariable("SimpleValue");		
+			assertEquals(SimpleValue.class, var.getInternalType());
 		}
 	}
 		
@@ -284,10 +318,14 @@ public class BlueprintInspectorTest {
 			assertEquals(Double.class, var.getExternalType());
 		}
 		
-		// enums
+		// enums and classes
 		{
 			BlueprintVariable var = blueprintClass.getVariable("PlantEnum");		
 			assertEquals(TestBlueprint.PlantEnum.class, var.getExternalType());
+		}
+		{
+			BlueprintVariable var = blueprintClass.getVariable("SimpleValue");		
+			assertEquals(TestBlueprint.SimpleValue.class, var.getExternalType());
 		}
 	}
 	
@@ -305,7 +343,7 @@ public class BlueprintInspectorTest {
 		}
 		{
 			BlueprintMethod method = blueprintClass.getMethod("getSimpleValue()");	
-			assertEquals(ActionType.GetValue, method.getActionType());
+			assertEquals(ActionType.GetSequence, method.getActionType());
 		}		
 		{
 			BlueprintMethod method = blueprintClass.getMethod("getSimpleValue("+SimpleValue.class.getName()+")");	

@@ -36,6 +36,7 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static net.wpm.codegen.Expressions.sequence;
 import static java.util.Arrays.asList;
 import static net.wpm.codegen.Utils.loadAndCast;
 import static org.objectweb.asm.Opcodes.*;
@@ -59,6 +60,8 @@ public class AsmBuilder<T> {
 	private Path bytecodeSaveDir;
 
 	private final ClassScope<T> scope;
+	
+	private Expression staticConstructor = sequence(Collections.EMPTY_LIST);
 	
 	private final Map<String, Class<?>> fields = new LinkedHashMap<String, Class<?>>();
 	private final Map<String, Class<?>> staticFields = new LinkedHashMap<String, Class<?>>();
@@ -220,7 +223,8 @@ public class AsmBuilder<T> {
 	 * @return changed AsmFunctionFactory
 	 */
 	public AsmBuilder<T> staticInitializationBlock(Expression expression) {
-		return staticMethod("<clinit>", void.class, Collections.EMPTY_LIST, expression);
+		staticConstructor = sequence(staticConstructor, expression);
+		return staticMethod("<clinit>", void.class, Collections.EMPTY_LIST, staticConstructor);
 	}
 		
 		

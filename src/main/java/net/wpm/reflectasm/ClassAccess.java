@@ -54,6 +54,7 @@ public abstract class ClassAccess {
         classInfo.methodModifiers = new int[n];
         classInfo.parameterTypes = new Class[n][];
         classInfo.returnTypes = new Class[n];
+        classInfo.genericReturnTypes = new java.lang.reflect.Type[n];
         classInfo.methodNames = new String[n];
         classInfo.methodAnnotations = new Annotation[n][];
         for (int i = 0; i < n; i++) {
@@ -61,6 +62,7 @@ public abstract class ClassAccess {
             classInfo.methodModifiers[i] = m.getModifiers();
             classInfo.parameterTypes[i] = m.getParameterTypes();
             classInfo.returnTypes[i] = m.getReturnType();
+            classInfo.genericReturnTypes[i] = m.getGenericReturnType();
             classInfo.methodNames[i] = m.getName();
             classInfo.methodAnnotations[i] = m.getAnnotations();
         }
@@ -732,6 +734,10 @@ public abstract class ClassAccess {
     public Class<?>[] getReturnTypes() {
         return info.returnTypes;
     }
+    
+    public java.lang.reflect.Type[] getGenericReturnTypes() {
+        return info.genericReturnTypes;
+    }
 
     public String[] getFieldNames() {
         return info.fieldNames;
@@ -807,6 +813,7 @@ public abstract class ClassAccess {
         public Class<?>[][] parameterTypes;
         public Annotation[][] methodAnnotations;
         public Class<?>[] returnTypes;
+        public java.lang.reflect.Type[] genericReturnTypes;
         
         public int[] constructorModifiers;
         public Class<?>[][] constructorParameterTypes;

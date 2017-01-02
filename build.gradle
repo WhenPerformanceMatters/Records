@@ -18,7 +18,7 @@ def projectName = 'Records'
 eclipse.project.name = projectName
 idea.module.name = projectName
 
-version = '1.1.0-SNAPSHOT'
+version = '1.0.2-SNAPSHOT'
 group = 'net.whenperformancematters'
 archivesBaseName = "records"
 
@@ -32,6 +32,7 @@ repositories {
     mavenCentral()
 }
 
+// https://app.updateimpact.com/treeof/net.whenperformancematters/records/1.0.0
 dependencies {
 	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.20'
 	compile group: 'com.koloboke', name: 'koloboke-api-jdk8', version: '1.0.0'
@@ -137,6 +138,7 @@ uploadArchives {
       repository(url: uri('build/publications/'))
       
       // Maven central repository
+      // http://central.maven.org/maven2/net/whenperformancematters/records/
       //repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
       //  authentication(userName: ossrhUsername, password: ossrhPassword)
       //}

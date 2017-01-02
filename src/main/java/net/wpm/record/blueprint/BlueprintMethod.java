@@ -10,7 +10,7 @@ package net.wpm.record.blueprint;
 public class BlueprintMethod {
 	
 	public static enum ActionType { 
-			GetValue, GetValueAt, GetValueWith, GetValueWithAt, 
+			GetValue, GetValueAt, GetValueWith, GetValueWithAt, GetSequence, 
 			SetValue, SetValueAt, GetArraySize,
 			IncreaseValue, IncreaseValueBy, DecreaseValue, DecreaseValueBy,
 			GetRecordId, SetRecordId, GetRecordSize, GetBlueprintId, 
@@ -92,6 +92,11 @@ public class BlueprintMethod {
 		StringBuilder sb = new StringBuilder();
 		
 		switch (actionType) {
+			case GetSequence:
+				sb.append("Iterable<"+variable.getExternalType().getName()+">");
+				sb.append(" " + getSignature());
+				sb.append(" {" + actionType.toString() + "}");
+				break;
 			case GetValue:
 			case GetValueWith:
 			case GetValueAt:
