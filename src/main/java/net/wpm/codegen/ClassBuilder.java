@@ -22,7 +22,7 @@ import org.objectweb.asm.commons.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.codegen.ClassScope;
 import net.wpm.codegen.Context;
 import net.wpm.codegen.Expression;
@@ -32,6 +32,7 @@ import net.wpm.codegen.utils.Preconditions;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -50,10 +51,10 @@ import static org.objectweb.asm.commons.Method.getMethod;
  * @param <T> type of item
  */
 @SuppressWarnings("unchecked")
-public class AsmBuilder<T> {
+public class ClassBuilder<T> {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public static final String DEFAULT_CLASS_NAME = AsmBuilder.class.getPackage().getName() + ".Class";
+	public static final String DEFAULT_CLASS_NAME = ClassBuilder.class.getPackage().getName() + ".Class";
 	private static final AtomicInteger COUNTER = new AtomicInteger();
 
 	private final DefiningClassLoader classLoader;
@@ -63,12 +64,14 @@ public class AsmBuilder<T> {
 	
 	private Expression staticConstructor = sequence(Collections.EMPTY_LIST);
 	
+	private Expression constructor = null;
 	private final Map<String, Class<?>> fields = new LinkedHashMap<String, Class<?>>();
 	private final Map<String, Class<?>> staticFields = new LinkedHashMap<String, Class<?>>();
-	private final Map<Method, Expression> expressionMap = new LinkedHashMap<Method, Expression>();
-	private final Map<Method, Expression> expressionStaticMap = new LinkedHashMap<Method, Expression>();
+	private final Map<String, Class<?>> staticConstants = new LinkedHashMap<String, Class<?>>();
+	private final Map<Method, Expression> methods = new LinkedHashMap<Method, Expression>();
+	private final Map<Method, Expression> staticMethods = new LinkedHashMap<Method, Expression>();
 
-	public AsmBuilder<T> setBytecodeSaveDir(Path bytecodeSaveDir) {
+	public ClassBuilder<T> setBytecodeSaveDir(Path bytecodeSaveDir) {
 		this.bytecodeSaveDir = bytecodeSaveDir;
 		return this;
 	}
@@ -128,15 +131,20 @@ public class AsmBuilder<T> {
 	 * @param classLoader class loader
 	 * @param type        type of dynamic class
 	 */
-	public AsmBuilder(DefiningClassLoader classLoader, Class<T> type) {
+	public ClassBuilder(DefiningClassLoader classLoader, Class<T> type) {
 		this(classLoader, type, Collections.EMPTY_LIST);
 	}
 
-	public AsmBuilder(DefiningClassLoader classLoader, Class<T> mainType, List<Class<?>> types) {
+	public ClassBuilder(DefiningClassLoader classLoader, Class<T> mainType, List<Class<?>> types) {
 		this.classLoader = classLoader;
 		this.scope = new ClassScope<T>(mainType, types);
 	}
 
+	public ClassBuilder<T> constructor(Expression expression) {
+		constructor = expression;
+		return this;
+	}
+	
 	/**
 	 * Creates a new field for a dynamic class
 	 *
@@ -144,7 +152,7 @@ public class AsmBuilder<T> {
 	 * @param fieldClass type of field
 	 * @return changed AsmFunctionFactory
 	 */
-	public AsmBuilder<T> field(String field, Class<?> fieldClass) {
+	public ClassBuilder<T> field(String field, Class<?> fieldClass) {
 		fields.put(field, fieldClass);
 		scope.addField(field, fieldClass);
 		return this;
@@ -157,8 +165,21 @@ public class AsmBuilder<T> {
 	 * @param fieldClass
 	 * @return changed AsmBuilder
 	 */
-	public AsmBuilder<T> staticField(String field, Class<?> fieldClass) {
+	public ClassBuilder<T> staticField(String field, Class<?> fieldClass) {
 		staticFields.put(field, fieldClass);
+		scope.addStaticField(field, fieldClass);
+		return this;
+	}
+	
+	/**
+	 * Creates a new static field for a dynamic class
+	 *  
+	 * @param field
+	 * @param fieldClass
+	 * @return changed AsmBuilder
+	 */
+	public ClassBuilder<T> staticConstant(String field, Class<?> fieldClass) {
+		staticConstants.put(field, fieldClass);
 		scope.addStaticField(field, fieldClass);
 		return this;
 	}
@@ -170,14 +191,14 @@ public class AsmBuilder<T> {
 	 * @param expression function which will be processed
 	 * @return changed AsmFunctionFactory
 	 */
-	public AsmBuilder<T> method(Method method, Expression expression) {
-		expressionMap.put(method, expression);
+	public ClassBuilder<T> method(Method method, Expression expression) {
+		methods.put(method, expression);
 		scope.addMethod(method);
 		return this;
 	}
 
-	public AsmBuilder<T> staticMethod(Method method, Expression expression) {
-		expressionStaticMap.put(method, expression);
+	public ClassBuilder<T> staticMethod(Method method, Expression expression) {
+		staticMethods.put(method, expression);
 		scope.addStaticMethod(method);
 		return this;
 	}
@@ -191,7 +212,7 @@ public class AsmBuilder<T> {
 	 * @param expression    function which will be processed
 	 * @return changed AsmFunctionFactory
 	 */
-	public AsmBuilder<T> method(String methodName, Class<?> returnClass, List<? extends Class<?>> argumentTypes, Expression expression) {
+	public ClassBuilder<T> method(String methodName, Class<?> returnClass, List<? extends Class<?>> argumentTypes, Expression expression) {
 		Type[] types = new Type[argumentTypes.size()];
 		for (int i = 0; i < argumentTypes.size(); i++) {
 			types[i] = getType(argumentTypes.get(i));
@@ -208,7 +229,7 @@ public class AsmBuilder<T> {
 	 * @param expression    function which will be processed
 	 * @return changed AsmFunctionFactory
 	 */
-	public AsmBuilder<T> staticMethod(String methodName, Class<?> returnClass, List<? extends Class<?>> argumentTypes, Expression expression) {
+	public ClassBuilder<T> staticMethod(String methodName, Class<?> returnClass, List<? extends Class<?>> argumentTypes, Expression expression) {
 		Type[] types = new Type[argumentTypes.size()];
 		for (int i = 0; i < argumentTypes.size(); i++) {
 			types[i] = getType(argumentTypes.get(i));
@@ -222,7 +243,7 @@ public class AsmBuilder<T> {
 	 * @param expression function which will be processed
 	 * @return changed AsmFunctionFactory
 	 */
-	public AsmBuilder<T> staticInitializationBlock(Expression expression) {
+	public ClassBuilder<T> staticInitializationBlock(Expression expression) {
 		staticConstructor = sequence(staticConstructor, expression);
 		return staticMethod("<clinit>", void.class, Collections.EMPTY_LIST, staticConstructor);
 	}
@@ -236,7 +257,7 @@ public class AsmBuilder<T> {
 	 * @param expression function which will be processed
 	 * @return changed AsmFunctionFactory
 	 */
-	public AsmBuilder<T> method(String methodName, Expression expression) {
+	public ClassBuilder<T> method(String methodName, Expression expression) {
 		if (methodName.contains("(")) {
 			Method method = Method.getMethod(methodName);
 			return method(method, expression);
@@ -268,13 +289,13 @@ public class AsmBuilder<T> {
 	 *
 	 * @return completed class
 	 */
-	public Class<T> defineClass() {
-		return defineClass(null);
+	public Class<T> build() {
+		return build(null);
 	}
 
-	public Class<T> defineClass(String className) {
+	public Class<T> build(String className) {
 		synchronized (classLoader) {
-			AsmClassKey<T> key = new AsmClassKey<T>(scope.getParentClasses(), fields, staticFields, expressionMap, expressionStaticMap);
+			AsmClassKey<T> key = new AsmClassKey<T>(scope.getParentClasses(), fields, staticFields, methods, staticMethods);
 			Class<?> cachedClass = classLoader.getClassByKey(key);
 
 			if (cachedClass != null) {
@@ -328,8 +349,13 @@ public class AsmBuilder<T> {
 		{
 			Method m = getMethod("void <init> ()");
 			GeneratorAdapter g = new GeneratorAdapter(ACC_PUBLIC, m, null, null, cw);
+			
+			if(constructor != null) {				
+				Context ctx = new Context(classLoader, g, classType, scope.getParentClasses(), scope.getFields(), scope.getStaticFields(), m.getArgumentTypes(), m, scope.getMethods(), scope.getStaticMethods());
+				loadAndCast(ctx, constructor, m.getReturnType());			
+			}
 			g.loadThis();
-
+			
 			if (scope.getMainType().isInterface()) {
 				g.invokeConstructor(getType(Object.class), m);
 			} else {
@@ -349,14 +375,19 @@ public class AsmBuilder<T> {
 			Class<?> fieldClass = staticFields.get(field);
 			cw.visitField(ACC_PUBLIC + ACC_STATIC, field, getType(fieldClass).getDescriptor(), null, null);
 		}
+		
+		for (String field : staticConstants.keySet()) {
+			Class<?> fieldClass = staticConstants.get(field);
+			cw.visitField(ACC_PUBLIC + ACC_STATIC + ACC_FINAL, field, getType(fieldClass).getDescriptor(), null, null);
+		}
 
-		for (Method m : expressionStaticMap.keySet()) {
+		for (Method m : staticMethods.keySet()) {
 			try {
 				GeneratorAdapter g = new GeneratorAdapter(ACC_PUBLIC + ACC_STATIC + ACC_FINAL, m, null, null, cw);
 
 				Context ctx = new Context(classLoader, g, classType, scope.getParentClasses(), Collections.EMPTY_MAP, scope.getStaticFields(), m.getArgumentTypes(), m, scope.getMethods(), scope.getStaticMethods());
 
-				Expression expression = expressionStaticMap.get(m);
+				Expression expression = staticMethods.get(m);
 				loadAndCast(ctx, expression, m.getReturnType());
 				g.returnValue();
 
@@ -366,12 +397,12 @@ public class AsmBuilder<T> {
 			}
 		}
 
-		for (Method m : expressionMap.keySet()) {
+		for (Method m : methods.keySet()) {
 			try {
 				GeneratorAdapter g = new GeneratorAdapter(ACC_PUBLIC + ACC_FINAL, m, null, null, cw);
 				Context ctx = new Context(classLoader, g, classType, scope.getParentClasses(), scope.getFields(), scope.getStaticFields(), m.getArgumentTypes(), m, scope.getMethods(), scope.getStaticMethods());
 
-				Expression expression = expressionMap.get(m);
+				Expression expression = methods.get(m);
 				loadAndCast(ctx, expression, m.getReturnType());
 				g.returnValue();
 
@@ -408,13 +439,29 @@ public class AsmBuilder<T> {
 	 * Returns a new instance of a dynamic class
 	 *
 	 * @return new instance of the class which was created before in a dynamic way
-	 */
-	public T newInstance() {
+	 */	
+	public T buildClassAndCreateNewInstance() {
 		try {
-			return defineClass().newInstance();
-		} catch (InstantiationException e) {
+			return build().newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
 			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public T buildClassAndCreateNewInstance(Object... constructorParameters) {
+		Class[] constructorParameterTypes = new Class[constructorParameters.length];
+		for (int i = 0; i < constructorParameters.length; i++) {
+			constructorParameterTypes[i] = constructorParameters[i].getClass();
+		}
+		return buildClassAndCreateNewInstance(constructorParameterTypes, constructorParameters);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public T buildClassAndCreateNewInstance(Class[] constructorParameterTypes, Object[] constructorParameters) {
+		try {
+			return build().getConstructor(constructorParameterTypes).newInstance(constructorParameters);
+		} catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}
 	}

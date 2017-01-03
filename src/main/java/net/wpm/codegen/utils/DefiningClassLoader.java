@@ -19,7 +19,7 @@ package net.wpm.codegen.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.wpm.codegen.AsmBuilder.AsmClassKey;
+import net.wpm.codegen.ClassBuilder.AsmClassKey;
 import net.wpm.codegen.utils.DefiningClassLoaderMBean;
 
 import static java.util.Arrays.asList;

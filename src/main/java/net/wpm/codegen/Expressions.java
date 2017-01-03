@@ -506,7 +506,7 @@ public final class Expressions {
 		return new ExpressionIf(condition, left, right);
 	}
 
-	public static Expression ifTrue(PredicateDefCmp condition, Expression ifTrue) {
+	public static Expression ifTrue(PredicateDef condition, Expression ifTrue) {
 		return choice(condition, ifTrue, null);
 	}
 
