@@ -7,7 +7,7 @@ import static net.wpm.codegen.Expressions.sequence;
 
 import java.util.Collections;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.codegen.Expression;
 import net.wpm.record.blueprint.BlueprintMethod;
 
@@ -23,7 +23,7 @@ public class TemplateView extends TemplateBase {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void addBytecode(AsmBuilder<?> builder) {	
+	public void addBytecode(ClassBuilder<?> builder) {	
 		Expression recordView = let(call(adapter(), "newInstance"));
 		Expression setId = call(recordView, "setRecordId", address());
 		Expression cast = cast(recordView, blueprintType);

@@ -6,7 +6,7 @@ import static net.wpm.codegen.Expressions.self;
 
 import java.util.Collections;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.codegen.Expression;
 import net.wpm.record.blueprint.BlueprintMethod;
 
@@ -22,7 +22,7 @@ public class TemplateCopy extends TemplateBase {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void addBytecode(AsmBuilder<?> builder) {	
+	public void addBytecode(ClassBuilder<?> builder) {	
 		// cast to object, since the RecordAdapter.copy uses generic
 		Expression copy = call(adapter(), "copy", cast(self(), Object.class));
 		builder.method(blueprintMethod.getName(), blueprintType, Collections.EMPTY_LIST, copy);			

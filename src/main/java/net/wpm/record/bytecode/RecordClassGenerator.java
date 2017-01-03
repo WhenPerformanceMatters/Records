@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.codegen.utils.DefiningClassLoader;
 import net.wpm.record.RecordView;
 import net.wpm.record.blueprint.BlueprintClass;
@@ -89,7 +89,7 @@ public class RecordClassGenerator {
 		blueprints.add(blueprintClass.getBlueprint());
 
 		// construct a class that implements the blueprints
-		AsmBuilder<RecordView> builder = new AsmBuilder<RecordView>(classLoader, RecordView.class, blueprints).setBytecodeSaveDir(byteCodePath);
+		ClassBuilder<RecordView> builder = new ClassBuilder<RecordView>(classLoader, RecordView.class, blueprints).setBytecodeSaveDir(byteCodePath);
 		
 		// all methods and fields necessary to work as a record
 		addRecordViewTrait(builder, blueprintClass.getSizeInBytes());
@@ -101,7 +101,7 @@ public class RecordClassGenerator {
 		addToString(builder, blueprintClass.isCustomToString(), blueprintClass.getVariables());		
 				
 		String className = blueprintClass.getBlueprint().getName() + "RecordView";
-		return builder.defineClass(className);
+		return builder.build(className);
 	}	
 	
 	
@@ -111,7 +111,7 @@ public class RecordClassGenerator {
 	 * @param builder
 	 * @param sizeInBytes
 	 */
-	private static void addRecordViewTrait(AsmBuilder<RecordView> builder, int sizeInBytes) {
+	private static void addRecordViewTrait(ClassBuilder<RecordView> builder, int sizeInBytes) {
 		ASMTemplate template = new TemplateRecord(sizeInBytes);
 		template.addBytecode(builder);			
 	}
@@ -123,7 +123,7 @@ public class RecordClassGenerator {
 	 * @param customToStringMethod
 	 * @param variables
 	 */
-	protected static void addToString(AsmBuilder<RecordView> builder, boolean customToStringMethod, Collection<BlueprintVariable> variables) {
+	protected static void addToString(ClassBuilder<RecordView> builder, boolean customToStringMethod, Collection<BlueprintVariable> variables) {
 		ASMTemplate template = new TemplateToString(variables, customToStringMethod);
 		template.addBytecode(builder);
 	}
@@ -134,7 +134,7 @@ public class RecordClassGenerator {
 	 *  
 	 * @param builder
 	 */
-	protected static void implementMethods(AsmBuilder<RecordView> builder, Class<?> blueprintClass, Collection<BlueprintMethod> methods) {
+	protected static void implementMethods(ClassBuilder<RecordView> builder, Class<?> blueprintClass, Collection<BlueprintMethod> methods) {
 		
 		// all methods that need to be implemented
 		for (BlueprintMethod method : methods) {

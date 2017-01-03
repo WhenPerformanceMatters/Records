@@ -5,7 +5,7 @@ import static net.wpm.codegen.Expressions.arg;
 import static net.wpm.codegen.Expressions.sub;
 import static net.wpm.codegen.Expressions.value;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.codegen.Expression;
 import net.wpm.record.blueprint.BlueprintMethod;
 import net.wpm.record.blueprint.BlueprintVariable;
@@ -19,7 +19,7 @@ public class TemplateDecreaseValueBy extends TemplateBase {
 	}
 
 	@Override
-	public void addBytecode(AsmBuilder<?> builder) {		
+	public void addBytecode(ClassBuilder<?> builder) {		
 		BlueprintVariable variable = blueprintMethod.getVariable();
 		
 		Expression value = readValueExpression(variable);

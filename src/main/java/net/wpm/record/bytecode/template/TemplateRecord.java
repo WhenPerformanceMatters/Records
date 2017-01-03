@@ -8,7 +8,7 @@ import static net.wpm.codegen.Expressions.value;
 
 import java.util.Collections;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.record.RecordAdapter;
 import net.wpm.record.bytes.MemoryAccess;
 
@@ -26,11 +26,11 @@ public class TemplateRecord extends TemplateBase {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void addBytecode(AsmBuilder<?> builder) {
+	public void addBytecode(ClassBuilder<?> builder) {
 		
 		// TODO: everything should be final
 		// TODO: name of variables should have a prefix z.b. ASMRecord_recordSize
-		builder.staticField("recordSize", int.class);
+		builder.staticConstant("recordSize", int.class);
 		builder.staticField("blueprintId", int.class);
 		builder.staticField("recordAdapter", RecordAdapter.class);
 		builder.staticField("memoryAccess", MemoryAccess.class);

@@ -8,7 +8,7 @@ import static net.wpm.codegen.Expressions.value;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.codegen.ExpressionToString;
 import net.wpm.record.blueprint.BlueprintVariable;
 
@@ -24,7 +24,7 @@ public class TemplateToString extends TemplateBase {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void addBytecode(AsmBuilder<?> builder) {
+	public void addBytecode(ClassBuilder<?> builder) {
 		
 		// use a custom to string method
 		if(customToStringMethod) {

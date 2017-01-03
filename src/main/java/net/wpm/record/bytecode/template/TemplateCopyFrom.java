@@ -5,7 +5,7 @@ import static net.wpm.codegen.Expressions.arg;
 import static net.wpm.codegen.Expressions.call;
 import static net.wpm.codegen.Expressions.cast;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.codegen.Expression;
 import net.wpm.record.RecordView;
 import net.wpm.record.blueprint.BlueprintMethod;
@@ -22,7 +22,7 @@ public class TemplateCopyFrom extends TemplateBase {
 	
 	
 	@Override
-	public void addBytecode(AsmBuilder<?> builder) {
+	public void addBytecode(ClassBuilder<?> builder) {
 		Expression fromId = call(cast(arg(0), RecordView.class), "getRecordId");
 		Expression toId = address();
 		Expression recordSize = recordSize();		

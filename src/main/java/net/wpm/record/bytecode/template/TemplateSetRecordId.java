@@ -3,7 +3,7 @@ package net.wpm.record.bytecode.template;
 import static java.util.Arrays.asList;
 import static net.wpm.codegen.Expressions.arg;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.record.blueprint.BlueprintMethod;
 
 public class TemplateSetRecordId extends TemplateBase {
@@ -15,7 +15,7 @@ public class TemplateSetRecordId extends TemplateBase {
 	}
 
 	@Override
-	public void addBytecode(AsmBuilder<?> builder) {		
+	public void addBytecode(ClassBuilder<?> builder) {		
 		builder.method(blueprintMethod.getName(), Void.TYPE, asList(long.class), setAddress(arg(0)));			
 	}	
 }

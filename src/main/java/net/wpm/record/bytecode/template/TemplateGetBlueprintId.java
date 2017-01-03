@@ -2,7 +2,7 @@ package net.wpm.record.bytecode.template;
 
 import java.util.Collections;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.record.blueprint.BlueprintMethod;
 
 public class TemplateGetBlueprintId extends TemplateBase {
@@ -15,7 +15,7 @@ public class TemplateGetBlueprintId extends TemplateBase {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void addBytecode(AsmBuilder<?> builder) {
+	public void addBytecode(ClassBuilder<?> builder) {
 		builder.method(blueprintMethod.getName(), int.class, Collections.EMPTY_LIST, blueprintId());			
 	}	
 }

@@ -5,7 +5,7 @@ import static net.wpm.codegen.Expressions.value;
 
 import java.util.Collections;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 import net.wpm.codegen.Expression;
 import net.wpm.record.blueprint.BlueprintMethod;
 import net.wpm.record.blueprint.BlueprintVariable;
@@ -20,7 +20,7 @@ public class TemplateDecreaseValue extends TemplateBase {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void addBytecode(AsmBuilder<?> builder) {	
+	public void addBytecode(ClassBuilder<?> builder) {	
 		BlueprintVariable variable = blueprintMethod.getVariable();
 		
 		Expression value = readValueExpression(variable);

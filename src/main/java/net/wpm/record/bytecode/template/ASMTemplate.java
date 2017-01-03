@@ -1,7 +1,7 @@
 package net.wpm.record.bytecode.template;
 
-import net.wpm.codegen.AsmBuilder;
+import net.wpm.codegen.ClassBuilder;
 
 public interface ASMTemplate {	
-	public void addBytecode(AsmBuilder<?> builder);	
+	public void addBytecode(ClassBuilder<?> builder);	
 }
