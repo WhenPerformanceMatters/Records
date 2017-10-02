@@ -57,8 +57,14 @@ public class ExpressionCallStatic implements Expression {
 		Class<?>[] arguments = argumentClasses.toArray(new Class<?>[]{});
 
 		Type returnType;
+		Method method;
 		try {
-			Method method = owner.getMethod(name, arguments);
+			// TODO support for methods in super class
+			try {
+				method = owner.getMethod(name, arguments);
+			}catch (NoSuchMethodException e) {				
+				method = owner.getDeclaredMethod(name, arguments);
+			}
 			Class<?> returnClass = method.getReturnType();
 			returnType = getType(returnClass);
 		} catch (NoSuchMethodException e) {
@@ -91,7 +97,13 @@ public class ExpressionCallStatic implements Expression {
 		Method method;
 		try {
 			Class<?> ownerJavaType = getJavaType(ctx.getClassLoader(), Type.getType(owner));
-			method = ownerJavaType.getMethod(name, arguments);
+			
+			// TODO support for methods in super class
+			try {
+				method = ownerJavaType.getMethod(name, arguments);
+			}catch (NoSuchMethodException e) {				
+				method = ownerJavaType.getDeclaredMethod(name, arguments);
+			}
 			Class<?> returnClass = method.getReturnType();
 			returnType = getType(returnClass);
 		} catch (NoSuchMethodException e) {

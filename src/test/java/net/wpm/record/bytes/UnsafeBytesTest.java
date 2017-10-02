@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import net.openhft.chronicle.core.Memory;
 import net.openhft.chronicle.core.OS;
+import net.wpm.record.bytes.UnsafeBytes;
 
 public class UnsafeBytesTest {
 

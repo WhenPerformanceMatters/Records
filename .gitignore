@@ -1,7 +1,6 @@
 # ignore gradle files
 /.gradle/
 gradle.properties
-settings.gradle
 
 # generated files
 /bin/

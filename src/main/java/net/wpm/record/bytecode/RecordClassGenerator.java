@@ -111,7 +111,7 @@ public class RecordClassGenerator {
 	 * @param builder
 	 * @param sizeInBytes
 	 */
-	private static void addRecordViewTrait(ClassBuilder<RecordView> builder, int sizeInBytes) {
+	private static void addRecordViewTrait(ClassBuilder<?> builder, int sizeInBytes) {
 		ASMTemplate template = new TemplateRecord(sizeInBytes);
 		template.addBytecode(builder);			
 	}
@@ -123,7 +123,7 @@ public class RecordClassGenerator {
 	 * @param customToStringMethod
 	 * @param variables
 	 */
-	protected static void addToString(ClassBuilder<RecordView> builder, boolean customToStringMethod, Collection<BlueprintVariable> variables) {
+	protected static void addToString(ClassBuilder<?> builder, boolean customToStringMethod, Collection<BlueprintVariable> variables) {
 		ASMTemplate template = new TemplateToString(variables, customToStringMethod);
 		template.addBytecode(builder);
 	}
@@ -134,7 +134,7 @@ public class RecordClassGenerator {
 	 *  
 	 * @param builder
 	 */
-	protected static void implementMethods(ClassBuilder<RecordView> builder, Class<?> blueprintClass, Collection<BlueprintMethod> methods) {
+	protected static void implementMethods(ClassBuilder<?> builder, Class<?> blueprintClass, Collection<BlueprintMethod> methods) {
 		
 		// all methods that need to be implemented
 		for (BlueprintMethod method : methods) {

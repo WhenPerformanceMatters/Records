@@ -62,4 +62,15 @@ public abstract class RecordView {
 	public final void setRecordId(final long recordId) {
 		address = recordId;
 	}
+	
+	//------------------------------------------------------------------------------
+	/**
+	 * Get the record adapter for the blueprintId
+	 * 
+	 * @param blueprintId
+	 * @return
+	 */
+	protected static RecordAdapter<?> recordAdapter(int blueprintId) {
+		return Records.getRecordAdapter(blueprintId);
+	}
 }

@@ -518,7 +518,6 @@ public class BlueprintInspector {
 		blueprintClass.addMethod(new BlueprintMethod(blueprintClass.getBlueprint(), methodName, BlueprintMethod.ActionType.GetArraySize, variable));
 	}
 	
-	
 	/**
 	 * Check if this is a valid Getter-Method
 	 * 

@@ -443,7 +443,9 @@ public class ClassBuilder<T> {
 	public T buildClassAndCreateNewInstance() {
 		try {
 			return build().newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (InstantiationException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -461,7 +463,13 @@ public class ClassBuilder<T> {
 	public T buildClassAndCreateNewInstance(Class[] constructorParameterTypes, Object[] constructorParameters) {
 		try {
 			return build().getConstructor(constructorParameterTypes).newInstance(constructorParameters);
-		} catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+		} catch (InstantiationException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException(e);
+		} catch (InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}
 	}

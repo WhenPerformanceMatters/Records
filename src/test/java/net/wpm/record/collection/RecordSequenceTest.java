@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import net.wpm.record.RecordAdapter;
+import net.wpm.record.collection.RecordSequence;
 import net.wpm.record.model.TestBlueprint.SimpleValue;
 
 /**

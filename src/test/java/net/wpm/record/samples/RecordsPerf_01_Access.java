@@ -19,7 +19,7 @@ public class RecordsPerf_01_Access {
 		RecordAdapter<Foo> recordAdapter = new RecordAdapter<Foo>(Foo.class);
 		int classId = Records.register(recordAdapter);
 		
-		// create a three new records
+		// create three new records
 		Foo obj = Records.create(Foo.class);
 		Foo otherObj = Records.create(classId); 	// faster
 		Foo anotherObj = recordAdapter.create();	// the fastest

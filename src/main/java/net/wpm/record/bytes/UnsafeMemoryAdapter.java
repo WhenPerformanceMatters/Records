@@ -193,7 +193,7 @@ public class UnsafeMemoryAdapter implements MemoryAccess {
 	 * costs 0C 0B 0A 0P 0M 0N
 	 */
 	@Override
-	public int getInt(long address) {
+	public final int getInt(long address) {
 		return memory.readInt(address);
 	}
 

@@ -14,23 +14,27 @@ import net.wpm.record.RecordView;
  */
 public class RecordSequence<B> implements Iterable<B>, RandomAccess {
 
-	protected final RecordAdapter<B> adapter;
-	protected final B reuse;
+	protected final RecordView view;	// record view
 	
+	protected long fromAddress;			// starting address of the sequence
 	protected final int recordSize;		// record size in bytes	
-	protected final long fromAddress;	// starting address of the sequence
-	protected final long toAddress;		// end address
 	protected final int count;			// amount of records
 	
-	@SuppressWarnings("unchecked")
 	public RecordSequence(final RecordAdapter<B> adapter, final long fromAddress, final int count) {
-		this.adapter = adapter;
-		this.reuse = (B)adapter.newInstance();
-		this.recordSize = adapter.getRecordSize();
+		this.view = adapter.newInstance();
 		
 		this.fromAddress = fromAddress;
-		this.toAddress = fromAddress + recordSize * count;
+		this.recordSize = view.getRecordSize();		
 		this.count = count;
+	}
+	
+	/**
+	 * Set a new address to reuse this sequence view
+	 * 
+	 * @param fromAddress
+	 */
+	public void setAddress(final long fromAddress) {
+		this.fromAddress = fromAddress;
 	}
 
 	/**
@@ -50,8 +54,10 @@ public class RecordSequence<B> implements Iterable<B>, RandomAccess {
 	 * @param index
 	 * @return Record extends RecordView
 	 */
+	@SuppressWarnings("unchecked")
 	public B get(final int index) {
-		return adapter.view(fromAddress + index * recordSize);
+		view.setRecordId(fromAddress + index * recordSize);
+		return (B)view;
 	}
 	
 	/**
@@ -63,14 +69,12 @@ public class RecordSequence<B> implements Iterable<B>, RandomAccess {
 	 * @param value
 	 */
 	public void set(final int index, final B value) {
-		RecordView fromValue = ((RecordView)value);
+		final RecordView fromValue = ((RecordView)value);
 		
-		// use the memory access of the value if it has the correct adapter 
-		if(fromValue.getRecordAdapter() == adapter) {
-			long copyFromAddress = fromValue.getRecordId();
-			long copyToAddress = fromAddress + index * recordSize;
-			fromValue.getMemoryAccess().copy(copyFromAddress, copyToAddress, recordSize);
-		}
+		// use the memory access of the value
+		long copyFromAddress = fromValue.getRecordId();
+		long copyToAddress = fromAddress + index * recordSize;
+		fromValue.getMemoryAccess().copy(copyFromAddress, copyToAddress, recordSize);
 	}
 
 	/**
@@ -89,14 +93,13 @@ public class RecordSequence<B> implements Iterable<B>, RandomAccess {
 	/**
 	 * costs 3C ?B 0A ?P 0M 1N
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public void forEach(Consumer<? super B> action) {		
-		final RecordView recordView = ((RecordView)reuse);
-		
+	public void forEach(final Consumer<? super B> action) {	
 		long address = fromAddress;
-		for (int i = 0; i < count; i++) {
-			recordView.setRecordId(address += recordSize);
-			action.accept(reuse);
+		for (int index = 0; index < count; index++, address += recordSize) {
+			view.setRecordId(address);
+			action.accept((B)view);
 		}
 	}
 
@@ -105,47 +108,6 @@ public class RecordSequence<B> implements Iterable<B>, RandomAccess {
 	 */
 	@Override
 	public final Iterator<B> iterator() {
-		return new Itr(adapter, reuse);
-	}
-
-	/**
-	 * A iterator reusing a single record view to access all records.
-	 * 
-	 * @author Nico Hezel
-	 */
-	protected final class Itr implements Iterator<B> {
-		
-		protected long address = 0;		// address in memory	
-		
-		// both records are identical, safes casting
-		protected final RecordView reuseRecordView;
-		protected final B reuseRecord;
-		
-		/**
-		 * costs 3C 0B 0A 0P 0M 1N
-		 * @param adapter
-		 */
-		public Itr(final RecordAdapter<B> adapter, final B reuse) {						
-			this.reuseRecord = reuse;
-			this.reuseRecordView = (RecordView) reuseRecord;
-			this.address = fromAddress - recordSize;
-		}
-
-		/**
-		 * costs 0C 0B 0A 0P 0M 0N
-		 */
-		@Override
-		public final boolean hasNext() {
-			return ((address += recordSize) < toAddress);
-		}
-
-		/**
-		 * costs 0C 0B 0A 0P 0M 0N
-		 */
-		@Override
-		public final B next() {
-			reuseRecordView.setRecordId(address);
-			return reuseRecord;
-		}
+		return new RecordIterator<B>(view, fromAddress, fromAddress + count * recordSize);
 	}
 }
